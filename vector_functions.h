@@ -7,9 +7,9 @@
 #include <iostream>
 #include <vector>
 
-std::vector<double> vectorSum(const std::vector<double> v1, const std::vector<double> v2);
-std::vector<double> vectorMax(const std::vector<double> v1, const std::vector<double> v2);
-std::vector<double> vectorPow(const std::vector<double> v1, const std::vector<double> v2);
+double vectorSum(const std::vector<double> v1);
+double vectorMax(const std::vector<double> v1);
+std::vector<double> vectorPow(const std::vector<double> v1, double power);
 std::vector<double> vectorSubtraction(const std::vector<double> v1, const std::vector<double> v2);
 std::vector<double> vectorAbs(const std::vector<double> v1, const std::vector<double> v2);
 std::vector<double> vectorAddition(const std::vector<double> v1, const std::vector<double> v2);
