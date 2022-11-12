@@ -34,3 +34,17 @@ double vectorMax(const std::vector<double> v1)
     }
     return max;
 }
+/*
+input: vector<double>, double
+output: vector<double
+this function returns a new vector, such that every value is a value from v1 to the power of the double passed as a function parameter
+*/
+std::vector<double> vectorPow(const std::vector<double> v1, double power)
+{
+    std::vector<double> newVector;
+    for(double d: v1)
+    {
+        newVector.push_back(pow(d, power));
+    }
+    return newVector;
+}
