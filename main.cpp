@@ -21,7 +21,11 @@ std::vector<double> getVectorFromInput()
     }
     return inputVector;   
 }
-
+/*
+input: vector<double>
+output: none
+this function prints the vector with spaces between the values
+*/
 void printVector(const std::vector<double> vectorToPrint)
 {
     for (double d: vectorToPrint)
