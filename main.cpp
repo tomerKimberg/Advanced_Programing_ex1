@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include "vector_functions.h"
 
 /*
 input: none
@@ -40,5 +41,6 @@ int main()
     std::vector<double> firstVector = getVectorFromInput();
     std::vector<double> secondVector = getVectorFromInput();
     printVector(firstVector);
-    printVector(secondVector);    
+    printVector(secondVector);
+    printVector(vectorAddition(firstVector,secondVector));
 }
