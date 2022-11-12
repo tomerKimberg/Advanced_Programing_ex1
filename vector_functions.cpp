@@ -17,3 +17,20 @@ double vectorSum(const std::vector<double> v1)
     }
     return sum;
 }
+/*
+input: vector<double>
+output: double
+this function returns the maximum value in the vector
+*/
+double vectorMax(const std::vector<double> v1)
+{
+    double max = v1[0];
+    for(double d: v1)
+    {
+        if (d > max)
+        {
+            max = d;
+        }
+    }
+    return max;
+}
