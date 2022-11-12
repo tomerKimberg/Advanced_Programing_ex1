@@ -22,8 +22,19 @@ std::vector<double> getVectorFromInput()
     return inputVector;   
 }
 
+void printVector(const std::vector<double> vectorToPrint)
+{
+    for (double d: vectorToPrint)
+    {
+        std::cout << d << " ";
+    }
+    std::cout << std::endl;
+}
+
 int main()
 {
     std::vector<double> firstVector = getVectorFromInput();
     std::vector<double> secondVector = getVectorFromInput();
+    printVector(firstVector);
+    printVector(secondVector);    
 }
