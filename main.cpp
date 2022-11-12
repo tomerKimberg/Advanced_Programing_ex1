@@ -24,4 +24,6 @@ std::vector<double> getVectorFromInput()
 
 int main()
 {
+    std::vector<double> firstVector = getVectorFromInput();
+    std::vector<double> secondVector = getVectorFromInput();
 }
