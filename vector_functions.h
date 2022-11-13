@@ -6,14 +6,17 @@
 #define TARGIL1_VECTOR_FUNCTIONS_H
 #include <iostream>
 #include <vector>
+#include "vector_function_exeption.h"
 
-double vectorSum(const std::vector<double> v1);
-double vectorMax(const std::vector<double> v1);
-std::vector<double> vectorPow(const std::vector<double> v1, double power);
-std::vector<double> vectorSubtraction(const std::vector<double> v1, const std::vector<double> v2);
-std::vector<double> vectorAbs(const std::vector<double> v1);
-std::vector<double> vectorAddition(const std::vector<double> v1, const std::vector<double> v2);
-std::vector<double> vectorDivision(const std::vector<double> v1, const std::vector<double> v2);
+double vectorSum(const std::vector<double> v1)throw(vector_function_exeption);
+double vectorMax(const std::vector<double> v1) throw(vector_function_exeption);
+std::vector<double> vectorPow(const std::vector<double> v1, double power)throw(vector_function_exeption);
+std::vector<double> vectorSubtraction(const std::vector<double> v1, const std::vector<double> v2)
+throw(vector_function_exeption);
+std::vector<double> vectorAbs(const std::vector<double> v1)throw(vector_function_exeption);
+std::vector<double> vectorAddition(const std::vector<double> v1, const std::vector<double> v2)
+throw(vector_function_exeption);
+std::vector<double> vectorDivision(const std::vector<double> v1, const std::vector<double> v2) throw(std::exception);
 
 
 #endif //TARGIL1_VECTOR_FUNCTIONS_H
