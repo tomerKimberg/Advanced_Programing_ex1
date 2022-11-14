@@ -15,6 +15,7 @@ double vectorSum(const std::vector<double> v1) throw(vector_function_exeption){
         for (double d: v1) {
             sum += d;
         }
+        return sum;
     }
     throw vector_function_exeption();
 }
@@ -105,6 +106,7 @@ std::vector<double> vectorAbs(const std::vector<double> v1) throw(vector_functio
         for (double d: v1) {
             resVector.push_back(abs(d));
         }
+        return resVector;
     }
     throw vector_function_exeption();
 }
