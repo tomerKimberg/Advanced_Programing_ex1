@@ -10,14 +10,14 @@
  * @return double. this function returns a sum from all of the values in the vector
  */
 double vectorSum(const std::vector<double> v1) throw(vector_function_exeption){
-    if(!v1.empty()) {
-        double sum = 0;
-        for (double d: v1) {
-            sum += d;
-        }
-        return sum;
+    if(v1.empty()){
+        throw vector_function_exeption();
     }
-    throw vector_function_exeption();
+    double sum = 0;
+    for (double d: v1) {
+        sum += d;
+    }
+    return sum;
 }
 
 /**
@@ -26,15 +26,15 @@ double vectorSum(const std::vector<double> v1) throw(vector_function_exeption){
  * @return double, this function returns the maximum value in the vector
  */
 double vectorMax(const std::vector<double> v1) throw(vector_function_exeption){
-    if(!v1.empty()) {
-        double max = v1[0];
-        for (double d: v1) {
-            if (d > max) {
-                max = d;
-            }
-        }
+    if(v1.empty()){
+        throw vector_function_exeption();        
     }
-    throw vector_function_exeption();
+    double max = v1[0];
+    for (double d: v1) {
+        if (d > max) {
+            max = d;
+        }
+    }    
 }
 
 /**
@@ -45,11 +45,12 @@ double vectorMax(const std::vector<double> v1) throw(vector_function_exeption){
  * such that every value is a value from v1 to the power of the double passed as a function parameter
  */
 std::vector<double> vectorPow(const std::vector<double> v1, double power)throw(vector_function_exeption){
-    if(!v1.empty()) {
-        std::vector<double> newVector;
-        for (double d: v1) {
-            newVector.push_back(pow(d, power));
-        }
+    if(v1.empty()) {
+        throw vector_function_exeption();
+    }
+    std::vector<double> newVector;
+    for (double d: v1) {
+        newVector.push_back(pow(d, power));
     }
     throw vector_function_exeption();
 }
@@ -63,16 +64,17 @@ std::vector<double> vectorPow(const std::vector<double> v1, double power)throw(v
  */
 std::vector<double> vectorAddition(const std::vector<double> v1, const std::vector<double> v2)
 throw(vector_function_exeption){
-    std::vector<double> resVector;
-    if(v1.size() == v2.size()) {
-        for (int index = 0; index < v1.size(); index +=1){
-            resVector.push_back(v1.at(index) + v2.at(index));
-        }
-        return resVector;
-
+    if(v1.empty()) {
+        throw vector_function_exeption();
     }
-    //the vectors are not the same size.
-    throw vector_function_exeption();
+    if(v1.size() != v2.size()) {
+        //throw vector_different_lenghts_exception
+    }
+    std::vector<double> resVector;
+    for (int index = 0; index < v1.size(); index +=1){
+        resVector.push_back(v1.at(index) + v2.at(index));
+    }
+    return resVector;
 }
 /**
  *
@@ -82,16 +84,17 @@ throw(vector_function_exeption){
  */
 std::vector<double> vectorSubtraction(const std::vector<double> v1, const std::vector<double> v2)
 throw(vector_function_exeption){
-    std::vector<double> resVector;
-    if(v1.size() == v2.size()) {
-        for (int index = 0; index < v1.size(); index +=1){
-            resVector.push_back(v1.at(index) - v2.at(index));
-        }
-        return resVector;
-
+    if(v1.empty()) {
+        throw vector_function_exeption();
     }
-    //vectors are not the same size
-    throw vector_function_exeption();
+    if(v1.size() == v2.size()) {
+        //throw vector_different_lenghts_exception
+    }
+    std::vector<double> resVector;
+    for (int index = 0; index < v1.size(); index +=1){
+        resVector.push_back(v1.at(index) - v2.at(index));
+    }
+    return resVector;
 }
 
 /**
@@ -101,14 +104,14 @@ throw(vector_function_exeption){
  * @return vector data, where every element in index i is the absolute value of that element at index i in v1
  */
 std::vector<double> vectorAbs(const std::vector<double> v1) throw(vector_function_exeption){
-    if(!v1.empty()) {
-        std::vector<double> resVector;
-        for (double d: v1) {
-            resVector.push_back(abs(d));
-        }
-        return resVector;
+    if(v1.empty()) {
+        throw vector_function_exeption();
     }
-    throw vector_function_exeption();
+    std::vector<double> resVector;
+    for (double d: v1) {
+        resVector.push_back(abs(d));
+    }
+    return resVector;
 }
 /**
  *
@@ -118,19 +121,20 @@ std::vector<double> vectorAbs(const std::vector<double> v1) throw(vector_functio
  * if the vectors are not the same length, an custom exception is thrown.
  */
 std::vector<double> vectorDivision(const std::vector<double> v1, const std::vector<double> v2) throw(std::exception){
-    std::vector<double> resVector;
-    if(v1.size() == v2.size()) {
-        for (int index = 0; index < v1.size(); index +=1){
-            if(v1.at(index) == 0) {
-                resVector.push_back(0);
-            }
-            else{
-                resVector.push_back(v1.at(index) / v2.at(index));
-            }
-        }
-        return resVector;
-
+    if(v1.empty()) {
+        throw vector_function_exeption();
     }
-    //the vectors are not the same size.
-    throw vector_function_exeption();
+    if(v1.size() == v2.size()) {
+        //throw vector_different_lenghts_exception
+    }
+    std::vector<double> resVector;
+    for (int index = 0; index < v1.size(); index +=1){
+        if(v1.at(index) == 0) {
+            resVector.push_back(0);
+        }
+        else{
+            resVector.push_back(v1.at(index) / v2.at(index));
+        }
+    }
+    return resVector;
 }
