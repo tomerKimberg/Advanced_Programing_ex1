@@ -2,6 +2,7 @@
 #include <vector>
 #include <sstream>
 #include "vector_functions.h"
+#include "distance_algorithms.h"
 
 /*
 input: none
@@ -22,6 +23,19 @@ std::vector<double> getVectorFromInput()
     }
     return inputVector;   
 }
+/**
+ * make sure the vectors are at same length and are not empty
+ * @param v1
+ * @param v2
+ * @return true if vectors are valid, else false
+ */
+bool vector_validation(const std::vector<double>& v1,  const std::vector<double>& v2){
+    if(v1.capacity() == v2.capacity() && !v1.empty()){
+        return true;
+    }
+    return false;
+
+}
 /*
 input: vector<double>
 output: none
@@ -40,7 +54,19 @@ int main()
 {
     std::vector<double> firstVector = getVectorFromInput();
     std::vector<double> secondVector = getVectorFromInput();
-    printVector(firstVector);
-    printVector(secondVector);
-    printVector(vectorAddition(firstVector,secondVector));
+    if(vector_validation(firstVector, secondVector)) {
+        printVector(firstVector);
+        printVector(secondVector);
+        printVector(vectorAddition(firstVector, secondVector));
+        std::vector<double> test = vectorDivision(firstVector, secondVector);
+        std::cout << "here" << std::endl;
+        std::cout << Canberra_distane(firstVector, secondVector) << std::endl;
+        printVector(test);
+        test = vectorSubtraction(firstVector, secondVector);
+        printVector(test);
+        test.push_back(5);
+    }
+    else{
+        std::cout << "the input by the user was invalid!" << std::endl;
+    }
 }
