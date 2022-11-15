@@ -1,8 +1,19 @@
 #include <iostream>
 #include <vector>
 #include <sstream>
+#include <regex>
 #include "vector_functions.h"
 
+/**
+ *
+ * @param std::string line
+ * @return bool, true if the string is a valid vector string or false if it's not.
+ */
+bool input_valid(std::string line)
+{
+    const std::regex input_regex("^(?:\\s|\\d|(?:\\d\\.\\d)|(?:\\-\\d)|(?:\\-\\d.\\d))+$");
+    return std::regex_match(line, input_regex);
+}
 /*
 input: none
 output: vector<double>
