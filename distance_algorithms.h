@@ -5,7 +5,7 @@
 #include <vector>
 #include "vector_functions.h"
 
-double Canberra_distane(const std::vector<double> v1, const std::vector<double> v2);
-double Manhattan_distane(const std::vector<double> v1, const std::vector<double> v2);
+double Canberra_distance(const std::vector<double> v1, const std::vector<double> v2);
+double Manhattan_distance(const std::vector<double> v1, const std::vector<double> v2);
 
 #endif //TARGIL1_DISTANCE_ALGORITHMS_H
