@@ -60,7 +60,7 @@ int main()
         printVector(vectorAddition(firstVector, secondVector));
         std::vector<double> test = vectorDivision(firstVector, secondVector);
         std::cout << "here" << std::endl;
-        std::cout << Canberra_distane(firstVector, secondVector) << std::endl;
+        std::cout << Canberra_distance(firstVector, secondVector) << std::endl;
         printVector(test);
         test = vectorSubtraction(firstVector, secondVector);
         printVector(test);
