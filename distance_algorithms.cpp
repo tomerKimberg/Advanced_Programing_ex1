@@ -35,8 +35,8 @@ double Euclidean_distance(const std::vector<double> v1, const std::vector<double
  * @param v2 vector<double>
  * @return double- distance
  */
-double Minkowski_distance(const std::vector<double> v1, const std::vector<double> v2,double  P){
-    return pow(vectorSum(vectorPow(vectorAbs(vectorSubtraction(v1, v2)), P)), (1 / P));
+double Minkowski_distance(const std::vector<double> v1, const std::vector<double> v2,int P){
+    return pow(vectorSum(vectorPow(vectorAbs(vectorSubtraction(v1, v2)), (double) P)), (1 / (double) P));
 }
 /**
  * calculates distance between two non empty and same length vectors by the Chebyshev distance algorithm.
