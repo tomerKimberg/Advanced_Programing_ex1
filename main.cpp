@@ -4,7 +4,7 @@
 #include <regex>
 #include "vector_functions.h"
 #include "distance_algorithms.h"
-#define number_of_vectors 2
+#define NUMBER_OF_VECTORS 2
 #define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
 
 /**
@@ -63,10 +63,10 @@ void printVector(const std::vector<double> vectorToPrint)
 /**
  * takes two lines of input, creates vectors from them and prints the distance between the vectors in 5 different ways
  */
-void measureDistance(){
+void run(){
     std::string line = "";
     std::vector<double> inputVectors[2];
-    for(int i = 0; i < number_of_vectors; i++){
+    for(int i = 0; i < NUMBER_OF_VECTORS; i++){
         std::getline(std::cin, line);
         if (!input_valid(line)){
             std::cout << BAD_INPUT_MESSAGE << std::endl;
@@ -77,16 +77,16 @@ void measureDistance(){
     printVector(inputVectors[0]);
     printVector(inputVectors[1]);
     printVector(vectorAddition(inputVectors[0], inputVectors[1]));
-    std::vector<double> test = vectorDivision(firstVector, secondVector);
+    std::vector<double> test = vectorDivision(inputVectors[0], inputVectors[1]);
     std::cout << "here" << std::endl;
-    std::cout << Canberra_distance(firstVector, secondVector) << std::endl;
+    std::cout << Canberra_distance(inputVectors[0], inputVectors[1]) << std::endl;
     printVector(test);
-    test = vectorSubtraction(firstVector, secondVector);
+    test = vectorSubtraction(inputVectors[0], inputVectors[1]);
     printVector(test);
     test.push_back(5);
 }
 
 int main()
 {
-    measureDistance();
+    run();
 }
