@@ -20,7 +20,7 @@ bool input_valid(std::string line)
  * @return true if vectors are valid, else false
  */
 bool vector_validation(const std::vector<double>& v1,  const std::vector<double>& v2){
-    if(v1.capacity() == v2.capacity() && !v1.empty()){
+    if(v1.size() == v2.size() && !v1.empty()){
         return true;
     }
     return false;
