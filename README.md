@@ -25,3 +25,4 @@ for that we have created functions to determine that these condition are met,
 if not, the program we print an error message and terminate gracfully.
 
 **compilation instructions-**
+g++ -std=c++11 *.cpp
