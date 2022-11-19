@@ -43,6 +43,7 @@ std::vector<double> vectorPow(const std::vector<double> v1, double power){
     for (double d: v1) {
         newVector.push_back(pow(d, power));
     }
+    return newVector;
 }
 
 
