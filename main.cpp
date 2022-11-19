@@ -2,10 +2,13 @@
 #include <vector>
 #include <sstream>
 #include <regex>
+#include <cmath>
 #include "vector_functions.h"
 #include "distance_algorithms.h"
 #define NUMBER_OF_VECTORS 2
 #define MINKOWSKI_P_VALUE 2
+#define INTEGER_REQUESTED_PRECISION 1
+#define FLOAT_REQUESTED_PRECISION 16
 #define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
 
 /**
@@ -62,6 +65,19 @@ void printVector(const std::vector<double> vectorToPrint)
     std::cout << std::endl;
 }
 /**
+ * print integers and floats with the requested precision
+ * @param distance the distance to be printed
+ */
+void printDistance(double distance){
+    int percision = INTEGER_REQUESTED_PRECISION;
+    if(distance != floor(distance)){
+        percision = FLOAT_REQUESTED_PRECISION;
+    }
+    std::fixed(std::cout);
+    std::cout.precision(percision);
+    std::cout << distance << std::endl;
+}
+/**
  * takes two lines of input, creates vectors from them and prints the distance between the vectors in 5 different ways
  */
 void run(){
@@ -75,11 +91,11 @@ void run(){
         }
         inputVectors[i] = vectorFromString(line);
     }
-    std::cout << Euclidean_distance(inputVectors[0], inputVectors[1]) << std::endl;
-    std::cout << Manhattan_distance(inputVectors[0], inputVectors[1]) << std::endl;
-    std::cout << Chebyshev_distance(inputVectors[0], inputVectors[1]) << std::endl;
-    std::cout << Canberra_distance(inputVectors[0], inputVectors[1]) << std::endl;
-    std::cout << Minkowski_distance(inputVectors[0], inputVectors[1], MINKOWSKI_P_VALUE) << std::endl;
+    printDistance(Euclidean_distance(inputVectors[0], inputVectors[1]));
+    printDistance(Manhattan_distance(inputVectors[0], inputVectors[1]));
+    printDistance(Chebyshev_distance(inputVectors[0], inputVectors[1]));
+    printDistance(Canberra_distance(inputVectors[0], inputVectors[1]));
+    printDistance(Minkowski_distance(inputVectors[0], inputVectors[1], MINKOWSKI_P_VALUE));
 }
 
 int main()
