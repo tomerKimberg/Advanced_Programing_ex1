@@ -51,6 +51,10 @@ void run(){
         }
         inputVectors[i] = vectorFromString(line);
     }
+    if(!vector_validation(inputVectors[0], inputVectors[1])){
+        std::cout << BAD_INPUT_MESSAGE << std::endl;
+        return;
+    }
     printVector(inputVectors[0]);
     printVector(inputVectors[1]);
     printVector(vectorAddition(inputVectors[0], inputVectors[1]));
