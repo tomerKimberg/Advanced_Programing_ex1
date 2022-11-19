@@ -5,6 +5,7 @@
 #include "vector_functions.h"
 #include "distance_algorithms.h"
 #define NUMBER_OF_VECTORS 2
+#define MINKOWSKI_P_VALUE 2
 #define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
 
 /**
@@ -74,16 +75,11 @@ void run(){
         }
         inputVectors[i] = vectorFromString(line);
     }
-    printVector(inputVectors[0]);
-    printVector(inputVectors[1]);
-    printVector(vectorAddition(inputVectors[0], inputVectors[1]));
-    std::vector<double> test = vectorDivision(inputVectors[0], inputVectors[1]);
-    std::cout << "here" << std::endl;
+    std::cout << Euclidean_distance(inputVectors[0], inputVectors[1]) << std::endl;
+    std::cout << Manhattan_distance(inputVectors[0], inputVectors[1]) << std::endl;
+    std::cout << Chebyshev_distance(inputVectors[0], inputVectors[1]) << std::endl;
     std::cout << Canberra_distance(inputVectors[0], inputVectors[1]) << std::endl;
-    printVector(test);
-    test = vectorSubtraction(inputVectors[0], inputVectors[1]);
-    printVector(test);
-    test.push_back(5);
+    std::cout << Minkowski_distance(inputVectors[0], inputVectors[1], MINKOWSKI_P_VALUE) << std::endl;
 }
 
 int main()
