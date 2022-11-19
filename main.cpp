@@ -51,7 +51,7 @@ void run(){
         }
         inputVectors[i] = vectorFromString(line);
     }
-    if(vector_validation(inputVectors[0], inputVectors[1])){
+    if(!vector_validation(inputVectors[0], inputVectors[1])){
         std::cout << BAD_INPUT_MESSAGE << std::endl;
         return;
     }
