@@ -14,6 +14,25 @@ bool input_valid(std::string line)
     return std::regex_match(line, input_regex);
 }
 /**
+ * check if a string is a real number
+ * @param string
+ * @return true- this is a real number, else returns false
+ */
+bool checkRealNumber(std::string string){
+    bool pointFlag = false;
+    for(char digit : string){
+        if(std::isdigit(digit)){
+            continue;
+        }
+        else if(digit == '.' && !pointFlag){
+            pointFlag = true;
+            continue;
+        }
+        return false;
+    }
+    return true;
+}
+/**
  * make sure the vectors are at same length and are not empty
  * @param v1
  * @param v2
