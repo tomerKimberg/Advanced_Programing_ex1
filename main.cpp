@@ -11,20 +11,27 @@
 #define INTEGER_REQUESTED_PRECISION 1
 #define FLOAT_REQUESTED_PRECISION 16
 #define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
+
 /**
- *
+ * create a new vector, if input is invalid set valid_input to false
  * @param std::string line
+ * @param bool& valid_input
  * @return std::vector<double>, creates a new vector from the string
  */
-std::vector<double> vectorFromString(std::string line)
+std::vector<double> vectorFromString(std::string line, bool& valid_input)
 {
-    std::stringstream stringStream;
-    stringStream.str(line);
-    double inputValue = 0;
+    std::stringstream stringstream;
+    stringstream.str(line);
+    std::string number;
     std::vector<double> inputVector;
-    while(stringStream >> inputValue)
+    while(stringstream >> number && valid_input)
     {
-        inputVector.push_back(inputValue);
+        if (checkRealNumber(number)){
+            inputVector.push_back(std::stod(number));
+        }
+        else{
+            valid_input = false;
+        }
     }
     return inputVector;   
 }
@@ -60,15 +67,12 @@ void printDistance(double distance){
 void run(){
     std::string line = "";
     std::vector<double> inputVectors[2];
+    bool valid_input = true;
     for(int i = 0; i < NUMBER_OF_VECTORS; i++){
         std::getline(std::cin, line);
-        if (!input_valid(line)){
-            std::cout << BAD_INPUT_MESSAGE << std::endl;
-            return;
-        }
-        inputVectors[i] = vectorFromString(line);
+        inputVectors[i] = vectorFromString(line, valid_input);
     }
-    if(!vector_validation(inputVectors[0], inputVectors[1])){
+    if(!vector_validation(inputVectors[0], inputVectors[1]) || !valid_input){
         std::cout << BAD_INPUT_MESSAGE << std::endl;
         return;
     }
