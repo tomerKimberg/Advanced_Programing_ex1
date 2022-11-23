@@ -24,4 +24,6 @@ In order for these opertions to be well defined the following conditions must be
 We created a few functions to enforce those conditions, if one of the conditions is not met, an error message will be printed and the program will exit gracefully.
 
 **compilation instructions-**
+```
 g++ -std=c++11 *.cpp
+```
