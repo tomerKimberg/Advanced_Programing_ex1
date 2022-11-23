@@ -2,7 +2,7 @@
 This program computes the distance between two vectors (which are recived by the user) based on 5 diffrent distance algorithms:
 1. Manhattan distance
 2. Euclidean distance
-3. Minkowski distance
+3. Minkowski distance (we used to constant 2 in the calculations)
 4. Chebyshev distance
 5. Canberra distance
 
