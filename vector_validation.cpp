@@ -20,17 +20,24 @@ bool input_valid(std::string line)
  */
 bool checkRealNumber(std::string string){
     bool pointFlag = false;
+    bool signFlag = false;
     for(char digit : string){
         if(std::isdigit(digit)){
+            pointFlag = false;
+            signFlag = false;
             continue;
         }
-        else if(digit == '.' && !pointFlag){
+        if(digit == '.' && !pointFlag && !signFlag){
             pointFlag = true;
+            continue;
+        }
+        if(digit == '-' && !pointFlag && !signFlag){
+            signFlag = true;
             continue;
         }
         return false;
     }
-    return true;
+    return !pointFlag && !signFlag;
 }
 /**
  * make sure the vectors are at same length and are not empty
