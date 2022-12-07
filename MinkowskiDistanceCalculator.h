@@ -5,7 +5,9 @@
 #ifndef TARGIL1_MINKOWSKIDISTANCECALCULATOR_H
 #define TARGIL1_MINKOWSKIDISTANCECALCULATOR_H
 #include "distanceCalculator.h"
-
+/**
+ * a distanceCalculator object using the Minkowski metric
+ */
 class MinkowskiDistanceCalculator: public distanceCalculator {
 private:
     int power;

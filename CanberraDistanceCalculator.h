@@ -6,7 +6,9 @@
 #define TARGIL1_CANBERRADISTANCECALCULATOR_H
 #include "distanceCalculator.h"
 #include "distance_algorithms.h"
-
+/**
+ * a distanceCalculator object using the Canberra metric
+ */
 class CanberraDistanceCalculator: public distanceCalculator{
 public:
      double calculateDistance(std::vector<double> v1, std::vector<double> v2) override;
