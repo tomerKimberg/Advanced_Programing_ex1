@@ -2,3 +2,4 @@
 
 #include "distanceCalculator.h"
 
+distanceCalculator::~distanceCalculator() {}

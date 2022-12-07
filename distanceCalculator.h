@@ -3,13 +3,13 @@
 
 #include <iostream>
 #include <vector>
-#include "distanceCalculator.h"
 #include "distance_algorithms.h"
 /*
  * abstract class used to calculate distances between vectors using a  specific metric
  */
 class distanceCalculator {
 public:
+    virtual ~distanceCalculator() = 0;
     /**
      * pure virtual function, to calculate distances between vectors using a  specific metric
      * @param v1 vector<double>
@@ -17,7 +17,8 @@ public:
      * @return double distance
      */
     virtual double calculateDistance(std::vector<double> v1, std::vector<double> v2) = 0;
-    virtual ~distanceCalculator() = 0;
+
+
 };
 
 
