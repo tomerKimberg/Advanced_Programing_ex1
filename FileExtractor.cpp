@@ -7,6 +7,7 @@ std::string FileExtractor::getPath() {
 }
 //implement
 FileExtractor::~FileExtractor(){}
+
 void FileExtractor::setPath(std::string newPath) {
     this->path = newPath;
 }

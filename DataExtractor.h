@@ -8,7 +8,7 @@
 
 class DataExtractor {
 public:
-    virtual ~DataExtractor();
+    virtual ~DataExtractor() = 0;
     virtual std::string getData() = 0;
     virtual bool hasNext() = 0;
 };

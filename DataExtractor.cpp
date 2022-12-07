@@ -5,3 +5,5 @@
 #include "DataExtractor.h"
 
 //abstract class, cpp file only for convention
+
+DataExtractor::~DataExtractor() {}
