@@ -12,8 +12,8 @@ class getNeighbors {
 private:
     DataExtractor* dataExtractor;
 public:
-    getNeighbors(DataExtractor* de);
-    void setDataExtractor(DataExtractor* de);
+    getNeighbors(DataExtractor& de);
+    void setDataExtractor(DataExtractor& de);
     ~getNeighbors();
     std::map<std::vector<double>,std::vector<std::string>> getNeighborsInMap();
 
