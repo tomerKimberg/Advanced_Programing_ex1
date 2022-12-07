@@ -1,5 +1,7 @@
 
 #include "ChebyshevDistanceCalculator.h"
+
+ChebyshevDistanceCalculator::~ChebyshevDistanceCalculator() noexcept {}
 /**
  * calculate distance using Chebyshev metic
  * @param v1 vector<double>

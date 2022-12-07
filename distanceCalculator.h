@@ -17,7 +17,7 @@ public:
      * @return double distance
      */
     virtual double calculateDistance(std::vector<double> v1, std::vector<double> v2) = 0;
-    //virtual ~distanceCalculator();
+    virtual ~distanceCalculator() = 0;
 };
 
 

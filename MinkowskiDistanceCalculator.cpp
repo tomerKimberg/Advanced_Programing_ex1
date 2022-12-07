@@ -5,6 +5,8 @@
 #include "MinkowskiDistanceCalculator.h"
 //constructor
 MinkowskiDistanceCalculator::MinkowskiDistanceCalculator(int p): distanceCalculator(), power(p) {}
+//destructor
+MinkowskiDistanceCalculator::~MinkowskiDistanceCalculator() noexcept {}
 /**
  * calculate distance using Minkowski metric
  * @param v1 vector<double>

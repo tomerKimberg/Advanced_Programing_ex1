@@ -9,6 +9,7 @@
  * @param v2 vector<double>
  * @return double distance
  */
+ManhattanDistanceCalculator::~ManhattanDistanceCalculator() noexcept {}
 double ManhattanDistanceCalculator::calculateDistance(std::vector<double> v1, std::vector<double> v2){
     return Manhattan_distance(v1, v2);
 }

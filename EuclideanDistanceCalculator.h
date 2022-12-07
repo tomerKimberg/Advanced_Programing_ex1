@@ -11,7 +11,7 @@
 class EuclideanDistanceCalculator: public distanceCalculator{
 public:
     double calculateDistance(std::vector<double> v1, std::vector<double> v2) override;
-    //~CanberraDistanceCalculator();
+    ~EuclideanDistanceCalculator();
 
 };
 

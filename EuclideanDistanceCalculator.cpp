@@ -1,5 +1,7 @@
 
 #include "EuclideanDistanceCalculator.h"
+
+EuclideanDistanceCalculator::~EuclideanDistanceCalculator() noexcept {}
 /**
  * calculate distance using Euclidean metric
  * @param v1 vector<double>

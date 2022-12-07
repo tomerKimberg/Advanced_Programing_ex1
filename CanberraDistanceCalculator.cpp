@@ -1,6 +1,6 @@
 
 #include "CanberraDistanceCalculator.h"
-//CanberraDistanceCalculator::~CanberraDistanceCalculator(){}
+CanberraDistanceCalculator::~CanberraDistanceCalculator(){}
 /**
  * calculate distance using Canberra metric
  * @param v1 vector<double>
