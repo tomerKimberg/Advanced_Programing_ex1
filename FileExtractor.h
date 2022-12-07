@@ -12,6 +12,7 @@ private:
     std::string path;
 public:
     FileExtractor(std::string path);
+    ~FileExtractor() override;
     std::string getPath();
     void setPath(std::string newPath);
     std::string getData() override;
