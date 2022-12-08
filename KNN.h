@@ -7,6 +7,7 @@
 #include "headerDistanceCalculators.h"
 #include <map>
 #include <set>
+#include <algorithm>
 #include "factoryDistanceCalculator.h"
 class KNN {
 private:
@@ -68,9 +69,55 @@ private:
 
 
     };
-    //set of distance and data object the stores a computed distance and all dataVector associated with it
-    std::set<distanceAndData> processedData;
-    std::vector<distanceAndData> processedData2;
+    //vector of distance and data object that stores a computed distance and a dataVector associated with it
+    std::vector<distanceAndData> processedData;
+
+    //private functions-
+    void updateProcessedData(double distance, std::vector<double>* vectorDouble,
+                             std::vector<std::string>* classification);
+
+    void run(std::vector<double> v1){
+        for(std::map<std::vector<double>, std::vector<std::string>>::iterator iter = this->neighbors.begin();
+            iter != this->neighbors.end(); ++iter)
+        {
+            std::vector<double> v2 =  iter->first;
+            double distance = this->distanceCalculatorMetric->calculateDistance(v1,v2);
+            this->updateProcessedData(distance, const_cast<std::vector<double> *>(&(iter->first)), &iter->second);
+        }
+
+        //use select(K) algorithm to reorganize all element around the k'th smallest element in the vector
+        std::nth_element(this->processedData.begin(), (this->processedData.begin() + (this->k-1)),
+                this->processedData.end());
+    }
+    std::vector<std::vector<double>> getProcessedVectorData(){
+        std::vector<std::vector<double>> res;
+        int k = 1;
+        for(distanceAndData temp : this->processedData){
+            if(k <= this->k) {
+                k += 1;
+                res.push_back(*temp.getData().getVectorDouble());
+            }
+            else{
+                break;
+            }
+        }
+        return res;
+    }
+    std::vector<std::vector<std::string>> getProcessedClassification(){
+        std::vector<std::vector<std::string>> res;
+        int k = 1;
+        for(distanceAndData temp : this->processedData){
+            if(k <= this->k) {
+                k+=1;
+                const std::vector<std::string>& temp1 = *temp.getData().getVectorClassification();
+                res.push_back(temp1);
+            }
+            else{
+                break;
+            }
+        }
+        return res;
+    }
 
 
 public:
@@ -82,14 +129,13 @@ public:
     void setK(int k);
     //make sure to delete former distance calculator
     void setMetric(std::string metric);
-    void updateProcessedData(double distance, std::vector<double>* vectorDouble,
-                             std::vector<std::string>* classification);
+
     int getK();
     std::map<std::vector<double>, std::vector<std::string>> getNeighbors();
 
-    std::string getClassification(std::vector<double>);
+    std::string getClassification(std::vector<double> v1);
     //might change based on design
-    std::vector<std::vector<double>> getKNearestNeighbors(std::vector<double>);
+    std::vector<std::vector<double>> getKNearestNeighbors(std::vector<double> v1);
 
 };
 
