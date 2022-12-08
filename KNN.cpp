@@ -29,6 +29,18 @@ void KNN::setNeighbors(std::map<std::vector<double>, std::vector<std::string>> n
     this->neighbors = neighbors;
 }
 
+void KNN::updateProcessedData(double distance, std::vector<double> vectorDouble,
+                         std::vector<std::string> classification){
+    distanceAndData temp = *this->processedData.find(distanceAndData(distance, vectorDouble, classification));
+    if(temp.getData().empty()){
+        this->processedData.insert(distanceAndData(distance, vectorDouble, classification));
+    }
+    else{
+        temp.append(distanceAndData(distance, vectorDouble, classification).getData());
+        this->processedData.erase(distanceAndData(distance, vectorDouble, classification));
+        this->processedData.insert(temp);
+    }
+}
 int KNN::getK() {
     return this->k;
 }
