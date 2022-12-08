@@ -127,6 +127,7 @@ private:
      * @param v1 the vector to get its k-nearest neighbors
      */
     void run(std::vector<double> v1){
+        this->processedData.clear();
         //iterate over all neighbors in the map
         for(std::map<std::vector<double>, std::vector<std::string>>::iterator iter = this->neighbors.begin();
             iter != this->neighbors.end(); ++iter)
