@@ -6,7 +6,12 @@ KNN::KNN(std::map<std::vector<double>, std::vector<std::string>> neighbors,
          std::string metric, int k) {
     this->neighbors = neighbors;
     this->distanceCalculatorMetric = this->FDC.createDistanceCalculator(metric);
-    this->k = k;
+    if(k >= 0) {
+        this->k = k;
+    }
+    else{
+        this->k = 0;
+    }
     this->metric = metric;
 }
 
@@ -22,8 +27,8 @@ void KNN::setK(int k) {
 }
 
 void KNN::setMetric(std::string metric) {
-    //delete old distance calculator
-    delete this->distanceCalculatorMetric;
+
+    //delete this->distanceCalculatorMetric;
     this->distanceCalculatorMetric = this->FDC.createDistanceCalculator(metric);
 }
 
@@ -54,10 +59,9 @@ std::vector<std::vector<double>> KNN::getKNearestNeighbors(std::vector<double> v
 
 std::string KNN::getClassification(std::vector<double> v1) {
     this->run(v1);
-    std::vector<std::vector<std::string>> KNearestClassifications = this->getProcessedClassification();
+    std::vector<std::string> KNearestClassifications = this->getProcessedClassification();
     std::map<std::string, int> classifications;
-    for (std::vector<std::string> stringVector: KNearestClassifications) {
-        for (std::string classification: stringVector) {
+        for (std::string classification: KNearestClassifications) {
             std::map<std::string, int>::iterator it = classifications.find(classification);
             if (it != classifications.end()) {
                 it->second += 1;
@@ -65,7 +69,7 @@ std::string KNN::getClassification(std::vector<double> v1) {
                 classifications.insert({classification, 1});
             }
         }
-    }
+
     int max = 0;
     std::string classification;
     for (std::map<std::string, int>::iterator iter = classifications.begin(); iter != classifications.end(); ++iter) {
