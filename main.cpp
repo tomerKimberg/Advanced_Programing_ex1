@@ -6,6 +6,8 @@
 #include "vector_functions.h"
 #include "vector_validation.h"
 #include "distance_algorithms.h"
+#include "headerDistanceCalculators.h"
+
 #define NUMBER_OF_VECTORS 2
 #define MINKOWSKI_P_VALUE 2
 #define INTEGER_REQUESTED_PRECISION 1
@@ -65,6 +67,16 @@ void printDistance(double distance){
  * takes two lines of input, creates vectors from them and prints the distance between the vectors in 5 different ways
  */
 void run(){
+
+///
+
+CanberraDistanceCalculator ca1;
+MinkowskiDistanceCalculator mi1(MINKOWSKI_P_VALUE);
+ManhattanDistanceCalculator ma;
+EuclideanDistanceCalculator e1;
+ChebyshevDistanceCalculator ch1;
+
+////
     std::string line = "";
     std::vector<double> inputVectors[2];
     bool valid_input = true;
@@ -76,14 +88,21 @@ void run(){
         std::cout << BAD_INPUT_MESSAGE << std::endl;
         return;
     }
-    printDistance(Euclidean_distance(inputVectors[0], inputVectors[1]));
-    printDistance(Manhattan_distance(inputVectors[0], inputVectors[1]));
-    printDistance(Chebyshev_distance(inputVectors[0], inputVectors[1]));
-    printDistance(Canberra_distance(inputVectors[0], inputVectors[1]));
-    printDistance(Minkowski_distance(inputVectors[0], inputVectors[1], MINKOWSKI_P_VALUE));
+    //printDistance(Euclidean_distance(inputVectors[0], inputVectors[1]));
+    printDistance(e1.calculateDistance(inputVectors[0],inputVectors[1]));
+    //printDistance(Manhattan_distance(inputVectors[0], inputVectors[1]));
+    printDistance(ma.calculateDistance(inputVectors[0], inputVectors[1]));
+    //printDistance(Chebyshev_distance(inputVectors[0], inputVectors[1]));
+    printDistance(ch1.calculateDistance(inputVectors[0], inputVectors[1]));
+    //printDistance(Canberra_distance(inputVectors[0], inputVectors[1]));
+    printDistance(ca1.calculateDistance(inputVectors[0], inputVectors[1]));
+    //printDistance(Minkowski_distance(inputVectors[0], inputVectors[1], MINKOWSKI_P_VALUE));
+    printDistance(mi1.calculateDistance(inputVectors[0],inputVectors[1]));
 }
 
 int main()
 {
+
     run();
+
 }
