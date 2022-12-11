@@ -65,7 +65,7 @@ std::string KNN::getClassification(std::vector<double> v1) {
     this->run(v1);
     std::vector<std::string> KNearestClassifications = this->getProcessedClassification();
     if(KNearestClassifications.empty()){
-        return "no classification found, bad input";
+        return "no classification found,\nnon of the neighbors vectors dimensions match given input vector";
     };
     std::map<std::string, int> classifications;
         for (std::string classification: KNearestClassifications) {
