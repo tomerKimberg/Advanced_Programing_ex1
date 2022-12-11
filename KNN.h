@@ -112,6 +112,8 @@ private:
 
     //vector of distance and data object that stores a computed distance and a dataVector associated with it
     std::vector<distanceAndData> processedData;
+    //store all vectors and classifications for vectors that don't match the given vectors dimension
+    std::vector<std::pair<std::vector<double>, std::vector<std::string>>> mismatches;
 
     //private functions-
     /**
@@ -131,12 +133,20 @@ private:
         //iterate over all neighbors in the map
         for(std::map<std::vector<double>, std::vector<std::string>>::iterator iter = this->neighbors.begin();
             iter != this->neighbors.end(); ++iter)
-        {
-            std::vector<double> v2 =  iter->first;
+        if(v1.size() == iter->first.size()) {
+            //check distance if vectors have the same dimensions
+            std::vector<double> v2 = iter->first;
             //compute distance from v1 for every v2
-            double distance = this->distanceCalculatorMetric->calculateDistance(v1,v2);
+            double distance = this->distanceCalculatorMetric->calculateDistance(v1, v2);
             //update the processedData
             this->updateProcessedData(distance, const_cast<std::vector<double> *>(&(iter->first)), &iter->second);
+        }
+
+        else{
+            //store all vectors with mismatch to v1 dimension
+            this->mismatches.push_back(
+                    std::pair<std::vector<double>,std::vector<std::string>>(iter->first,iter->second));
+            continue;
         }
 
         //use select(K) algorithm to reorganize all element around the k'th smallest element in the vector
@@ -215,6 +225,11 @@ public:
      */
     int getK();
     std::map<std::vector<double>, std::vector<std::string>> getNeighbors();
+    /**
+     * get the vectors that there dimension doesn't match input vector dimension
+     * @return vector of a pair, that stores the vector<double> and its classifications
+     */
+    std::vector<std::pair<std::vector<double>, std::vector<std::string>>> getMismaches();
     /**
      * get the classification cording to the k nearest neighbors
      * @param v1 vector to get classification for

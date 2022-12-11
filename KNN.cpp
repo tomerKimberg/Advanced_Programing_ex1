@@ -51,6 +51,10 @@ std::map<std::vector<double>, std::vector<std::string>> KNN::getNeighbors() {
     return this->neighbors;
 }
 
+std::vector<std::pair<std::vector<double>, std::vector<std::string>>> KNN::getMismaches() {
+    return std::vector<std::pair<std::vector<double>, std::vector<std::string>>>();
+}
+
 
 std::vector<std::vector<double>> KNN::getKNearestNeighbors(std::vector<double> v1) {
     this->run(v1);
@@ -60,6 +64,9 @@ std::vector<std::vector<double>> KNN::getKNearestNeighbors(std::vector<double> v
 std::string KNN::getClassification(std::vector<double> v1) {
     this->run(v1);
     std::vector<std::string> KNearestClassifications = this->getProcessedClassification();
+    if(KNearestClassifications.empty()){
+        return "no classification found, bad input";
+    };
     std::map<std::string, int> classifications;
         for (std::string classification: KNearestClassifications) {
             std::map<std::string, int>::iterator it = classifications.find(classification);
@@ -80,3 +87,5 @@ std::string KNN::getClassification(std::vector<double> v1) {
     }
     return classification;
 }
+
+
