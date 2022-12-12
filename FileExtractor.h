@@ -18,6 +18,7 @@ public:
     void setPath(std::string newPath);
     std::string getData() override;
     bool hasNext() override;
+    bool fail() override;
 };
 
 

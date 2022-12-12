@@ -17,6 +17,7 @@ public:
     virtual DataExtractor* copy() = 0;
     virtual std::string getData() = 0;
     virtual bool hasNext() = 0;
+    virtual bool fail() = 0;
 };
 
 
