@@ -6,10 +6,12 @@
 #define TARGIL1_FILEEXTRACTOR_H
 #include "DataExtractor.h"
 #include <iostream>
+#include <fstream>
 
 class FileExtractor: public DataExtractor{
 private:
     std::string path;
+    std::ifstream fileStream;
 public:
     FileExtractor(std::string path);
     ~FileExtractor() override;
