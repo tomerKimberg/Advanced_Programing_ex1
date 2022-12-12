@@ -7,6 +7,7 @@
 #include "vector_validation.h"
 #include "distance_algorithms.h"
 #include "headerDistanceCalculators.h"
+#include "KNN.h"
 
 #define NUMBER_OF_VECTORS 2
 #define MINKOWSKI_P_VALUE 2
@@ -103,6 +104,31 @@ ChebyshevDistanceCalculator ch1;
 int main()
 {
 
-    run();
+    std::map<std::vector<double>, std::vector<std::string>> neighbors;
+
+    std::vector<double> d1 = {1,3};//
+    std::vector<double> d2 = {3,1};//
+    std::vector<double> d3 = {11.5,2.4};//
+    std::vector<double> d4 = {11,2};//
+    std::vector<double> d5 = {1,22};//
+    std::vector<double> d6 = {1,23};//
+    std::vector<std::string> calsifiaction1 = {"d"};
+    std::vector<std::string> calsifiaction2 = {"f"};
+    neighbors.insert({d1,calsifiaction1});
+    neighbors.insert({d2,calsifiaction2});
+    neighbors.insert({d3,calsifiaction2});
+    neighbors.insert({d4,calsifiaction1});
+    neighbors.insert({d5,calsifiaction2});
+    neighbors.insert({d6,calsifiaction2});
+
+
+    KNN k(neighbors,"s", 3);
+    std::string classofocation = k.getClassification(std::vector<double>{0});
+    std::cout << classofocation << std::endl;
+    std::vector<std::vector<double>> kNearsNeighbors = k.getKNearestNeighbors(std::vector<double>{0});
+    for(std::vector<double> v : kNearsNeighbors){
+        printVector(v);
+    }
+    //run();
 
 }
