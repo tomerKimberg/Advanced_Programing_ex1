@@ -113,6 +113,7 @@ int main()
     DataExtractor* extractor = &fileExtractor;
     
 
+    delete extractor;
     std::map<std::vector<double>, std::vector<std::string>> neighbors;
 
     std::vector<double> d1 = {1,3};//
