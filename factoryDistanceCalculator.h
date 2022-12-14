@@ -8,6 +8,12 @@
 
 #include "headerDistanceCalculators.h"
 
+#define CANBERRA_METRIC_SYMBOL "CAN"
+#define CHEBYSHEV_METRIC_SYMBOL "CHB"
+#define EUCLIDEAN_METRIC_SYMBOL "AUC"
+#define MANHATTAN_METRIC_SYMBOL "MAN"
+#define MINKOWSKI_METRIC_SYMBOL "MIN"
+
 class factoryDistanceCalculator {
 private:
     //think about attribues needed for the factoryDistanceCalculator
