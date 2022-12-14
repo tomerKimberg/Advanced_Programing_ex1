@@ -127,12 +127,13 @@ private:
     /**
      * for all the data inside the neighbors map, calculate distance and update the processedData accordingly
      * @param v1 the vector to get its k-nearest neighbors
+     * @return wether run was succesful or not
      */
-    void run(std::vector<double> v1){
+    bool run(std::vector<double> v1){
         //check if metric is null
         if(nullptr == this->distanceCalculatorMetric){
-            std::cout << "You tried to run the KNN but an invalid distance metric was passed" << std::endl;
-            return;
+            std::cout << "We tried to run the KNN but couldn't determine a distance function" << std::endl;
+            return false;
         }
         this->processedData.clear();
         //iterate over all neighbors in the map
@@ -238,13 +239,13 @@ public:
     /**
      * get the classification cording to the k nearest neighbors
      * @param v1 vector to get classification for
-     * @return string name of classification
+     * @return string name of classification, nullptr if an error occurred
      */
     std::string getClassification(std::vector<double> v1);
     /**
      * get the k nearest neighbors
      * @param v1 vector to get its k nearest neighbors
-     * @return vector<vector<double>>
+     * @return vector<vector<double>>, empty if an error occurred
      */
     std::vector<std::vector<double>> getKNearestNeighbors(std::vector<double> v1);
 
