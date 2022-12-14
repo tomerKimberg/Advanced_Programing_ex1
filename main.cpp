@@ -8,12 +8,17 @@
 #include "distance_algorithms.h"
 #include "headerDistanceCalculators.h"
 #include "KNN.h"
+#include "DataExtractor.h"
+#include "FileExtractor.h"
 
 #define NUMBER_OF_VECTORS 2
 #define MINKOWSKI_P_VALUE 2
 #define INTEGER_REQUESTED_PRECISION 1
 #define FLOAT_REQUESTED_PRECISION 16
 #define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
+//TEMPORARY
+#define PATH "datasets/wine/wine_UnClassified.csv"
+//TEMPOERARY
 
 /**
  * create a new vector, if input is invalid set valid_input to false
@@ -103,7 +108,12 @@ ChebyshevDistanceCalculator ch1;
 
 int main()
 {
+    //create an DataExtractor pointer using FileExtractor
+    FileExtractor fileExtractor(PATH);
+    DataExtractor* extractor = &fileExtractor;
+    
 
+    delete extractor;
     std::map<std::vector<double>, std::vector<std::string>> neighbors;
 
     std::vector<double> d1 = {1,3};//
