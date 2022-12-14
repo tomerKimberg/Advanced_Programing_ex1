@@ -12,6 +12,7 @@
 #include "FileExtractor.h"
 
 #define NUMBER_OF_VECTORS 2
+#define NUMBER_OF_ARGUMENTS 4
 #define MINKOWSKI_P_VALUE 2
 #define INTEGER_REQUESTED_PRECISION 1
 #define FLOAT_REQUESTED_PRECISION 16
@@ -19,6 +20,47 @@
 //TEMPORARY
 #define PATH "./datasets/wine/wine_UnClassified.csv"
 //TEMPOERARY
+
+/*
+input: vector<double>
+output: none
+this function prints the vector with spaces between the values
+*/
+template <class T>
+void printVector(const std::vector<T> vectorToPrint)
+{
+    for (T d: vectorToPrint)
+    {
+        std::cout << d << " ";
+    }
+    std::cout << std::endl;
+}
+/**
+ * @param int argc, amount of the program arguments
+ * @param char** argv - the arguments values
+ * @return bool - wether the arguments are valid or not
+*/
+bool validArgs(int argc, char** argv){
+    if(NUMBER_OF_ARGUMENTS != argc){
+        std::cout << "wrong amount of arguments were passed to the program." << std:: endl;
+        return false;
+    }
+    int k = std::stoi(argv[1]);
+    if(k <= 0){
+        std::cout << "bad K parameter, needs to be a positive integer" << std:: endl;
+        return false;
+    }
+    std::string metric = argv[3];
+    std::vector<std::string> VALID_METRICS = {"CAN","CHB","AUC","MAN","MIN"};
+    auto metricInVector = std::find(VALID_METRICS.begin(), VALID_METRICS.end(), metric);
+    if(metricInVector == VALID_METRICS.end()){
+        std::cout << "bad metric parameter, needs to be a part of the list:" << std:: endl;
+        printVector<std::string>(VALID_METRICS);
+        return false;
+    }
+
+    return true;
+}
 
 /**
  * create a new vector, if input is invalid set valid_input to false
@@ -42,19 +84,6 @@ std::vector<double> vectorFromString(std::string line, bool& valid_input)
         }
     }
     return inputVector;   
-}
-/*
-input: vector<double>
-output: none
-this function prints the vector with spaces between the values
-*/
-void printVector(const std::vector<double> vectorToPrint)
-{
-    for (double d: vectorToPrint)
-    {
-        std::cout << d << " ";
-    }
-    std::cout << std::endl;
 }
 /**
  * print integers and floats with the requested precision
@@ -106,8 +135,12 @@ ChebyshevDistanceCalculator ch1;
     printDistance(mi1.calculateDistance(inputVectors[0],inputVectors[1]));
 }
 
-int main()
+int main(int argc, char** argv)
 {
+    if(!validArgs(argc, argv)){
+        std::cout << "bad argument, exiting" << std::endl;
+        return 1;
+    }
     //create an DataExtractor pointer using FileExtractor
     FileExtractor fileExtractor(PATH);
     DataExtractor* extractor = &fileExtractor;
@@ -137,7 +170,7 @@ int main()
     std::cout << classofocation << std::endl;
     std::vector<std::vector<double>> kNearsNeighbors = k.getKNearestNeighbors(std::vector<double>{0});
     for(std::vector<double> v : kNearsNeighbors){
-        printVector(v);
+        printVector<double>(v);
     }
     //run();
 
