@@ -240,7 +240,7 @@ public:
     /**
      * get the classification cording to the k nearest neighbors
      * @param v1 vector to get classification for
-     * @return string name of classification, nullptr if an error occurred
+     * @return string name of classification, "" if an error occurred
      */
     std::string getClassification(std::vector<double> v1);
     /**
