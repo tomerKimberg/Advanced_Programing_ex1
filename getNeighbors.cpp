@@ -5,7 +5,7 @@
 #include <sstream>
 #include "getNeighbors.h"
 
-#define GET_NEIGHBORS_DEBUG 1
+#define GET_NEIGHBORS_DEBUG 0
 
 getNeighbors::getNeighbors(DataExtractor *de){
     this->dataExtractor = nullptr;
