@@ -28,7 +28,7 @@ void KNN::setK(int k) {
 
 void KNN::setMetric(std::string metric) {
 
-    //delete this->distanceCalculatorMetric;
+    delete this->distanceCalculatorMetric;
     this->distanceCalculatorMetric = this->FDC.createDistanceCalculator(metric);
 }
 
@@ -57,12 +57,16 @@ std::vector<std::pair<std::vector<double>, std::vector<std::string>>> KNN::getMi
 
 
 std::vector<std::vector<double>> KNN::getKNearestNeighbors(std::vector<double> v1) {
-    this->run(v1);
+    if(!this->run(v1)){
+        return std::vector<std::vector<double>>();
+    }
     return this->getProcessedVectorData();
 }
 
 std::string KNN::getClassification(std::vector<double> v1) {
-    this->run(v1);
+    if(!this->run(v1)){
+        return nullptr;
+    }
     std::vector<std::string> KNearestClassifications = this->getProcessedClassification();
     if(KNearestClassifications.empty()){
         return "no classification found,\nnon of the neighbors vectors dimensions match given input vector";
