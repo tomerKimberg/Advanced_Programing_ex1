@@ -28,7 +28,7 @@ void KNN::setK(int k) {
 
 void KNN::setMetric(std::string metric) {
 
-    //delete this->distanceCalculatorMetric;
+    delete this->distanceCalculatorMetric;
     this->distanceCalculatorMetric = this->FDC.createDistanceCalculator(metric);
 }
 
