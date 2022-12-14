@@ -17,7 +17,7 @@
 #define FLOAT_REQUESTED_PRECISION 16
 #define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
 //TEMPORARY
-#define PATH "datasets/wine/wine_UnClassified.csv"
+#define PATH "./datasets/wine/wine_UnClassified.csv"
 //TEMPOERARY
 
 /**
