@@ -5,6 +5,8 @@
 #include <sstream>
 #include "getNeighbors.h"
 
+#define GET_NEIGHBORS_DEBUG 1
+
 getNeighbors::getNeighbors(DataExtractor *de){
     this->dataExtractor = nullptr;
     this->setDataExtractor(de);
@@ -43,12 +45,24 @@ std::map<std::vector<double>, std::vector<std::string>> getMapFromVectorString(s
     std::vector<std::string> classifications;
     while(stringstream >> calssification)
     {
+        char nextCharInStream = stringstream.peek();
+        while(nextCharInStream != ',' && nextCharInStream != '\n' && !stringstream.eof()){
+            std::string nextWord = "";
+            stringstream >> nextWord;
+            calssification += " ";
+            calssification += nextWord;
+            nextCharInStream = stringstream.peek();
+        }
         classifications.push_back(calssification);
         //remove the ',' from the string
         char comma[1];
         stringstream.read(comma, 1);
     }
     std::map<std::vector<double>, std::vector<std::string>> tempMap;
+    if(GET_NEIGHBORS_DEBUG){
+        std::cout << "there are " << values.size() << " numeric values and there are ";
+        std::cout << classifications.size() << " string values in map" << std::endl;
+    }
     tempMap.insert({values, classifications});
     return tempMap;
 }
