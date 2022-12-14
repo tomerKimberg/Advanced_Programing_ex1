@@ -129,6 +129,11 @@ private:
      * @param v1 the vector to get its k-nearest neighbors
      */
     void run(std::vector<double> v1){
+        //check if metric is null
+        if(nullptr == this->distanceCalculatorMetric){
+            std::cout << "You tried to run the KNN but an invalid distance metric was passed" << std::endl;
+            return;
+        }
         this->processedData.clear();
         //iterate over all neighbors in the map
         for(std::map<std::vector<double>, std::vector<std::string>>::iterator iter = this->neighbors.begin();
