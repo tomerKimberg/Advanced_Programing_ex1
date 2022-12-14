@@ -59,7 +59,7 @@ std::map<std::vector<double>, std::vector<std::string>> getNeighbors::getNeighbo
     while(this->dataExtractor->hasNext()) {
         std::string vectorString = dataExtractor->getData();
         std::map<std::vector<double>, std::vector<std::string>> tempMap = getMapFromVectorString(vectorString);
-        for (auto const& x : tempMap)
+        for (std::pair<std::vector<double>, std::vector<std::string>> const& x : tempMap)
         {
             neighbors.insert({x.first, x.second});
         }
