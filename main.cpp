@@ -20,6 +20,20 @@
 #define PATH "./datasets/wine/wine_UnClassified.csv"
 //TEMPOERARY
 
+/*
+input: vector<double>
+output: none
+this function prints the vector with spaces between the values
+*/
+template <class T>
+void printVector(const std::vector<T> vectorToPrint)
+{
+    for (T d: vectorToPrint)
+    {
+        std::cout << d << " ";
+    }
+    std::cout << std::endl;
+}
 /**
  * create a new vector, if input is invalid set valid_input to false
  * @param std::string line
@@ -42,19 +56,6 @@ std::vector<double> vectorFromString(std::string line, bool& valid_input)
         }
     }
     return inputVector;   
-}
-/*
-input: vector<double>
-output: none
-this function prints the vector with spaces between the values
-*/
-void printVector(const std::vector<double> vectorToPrint)
-{
-    for (double d: vectorToPrint)
-    {
-        std::cout << d << " ";
-    }
-    std::cout << std::endl;
 }
 /**
  * print integers and floats with the requested precision
@@ -137,7 +138,7 @@ int main()
     std::cout << classofocation << std::endl;
     std::vector<std::vector<double>> kNearsNeighbors = k.getKNearestNeighbors(std::vector<double>{0});
     for(std::vector<double> v : kNearsNeighbors){
-        printVector(v);
+        printVector<double>(v);
     }
     //run();
 
