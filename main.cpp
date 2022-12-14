@@ -8,6 +8,7 @@
 #include "distance_algorithms.h"
 #include "headerDistanceCalculators.h"
 #include "KNN.h"
+#include "getNeighbors.h"
 #include "DataExtractor.h"
 #include "FileExtractor.h"
 
@@ -148,31 +149,14 @@ int main(int argc, char** argv)
     //create an DataExtractor pointer using FileExtractor
     FileExtractor fileExtractor(path);
     DataExtractor* extractor = &fileExtractor;
-    
 
-    delete extractor;
-    std::map<std::vector<double>, std::vector<std::string>> neighbors;
-
-    std::vector<double> d1 = {1,3};//
-    std::vector<double> d2 = {3,1};//
-    std::vector<double> d3 = {11.5,2.4};//
-    std::vector<double> d4 = {11,2};//
-    std::vector<double> d5 = {1,22};//
-    std::vector<double> d6 = {1,23};//
-    std::vector<std::string> calsifiaction1 = {"d"};
-    std::vector<std::string> calsifiaction2 = {"f"};
-    neighbors.insert({d1,calsifiaction1});
-    neighbors.insert({d2,calsifiaction2});
-    neighbors.insert({d3,calsifiaction2});
-    neighbors.insert({d4,calsifiaction1});
-    neighbors.insert({d5,calsifiaction2});
-    neighbors.insert({d6,calsifiaction2});
-
+    getNeighbors get(extractor);       
+    std::map<std::vector<double>, std::vector<std::string>> neighbors = get.getNeighborsInMap();
 
     KNN knn(neighbors, metric, neighborsNum);
-    std::string classofocation = knn.getClassification(std::vector<double>{0});
+    std::string classofocation = knn.getClassification(std::vector<double>{13.88,1.89,2.59,15,101,3.25,3.56,.17,1.7,5.43,.88,3.56,1095});
     std::cout << classofocation << std::endl;
-    std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(std::vector<double>{0});
+    std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(std::vector<double>{13.88,1.89,2.59,15,101,3.25,3.56,.17,1.7,5.43,.88,3.56,1095});
     for(std::vector<double> v : kNearsNeighbors){
         printVector<double>(v);
     }
