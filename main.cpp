@@ -141,8 +141,12 @@ int main(int argc, char** argv)
         std::cout << "bad argument, exiting" << std::endl;
         return 1;
     }
+    int neighborsNum = std::stoi(argv[1]);
+    std::string path = argv[2];
+    std::string metric = argv[3];
+
     //create an DataExtractor pointer using FileExtractor
-    FileExtractor fileExtractor(PATH);
+    FileExtractor fileExtractor(path);
     DataExtractor* extractor = &fileExtractor;
     
 
@@ -165,10 +169,10 @@ int main(int argc, char** argv)
     neighbors.insert({d6,calsifiaction2});
 
 
-    KNN k(neighbors,"s", 3);
-    std::string classofocation = k.getClassification(std::vector<double>{0});
+    KNN knn(neighbors, metric, neighborsNum);
+    std::string classofocation = knn.getClassification(std::vector<double>{0});
     std::cout << classofocation << std::endl;
-    std::vector<std::vector<double>> kNearsNeighbors = k.getKNearestNeighbors(std::vector<double>{0});
+    std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(std::vector<double>{0});
     for(std::vector<double> v : kNearsNeighbors){
         printVector<double>(v);
     }
