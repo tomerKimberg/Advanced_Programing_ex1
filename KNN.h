@@ -158,6 +158,7 @@ private:
         //use select(K) algorithm to reorganize all element around the k'th smallest element in the vector
         std::nth_element(this->processedData.begin(), (this->processedData.begin() + (this->k-1)),
                 this->processedData.end());
+        return true;
     }
     /**
      * get k nearest vectors<double>
