@@ -65,7 +65,7 @@ std::vector<std::vector<double>> KNN::getKNearestNeighbors(std::vector<double> v
 
 std::string KNN::getClassification(std::vector<double> v1) {
     if(!this->run(v1)){
-        return nullptr;
+        return "";
     }
     std::vector<std::string> KNearestClassifications = this->getProcessedClassification();
     if(KNearestClassifications.empty()){
