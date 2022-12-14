@@ -14,7 +14,7 @@ distanceCalculator* factoryDistanceCalculator::createDistanceCalculator(std::str
     } else if(metric == "MIN"){
         return new MinkowskiDistanceCalculator;
     }
-    //if non of the strings math, return -1
+    //if non of the strings match, return nullptr
     return nullptr;
 
 }
