@@ -86,19 +86,6 @@ std::vector<double> vectorFromString(std::string line, bool& valid_input)
     }
     return inputVector;   
 }
-/**
- * print integers and floats with the requested precision
- * @param distance the distance to be printed
- */
-void printDistance(double distance){
-    int percision = INTEGER_REQUESTED_PRECISION;
-    if(distance != floor(distance)){
-        percision = FLOAT_REQUESTED_PRECISION;
-    }
-    std::fixed(std::cout);
-    std::cout.precision(percision);
-    std::cout << distance << std::endl;
-}
 
 int main(int argc, char** argv)
 {
