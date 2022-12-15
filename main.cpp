@@ -99,42 +99,6 @@ void printDistance(double distance){
     std::cout.precision(percision);
     std::cout << distance << std::endl;
 }
-/**
- * takes two lines of input, creates vectors from them and prints the distance between the vectors in 5 different ways
- */
-void run(){
-
-///
-
-CanberraDistanceCalculator ca1;
-MinkowskiDistanceCalculator mi1(MINKOWSKI_P_VALUE);
-ManhattanDistanceCalculator ma;
-EuclideanDistanceCalculator e1;
-ChebyshevDistanceCalculator ch1;
-
-////
-    std::string line = "";
-    std::vector<double> inputVectors[2];
-    bool valid_input = true;
-    for(int i = 0; i < NUMBER_OF_VECTORS; i++){
-        std::getline(std::cin, line);
-        inputVectors[i] = vectorFromString(line, valid_input);
-    }
-    if(!vector_validation(inputVectors[0], inputVectors[1]) || !valid_input){
-        std::cout << BAD_INPUT_MESSAGE << std::endl;
-        return;
-    }
-    //printDistance(Euclidean_distance(inputVectors[0], inputVectors[1]));
-    printDistance(e1.calculateDistance(inputVectors[0],inputVectors[1]));
-    //printDistance(Manhattan_distance(inputVectors[0], inputVectors[1]));
-    printDistance(ma.calculateDistance(inputVectors[0], inputVectors[1]));
-    //printDistance(Chebyshev_distance(inputVectors[0], inputVectors[1]));
-    printDistance(ch1.calculateDistance(inputVectors[0], inputVectors[1]));
-    //printDistance(Canberra_distance(inputVectors[0], inputVectors[1]));
-    printDistance(ca1.calculateDistance(inputVectors[0], inputVectors[1]));
-    //printDistance(Minkowski_distance(inputVectors[0], inputVectors[1], MINKOWSKI_P_VALUE));
-    printDistance(mi1.calculateDistance(inputVectors[0],inputVectors[1]));
-}
 
 int main(int argc, char** argv)
 {
@@ -160,6 +124,4 @@ int main(int argc, char** argv)
     for(std::vector<double> v : kNearsNeighbors){
         printVector<double>(v);
     }
-    //run();
-
 }
