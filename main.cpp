@@ -20,8 +20,8 @@
 #define ARGS_VARIABLE_METRIC 3
 #define INTEGER_REQUESTED_PRECISION 1
 #define FLOAT_REQUESTED_PRECISION 16
-#define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
-
+#define INPUT_BAD_MESSAGE "You entered an invalid input, please try to run the program again."
+#define ARGS_BAD_MESSAGE "Bad arguments, exiting."
 /*
 input: vector<double>
 output: none
@@ -91,7 +91,7 @@ int main(int argc, char** argv)
 {
     //check program arguments
     if(!validArgs(argc, argv)){
-        std::cout << "bad argument, exiting" << std::endl;
+        std::cout << ARGS_BAD_MESSAGE << std::endl;
         return 1;
     }
     int neighborsNum = std::stoi(argv[ARGS_VARIABLE_K]);
@@ -114,7 +114,7 @@ int main(int argc, char** argv)
         inputVectors[i] = vectorFromString(line, valid_input);
     }
     if(!valid_input){
-        std::cout << BAD_INPUT_MESSAGE << std::endl;
+        std::cout << INPUT_BAD_MESSAGE << std::endl;
         return 1;
     }
     //create a KNN object, and get the classification of the input vector
