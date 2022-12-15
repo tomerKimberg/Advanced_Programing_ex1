@@ -123,4 +123,5 @@ int main(int argc, char** argv)
     for(std::vector<double> v : kNearsNeighbors){
         printVector<double>(v);
     }
+    return 0;
 }
