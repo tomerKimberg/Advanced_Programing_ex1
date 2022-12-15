@@ -119,8 +119,8 @@ int main(int argc, char** argv)
     }
     //create a KNN object, and get the classification of the input vector
     KNN knn(neighbors, metric, neighborsNum);
-    std::string classofocation = knn.getClassification(inputVectors[0]);
-    std::cout << classofocation << std::endl;
+    std::string classification = knn.getClassification(inputVectors[0]);
+    std::cout << classification << std::endl;
     std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(inputVectors[0]);
     for(std::vector<double> v : kNearsNeighbors){
         printVector<double>(v);
