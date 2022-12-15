@@ -89,6 +89,7 @@ std::vector<double> vectorFromString(std::string line, bool& valid_input)
 
 int main(int argc, char** argv)
 {
+    //check program arguments
     if(!validArgs(argc, argv)){
         std::cout << "bad argument, exiting" << std::endl;
         return 1;
@@ -96,14 +97,15 @@ int main(int argc, char** argv)
     int neighborsNum = std::stoi(argv[ARGS_VARIABLE_K]);
     std::string path = argv[ARGS_VARIABLE_PATH];
     std::string metric = argv[ARGS_VARIABLE_METRIC];
-
+    
     //create an DataExtractor pointer using FileExtractor
     FileExtractor fileExtractor(path);
     DataExtractor* extractor = &fileExtractor;
-
+    //create neighbors from the data of our file
     getNeighbors get(extractor);       
     std::map<std::vector<double>, std::vector<std::string>> neighbors = get.getNeighborsInMap();
     
+    //get a vector from the user
     std::string line = "";
     std::vector<double> inputVectors[NUMBER_OF_VECTORS];
     bool valid_input = true;
@@ -115,7 +117,7 @@ int main(int argc, char** argv)
         std::cout << BAD_INPUT_MESSAGE << std::endl;
         return 1;
     }
-
+    //create a KNN object, and get the classification of the input vector
     KNN knn(neighbors, metric, neighborsNum);
     std::string classofocation = knn.getClassification(inputVectors[0]);
     std::cout << classofocation << std::endl;
