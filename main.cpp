@@ -15,6 +15,9 @@
 #define NUMBER_OF_VECTORS 1
 #define NUMBER_OF_ARGUMENTS 4
 #define MINKOWSKI_P_VALUE 2
+#define ARGS_VARIABLE_K 1
+#define ARGS_VARIABLE_PATH 2
+#define ARGS_VARIABLE_METRIC 3
 #define INTEGER_REQUESTED_PRECISION 1
 #define FLOAT_REQUESTED_PRECISION 16
 #define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
@@ -46,12 +49,12 @@ bool validArgs(int argc, char** argv){
         std::cout << "wrong amount of arguments were passed to the program." << std:: endl;
         return false;
     }
-    int k = std::stoi(argv[1]);
+    int k = std::stoi(argv[ARGS_VARIABLE_K]);
     if(k <= 0){
         std::cout << "bad K parameter, needs to be a positive integer" << std:: endl;
         return false;
     }
-    std::string metric = argv[3];
+    std::string metric = argv[ARGS_VARIABLE_METRIC];
     std::vector<std::string> VALID_METRICS = {"CAN","CHB","AUC","MAN","MIN"};
     auto metricInVector = std::find(VALID_METRICS.begin(), VALID_METRICS.end(), metric);
     if(metricInVector == VALID_METRICS.end()){
@@ -93,9 +96,9 @@ int main(int argc, char** argv)
         std::cout << "bad argument, exiting" << std::endl;
         return 1;
     }
-    int neighborsNum = std::stoi(argv[1]);
-    std::string path = argv[2];
-    std::string metric = argv[3];
+    int neighborsNum = std::stoi(argv[ARGS_VARIABLE_K]);
+    std::string path = argv[ARGS_VARIABLE_PATH];
+    std::string metric = argv[ARGS_VARIABLE_METRIC];
 
     //create an DataExtractor pointer using FileExtractor
     FileExtractor fileExtractor(path);
