@@ -22,6 +22,7 @@
 #define FLOAT_REQUESTED_PRECISION 16
 #define INPUT_BAD_MESSAGE "You entered an invalid input, please try to run the program again."
 #define ARGS_BAD_MESSAGE "Bad arguments, exiting."
+#define MAIN_DEBUG 0
 /*
 input: vector<double>
 output: none
@@ -121,9 +122,11 @@ int main(int argc, char** argv)
     KNN knn(neighbors, metric, neighborsNum);
     std::string classification = knn.getClassification(inputVectors[0]);
     std::cout << classification << std::endl;
-    std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(inputVectors[0]);
-    for(std::vector<double> v : kNearsNeighbors){
-        printVector<double>(v);
+    if(MAIN_DEBUG){
+        std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(inputVectors[0]);
+        for(std::vector<double> v : kNearsNeighbors){
+            printVector<double>(v);
+        }
     }
     return 0;
 }
