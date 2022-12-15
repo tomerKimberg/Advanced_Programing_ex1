@@ -12,7 +12,7 @@
 #include "DataExtractor.h"
 #include "FileExtractor.h"
 
-#define NUMBER_OF_VECTORS 2
+#define NUMBER_OF_VECTORS 1
 #define NUMBER_OF_ARGUMENTS 4
 #define MINKOWSKI_P_VALUE 2
 #define INTEGER_REQUESTED_PRECISION 1
@@ -116,11 +116,23 @@ int main(int argc, char** argv)
 
     getNeighbors get(extractor);       
     std::map<std::vector<double>, std::vector<std::string>> neighbors = get.getNeighborsInMap();
+    
+    std::string line = "";
+    std::vector<double> inputVectors[NUMBER_OF_VECTORS];
+    bool valid_input = true;
+    for(int i = 0; i < NUMBER_OF_VECTORS; i++){
+        std::getline(std::cin, line);
+        inputVectors[i] = vectorFromString(line, valid_input);
+    }
+    if(!valid_input){
+        std::cout << BAD_INPUT_MESSAGE << std::endl;
+        return 1;
+    }
 
     KNN knn(neighbors, metric, neighborsNum);
-    std::string classofocation = knn.getClassification(std::vector<double>{13.88,1.89,2.59,15,101,3.25,3.56,.17,1.7,5.43,.88,3.56,1095});
+    std::string classofocation = knn.getClassification(inputVectors[0]);
     std::cout << classofocation << std::endl;
-    std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(std::vector<double>{13.88,1.89,2.59,15,101,3.25,3.56,.17,1.7,5.43,.88,3.56,1095});
+    std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(inputVectors[0]);
     for(std::vector<double> v : kNearsNeighbors){
         printVector<double>(v);
     }
