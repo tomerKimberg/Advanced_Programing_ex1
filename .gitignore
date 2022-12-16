@@ -4,3 +4,4 @@
 *.out
 CMakeLists
 datasets/
+makefile-alternative
