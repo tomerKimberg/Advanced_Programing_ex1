@@ -8,14 +8,14 @@
 #include <map>
 #include <set>
 #include <algorithm>
-#include "factoryDistanceCalculator.h"
+#include "FactoryDistanceCalculator.h"
 class KNN {
 private:
     int k;
     std::string metric;
     DistanceCalculator* distanceCalculatorMetric;
     std::map<std::vector<double>, std::vector<std::string>> neighbors;
-    factoryDistanceCalculator FDC;
+    FactoryDistanceCalculator FDC;
     /**
      * inner class used to store a distance and the associated data with it
      */

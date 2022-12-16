@@ -14,9 +14,9 @@
 #define MANHATTAN_METRIC_SYMBOL "MAN"
 #define MINKOWSKI_METRIC_SYMBOL "MIN"
 
-class factoryDistanceCalculator {
+class FactoryDistanceCalculator {
 private:
-    //think about attribues needed for the factoryDistanceCalculator
+    //think about attribues needed for the FactoryDistanceCalculator
 public:
     // pointer to distanceCalculator
     DistanceCalculator* createDistanceCalculator(std::string metric);
