@@ -35,6 +35,7 @@ bool checkRealNumber(std::string string){
     for(int i = 0; i < stringLen ; i++){
 		char currentChar = string.at(i);
         if(std::isdigit(currentChar) || (isE(currentChar) && !eFlag)){
+			//turn on E flag
 			if(isE(currentChar)){
 				eFlag = true;
 			}
@@ -45,7 +46,7 @@ bool checkRealNumber(std::string string){
             pointFlag = true;
             continue;
         }
-        //'-' can only show up once, and on the start of the string
+        //'-' can only show up at the start of the string or after E symbol
         if(string.at(i) == '-'  && ((!signFlag && i == 0) || (i > 0 && isE(string.at(i-1))))){
             signFlag = true;
             continue;
