@@ -1,29 +1,51 @@
-**program discription-**
-This program computes the distance between two vectors (which are recived by the user) based on 5 diffrent distance algorithms:
+
+# **Program description-**
+---
+
+This program classifies a given vector using the KNN algorithm, a databe from a CSV file and a distance metric.
+
+### What is KNN?
+KNN is an artificail intelligence algorithm used to classify a given vector.
+KNN recieves a dataset of vectors and classfications, and an unclassified vector.
+KNN finds the closes K vectors to the given vector, and returns the most common classification among those closest "neighbors".
+
+### How is the distance measured?
+
+Our program offers 5 different distance algorithms for the user to choose from:
 1. Manhattan distance
 2. Euclidean distance
 3. Minkowski distance (we used 2 as the P constant)
 4. Chebyshev distance
 5. Canberra distance
 
-Being that all the algorithms require some shared operations, we have created a file containing vector functions that are used by most algorithms.
-we have defined the following functions:
-vectorSum- sum all the element of a vector.
-vectorMax- return the max value of all the elements of the vector.
-vectorPow- compute for every element of the vector, its value to the power of a given value.
-vectorSubtraction- for every matching indexes on two vectors compute the result of subtracting one from the other.
-vectorAbs- for every element of the vector update the value to be the absolute value of itself.
-vectorAddition- for every matching indexes on two vectors compute the result of adding one from the other.
-vectorDivision- for every matching indexes on two vectors compute the result of the divition of one from the other.
+like in the first exercise, most of those algorithms share some operations, so we calculate them using multiple vector operation functions, vectorSum, vectorMax, vectorPow, vectorSubtraction, vectorAbs, vectorAddition and vectorDivision
 
 In order for these opertions to be well defined the following conditions must be met:
 1. Operations on two vectors, compel that the vectors are the same size.
 2. Vectors musn't be empty.
 3. The input must be consisted of real numbers only.
 
-We created a few functions to enforce those conditions, if one of the conditions is not met, an error message will be printed and the program will exit gracefully.
+Our program will try to match the input vector with as much vector from our data that match the above conditions. If not all the conditions are met, including bad program arguments (more on that later), the program will exit gracefully.
 
-**compilation instructions-**
+# **Compilation and running instructions-**
+---
+
+This project includes a makefile, to compile the project, run it with the make command.
 ```
-g++ -std=c++11 *.cpp
+make
+```
+After compilation, a new file called knn will apear, this is the execution file for our program.
+To run the program, we need 3 program arguments:
+1. k - a positive integer to indicate how many neighbors will we consider when determining the classification
+2. path - a full or relative path to a csv source file, for the knn model to have data
+3. metric - one of the following five distance metrics
+	- AUC - for Auclidean distance
+	- MAN - for Manhattan distance
+	- CHB - for Chebyshev distance
+	- CAN - for Canberra distance
+	- MIN - for Monkowski distance (with a constant of 2)
+
+execution example:
+```
+./knn 6 datasets/iris/iris_classified.csv AUC
 ```
