@@ -1,6 +1,5 @@
 
 # **Program description-**
----
 
 This program classifies a given vector using the KNN algorithm, a databe from a CSV file and a distance metric.
 
@@ -28,7 +27,6 @@ In order for these opertions to be well defined the following conditions must be
 Our program will try to match the input vector with as much vector from our data that match the above conditions. If not all the conditions are met, including bad program arguments (more on that later), the program will exit gracefully.
 
 # **Compilation and running instructions-**
----
 
 This project includes a makefile, to compile the project, run it with the make command.
 ```
