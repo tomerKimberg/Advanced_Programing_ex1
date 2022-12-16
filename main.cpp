@@ -8,7 +8,7 @@
 #include "distance_algorithms.h"
 #include "headerDistanceCalculators.h"
 #include "KNN.h"
-#include "getNeighbors.h"
+#include "GetNeighbors.h"
 #include "DataExtractor.h"
 #include "FileExtractor.h"
 
@@ -103,7 +103,7 @@ int main(int argc, char** argv)
     FileExtractor fileExtractor(path);
     DataExtractor* extractor = &fileExtractor;
     //create neighbors from the data of our file
-    getNeighbors get(extractor);       
+    GetNeighbors get(extractor);       
     std::map<std::vector<double>, std::vector<std::string>> neighbors = get.getNeighborsInMap();
     
     //get a vector from the user

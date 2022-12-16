@@ -3,15 +3,15 @@
 //
 #include <vector>
 #include <sstream>
-#include "getNeighbors.h"
+#include "GetNeighbors.h"
 
 #define GET_NEIGHBORS_DEBUG 0
 
-getNeighbors::getNeighbors(DataExtractor *de){
+GetNeighbors::GetNeighbors(DataExtractor *de){
     this->dataExtractor = nullptr;
     this->setDataExtractor(de);
 }
-void getNeighbors::setDataExtractor(DataExtractor *de) {
+void GetNeighbors::setDataExtractor(DataExtractor *de) {
     //keep in case we will change implementation-
     //using this method, the pointer is dependent on the life scope of &de.
     //this->dataExtractor = &de;
@@ -19,7 +19,7 @@ void getNeighbors::setDataExtractor(DataExtractor *de) {
     this->dataExtractor = de->copy();
 }
 
-getNeighbors::~getNeighbors() {
+GetNeighbors::~GetNeighbors() {
     //if setDataExtractor() changes, change this as well
     delete this->dataExtractor;
 }
@@ -67,7 +67,7 @@ std::map<std::vector<double>, std::vector<std::string>> getMapFromVectorString(s
     return tempMap;
 }
 
-std::map<std::vector<double>, std::vector<std::string>> getNeighbors::getNeighborsInMap() {
+std::map<std::vector<double>, std::vector<std::string>> GetNeighbors::getNeighborsInMap() {
     //implementation for debug
     std::map<std::vector<double>, std::vector<std::string>> neighbors;
     while(this->dataExtractor->hasNext()) {
