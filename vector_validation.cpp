@@ -13,7 +13,10 @@ bool input_valid(std::string line)
     const std::regex input_regex("^(?:\\s|\\d|(?:\\d\\.\\d)|(?:\\-\\d)|(?:\\-\\d.\\d))+$");
     return std::regex_match(line, input_regex);
 }
-
+/**
+ * @param char character
+ * @return bool, returns true if the character is e or E, false otherwise
+*/
 bool isE(char character){
 	return (character == 'e' || character == 'E');
 }
