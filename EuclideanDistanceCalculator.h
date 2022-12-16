@@ -4,11 +4,11 @@
 
 #ifndef TARGIL1_EUCLIDEANDISTANCECALCULATOR_H
 #define TARGIL1_EUCLIDEANDISTANCECALCULATOR_H
-#include "distanceCalculator.h"
+#include "DistanceCalculator.h"
 /**
- * a distanceCalculator object using the Euclidean metric
+ * a DistanceCalculator object using the Euclidean metric
  */
-class EuclideanDistanceCalculator: public distanceCalculator{
+class EuclideanDistanceCalculator: public DistanceCalculator{
 public:
     double calculateDistance(std::vector<double> v1, std::vector<double> v2) override;
     ~EuclideanDistanceCalculator();

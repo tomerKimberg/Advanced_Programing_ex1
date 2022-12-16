@@ -1,11 +1,11 @@
 
 #ifndef TARGIL1_MANHATTANDISTANCECALCULATOR_H
 #define TARGIL1_MANHATTANDISTANCECALCULATOR_H
-#include "distanceCalculator.h"
+#include "DistanceCalculator.h"
 /**
- * a distanceCalculator object using the Manhattan metric
+ * a DistanceCalculator object using the Manhattan metric
  */
-class ManhattanDistanceCalculator: public distanceCalculator {
+class ManhattanDistanceCalculator: public DistanceCalculator {
 public:
     double calculateDistance(std::vector<double> v1, std::vector<double> v2) override;
     ~ManhattanDistanceCalculator() override;

@@ -7,9 +7,9 @@
 /*
  * abstract class used to calculate distances between vectors using a  specific metric
  */
-class distanceCalculator {
+class DistanceCalculator {
 public:
-    virtual ~distanceCalculator() = 0;
+    virtual ~DistanceCalculator() = 0;
     /**
      * pure virtual function, to calculate distances between vectors using a  specific metric
      * @param v1 vector<double>
