@@ -1,5 +1,5 @@
 //here only for convention
 
-#include "distanceCalculator.h"
+#include "DistanceCalculator.h"
 
-distanceCalculator::~distanceCalculator() {}
+DistanceCalculator::~DistanceCalculator() {}

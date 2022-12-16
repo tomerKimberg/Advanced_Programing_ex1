@@ -4,7 +4,7 @@
 
 #include "MinkowskiDistanceCalculator.h"
 //constructor
-MinkowskiDistanceCalculator::MinkowskiDistanceCalculator(int p): distanceCalculator(), power(p) {}
+MinkowskiDistanceCalculator::MinkowskiDistanceCalculator(int p): DistanceCalculator(), power(p) {}
 //destructor
 MinkowskiDistanceCalculator::~MinkowskiDistanceCalculator() noexcept {}
 /**

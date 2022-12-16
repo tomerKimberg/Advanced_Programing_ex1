@@ -1,7 +1,7 @@
 #include "factoryDistanceCalculator.h"
 
 
-distanceCalculator* factoryDistanceCalculator::createDistanceCalculator(std::string metric){
+DistanceCalculator* factoryDistanceCalculator::createDistanceCalculator(std::string metric){
 
     if(metric == "CAN"){
         return new CanberraDistanceCalculator;

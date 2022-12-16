@@ -4,7 +4,7 @@
 
 #ifndef TARGIL1_HEADERDISTANCECALCULATORS_H
 #define TARGIL1_HEADERDISTANCECALCULATORS_H
-#include "distanceCalculator.h"
+#include "DistanceCalculator.h"
 
 #include "CanberraDistanceCalculator.h"
 #include "MinkowskiDistanceCalculator.h"

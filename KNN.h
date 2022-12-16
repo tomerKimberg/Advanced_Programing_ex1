@@ -13,7 +13,7 @@ class KNN {
 private:
     int k;
     std::string metric;
-    distanceCalculator* distanceCalculatorMetric;
+    DistanceCalculator* distanceCalculatorMetric;
     std::map<std::vector<double>, std::vector<std::string>> neighbors;
     factoryDistanceCalculator FDC;
     /**

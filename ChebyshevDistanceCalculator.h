@@ -4,11 +4,11 @@
 
 #ifndef TARGIL1_CHEBYSHEVDISTANCECALCULATOR_H
 #define TARGIL1_CHEBYSHEVDISTANCECALCULATOR_H
-#include "distanceCalculator.h"
+#include "DistanceCalculator.h"
 /**
- * a distanceCalculator object using the Chebyshev metric
+ * a DistanceCalculator object using the Chebyshev metric
  */
-class ChebyshevDistanceCalculator: public distanceCalculator {
+class ChebyshevDistanceCalculator: public DistanceCalculator {
 public:
     double calculateDistance(std::vector<double> v1, std::vector<double> v2) override;
     ~ChebyshevDistanceCalculator();
