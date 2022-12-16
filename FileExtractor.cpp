@@ -1,6 +1,6 @@
 
 #include "FileExtractor.h"
-#define FILE_EXTRACTOR_DEBUG 1
+#define FILE_EXTRACTOR_DEBUG 0
 
 
 FileExtractor::FileExtractor(std::string filePath): path(filePath){
