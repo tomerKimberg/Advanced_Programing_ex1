@@ -14,6 +14,10 @@ bool input_valid(std::string line)
     return std::regex_match(line, input_regex);
 }
 
+bool isE(char character){
+	return (character == 'e' || character == 'E');
+}
+
 /**
  * check if a string is a real number
  * @param string
@@ -22,13 +26,18 @@ bool input_valid(std::string line)
 bool checkRealNumber(std::string string){
     bool pointFlag = false;
     bool signFlag = false;
+	bool eFlag = false;
     int stringLen = string.length();
     // '.' can't show up on the first or last char.
     if(string.at(0) == '.' || string.at(stringLen-1) == '.'){
         return false;
     }
     for(int i = 0; i < stringLen ; i++){
-        if(std::isdigit(string.at(i))){
+		char currentChar = string.at(i);
+        if(std::isdigit(currentChar) || (isE(currentChar) && !eFlag)){
+			if(isE(currentChar)){
+				eFlag = true;
+			}
             continue;
         }
         //being that '.' is not the first char, check the char before is digit
@@ -37,7 +46,7 @@ bool checkRealNumber(std::string string){
             continue;
         }
         //'-' can only show up once, and on the start of the string
-        if(string.at(i) == '-'  && !signFlag && i == 0){
+        if(string.at(i) == '-'  && ((!signFlag && i == 0) || (i > 0 && isE(string.at(i-1))))){
             signFlag = true;
             continue;
         }
