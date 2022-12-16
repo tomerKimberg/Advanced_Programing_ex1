@@ -31,10 +31,6 @@ bool checkRealNumber(std::string string){
     bool signFlag = false;
 	bool eFlag = false;
     int stringLen = string.length();
-    // '.' can't show up on the first or last char.
-    if(string.at(0) == '.' || string.at(stringLen-1) == '.'){
-        return false;
-    }
     for(int i = 0; i < stringLen ; i++){
 		char currentChar = string.at(i);
         if(std::isdigit(currentChar) || (isE(currentChar) && !eFlag)){
@@ -45,7 +41,7 @@ bool checkRealNumber(std::string string){
             continue;
         }
         //being that '.' is not the first char, check the char before is digit
-        if(string.at(i) == '.' && !pointFlag && isdigit(string.at(i-1))){
+        if((i == 0) || (string.at(i) == '.' && !pointFlag && isdigit(string.at(i-1)))){
             pointFlag = true;
             continue;
         }
