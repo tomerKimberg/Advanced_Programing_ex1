@@ -8,19 +8,21 @@
 #include "distance_algorithms.h"
 #include "headerDistanceCalculators.h"
 #include "KNN.h"
+#include "getNeighbors.h"
 #include "DataExtractor.h"
 #include "FileExtractor.h"
 
-#define NUMBER_OF_VECTORS 2
+#define NUMBER_OF_VECTORS 1
 #define NUMBER_OF_ARGUMENTS 4
 #define MINKOWSKI_P_VALUE 2
+#define ARGS_VARIABLE_K 1
+#define ARGS_VARIABLE_PATH 2
+#define ARGS_VARIABLE_METRIC 3
 #define INTEGER_REQUESTED_PRECISION 1
 #define FLOAT_REQUESTED_PRECISION 16
-#define BAD_INPUT_MESSAGE "You entered an invalid input, please try to run the program again."
-//TEMPORARY
-#define PATH "./datasets/wine/wine_UnClassified.csv"
-//TEMPOERARY
-
+#define INPUT_BAD_MESSAGE "You entered an invalid input, please try to run the program again."
+#define ARGS_BAD_MESSAGE "Bad arguments, exiting."
+#define MAIN_DEBUG 0
 /*
 input: vector<double>
 output: none
@@ -45,12 +47,12 @@ bool validArgs(int argc, char** argv){
         std::cout << "wrong amount of arguments were passed to the program." << std:: endl;
         return false;
     }
-    int k = std::stoi(argv[1]);
+    int k = std::stoi(argv[ARGS_VARIABLE_K]);
     if(k <= 0){
         std::cout << "bad K parameter, needs to be a positive integer" << std:: endl;
         return false;
     }
-    std::string metric = argv[3];
+    std::string metric = argv[ARGS_VARIABLE_METRIC];
     std::vector<std::string> VALID_METRICS = {"CAN","CHB","AUC","MAN","MIN"};
     auto metricInVector = std::find(VALID_METRICS.begin(), VALID_METRICS.end(), metric);
     if(metricInVector == VALID_METRICS.end()){
@@ -85,93 +87,46 @@ std::vector<double> vectorFromString(std::string line, bool& valid_input)
     }
     return inputVector;   
 }
-/**
- * print integers and floats with the requested precision
- * @param distance the distance to be printed
- */
-void printDistance(double distance){
-    int percision = INTEGER_REQUESTED_PRECISION;
-    if(distance != floor(distance)){
-        percision = FLOAT_REQUESTED_PRECISION;
+
+int main(int argc, char** argv)
+{
+    //check program arguments
+    if(!validArgs(argc, argv)){
+        std::cout << ARGS_BAD_MESSAGE << std::endl;
+        return 1;
     }
-    std::fixed(std::cout);
-    std::cout.precision(percision);
-    std::cout << distance << std::endl;
-}
-/**
- * takes two lines of input, creates vectors from them and prints the distance between the vectors in 5 different ways
- */
-void run(){
-
-///
-
-CanberraDistanceCalculator ca1;
-MinkowskiDistanceCalculator mi1(MINKOWSKI_P_VALUE);
-ManhattanDistanceCalculator ma;
-EuclideanDistanceCalculator e1;
-ChebyshevDistanceCalculator ch1;
-
-////
+    int neighborsNum = std::stoi(argv[ARGS_VARIABLE_K]);
+    std::string path = argv[ARGS_VARIABLE_PATH];
+    std::string metric = argv[ARGS_VARIABLE_METRIC];
+    
+    //create an DataExtractor pointer using FileExtractor
+    FileExtractor fileExtractor(path);
+    DataExtractor* extractor = &fileExtractor;
+    //create neighbors from the data of our file
+    getNeighbors get(extractor);       
+    std::map<std::vector<double>, std::vector<std::string>> neighbors = get.getNeighborsInMap();
+    
+    //get a vector from the user
     std::string line = "";
-    std::vector<double> inputVectors[2];
+    std::vector<double> inputVectors[NUMBER_OF_VECTORS];
     bool valid_input = true;
     for(int i = 0; i < NUMBER_OF_VECTORS; i++){
         std::getline(std::cin, line);
         inputVectors[i] = vectorFromString(line, valid_input);
     }
-    if(!vector_validation(inputVectors[0], inputVectors[1]) || !valid_input){
-        std::cout << BAD_INPUT_MESSAGE << std::endl;
-        return;
-    }
-    //printDistance(Euclidean_distance(inputVectors[0], inputVectors[1]));
-    printDistance(e1.calculateDistance(inputVectors[0],inputVectors[1]));
-    //printDistance(Manhattan_distance(inputVectors[0], inputVectors[1]));
-    printDistance(ma.calculateDistance(inputVectors[0], inputVectors[1]));
-    //printDistance(Chebyshev_distance(inputVectors[0], inputVectors[1]));
-    printDistance(ch1.calculateDistance(inputVectors[0], inputVectors[1]));
-    //printDistance(Canberra_distance(inputVectors[0], inputVectors[1]));
-    printDistance(ca1.calculateDistance(inputVectors[0], inputVectors[1]));
-    //printDistance(Minkowski_distance(inputVectors[0], inputVectors[1], MINKOWSKI_P_VALUE));
-    printDistance(mi1.calculateDistance(inputVectors[0],inputVectors[1]));
-}
-
-int main(int argc, char** argv)
-{
-    if(!validArgs(argc, argv)){
-        std::cout << "bad argument, exiting" << std::endl;
+    if(!valid_input){
+        std::cout << INPUT_BAD_MESSAGE << std::endl;
         return 1;
     }
-    //create an DataExtractor pointer using FileExtractor
-    FileExtractor fileExtractor(PATH);
-    DataExtractor* extractor = &fileExtractor;
-    
-
-    delete extractor;
-    std::map<std::vector<double>, std::vector<std::string>> neighbors;
-
-    std::vector<double> d1 = {1,3};//
-    std::vector<double> d2 = {3,1};//
-    std::vector<double> d3 = {11.5,2.4};//
-    std::vector<double> d4 = {11,2};//
-    std::vector<double> d5 = {1,22};//
-    std::vector<double> d6 = {1,23};//
-    std::vector<std::string> calsifiaction1 = {"d"};
-    std::vector<std::string> calsifiaction2 = {"f"};
-    neighbors.insert({d1,calsifiaction1});
-    neighbors.insert({d2,calsifiaction2});
-    neighbors.insert({d3,calsifiaction2});
-    neighbors.insert({d4,calsifiaction1});
-    neighbors.insert({d5,calsifiaction2});
-    neighbors.insert({d6,calsifiaction2});
-
-
-    KNN k(neighbors,"s", 3);
-    std::string classofocation = k.getClassification(std::vector<double>{0});
-    std::cout << classofocation << std::endl;
-    std::vector<std::vector<double>> kNearsNeighbors = k.getKNearestNeighbors(std::vector<double>{0});
-    for(std::vector<double> v : kNearsNeighbors){
-        printVector<double>(v);
+    //create a KNN object, and get the classification of the input vector
+    KNN knn(neighbors, metric, neighborsNum);
+    std::string classification = knn.getClassification(inputVectors[0]);
+    std::cout << classification << std::endl;
+    if(MAIN_DEBUG){
+        std::vector<std::vector<double>> kNearsNeighbors = knn.getKNearestNeighbors(inputVectors[0]);
+        for(std::vector<double> v : kNearsNeighbors){
+            printVector<double>(v);
+        }
     }
-    //run();
-
+    return 0;
 }
