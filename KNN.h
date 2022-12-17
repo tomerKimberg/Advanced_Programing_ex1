@@ -19,7 +19,7 @@ private:
     /**
      * inner class used to store a distance and the associated data with it
      */
-    class distanceAndData{
+    class DistanceAndData{
     private:
         double distance;
         /**
@@ -82,7 +82,7 @@ private:
          * @param vectorDouble the vector<double> that the distance was calculated to
          * @param classification it's classification
          */
-        distanceAndData(double d,  std::vector<double>* vectorDouble,
+        DistanceAndData(double d,  std::vector<double>* vectorDouble,
                         std::vector<std::string>* classification){
             this->distance = d;
             this->data = neighbor(vectorDouble,classification);
@@ -101,7 +101,7 @@ private:
         neighbor getData(){
             return this->data;
         }
-        bool operator< (const distanceAndData& data1) const {
+        bool operator< (const DistanceAndData& data1) const {
             return this->getDistance() < data1.getDistance();
         }
 
@@ -111,7 +111,7 @@ private:
     };
 
     //vector of distance and data object that stores a computed distance and a dataVector associated with it
-    std::vector<distanceAndData> processedData;
+    std::vector<DistanceAndData> processedData;
     //store all vectors and classifications for vectors that don't match the given vectors dimension
     std::vector<std::pair<std::vector<double>, std::vector<std::string>>> mismatches;
 
@@ -129,75 +129,17 @@ private:
      * @param v1 the vector to get its k-nearest neighbors
      * @return wether run was succesful or not
      */
-    bool run(std::vector<double> v1){
-        //check if metric is null
-        if(nullptr == this->distanceCalculatorMetric){
-            std::cout << "We tried to run the KNN but couldn't determine a distance function" << std::endl;
-            return false;
-        }
-        this->processedData.clear();
-        //iterate over all neighbors in the map
-        for(std::map<std::vector<double>, std::vector<std::string>>::iterator iter = this->neighbors.begin();
-            iter != this->neighbors.end(); ++iter)
-        if(v1.size() == iter->first.size()) {
-            //check distance if vectors have the same dimensions
-            std::vector<double> v2 = iter->first;
-            //compute distance from v1 for every v2
-            double distance = this->distanceCalculatorMetric->calculateDistance(v1, v2);
-            //update the processedData
-            this->updateProcessedData(distance, const_cast<std::vector<double> *>(&(iter->first)), &iter->second);
-        }
-
-        else{
-            //store all vectors with mismatch to v1 dimension
-            this->mismatches.push_back(
-                    std::pair<std::vector<double>,std::vector<std::string>>(iter->first,iter->second));
-            continue;
-        }
-
-        //use select(K) algorithm to reorganize all element around the k'th smallest element in the vector
-        std::nth_element(this->processedData.begin(), (this->processedData.begin() + (this->k-1)),
-                this->processedData.end());
-        return true;
-    }
+    bool run(std::vector<double> v1);
     /**
      * get k nearest vectors<double>
      * @return vector of vector<double -> vector<vector<double>>
      */
-    std::vector<std::vector<double>> getProcessedVectorData(){
-        std::vector<std::vector<double>> res;
-        int k = 1;
-        for(distanceAndData temp : this->processedData){
-            if(k <= this->k) {
-                k += 1;
-                res.push_back(*temp.getData().getVectorDouble());
-            }
-            else{
-                break;
-            }
-        }
-        return res;
-    }
+    std::vector<std::vector<double>> getProcessedVectorData();
     /**
      * get k nearest Classifications
      * @return vector<string>
      */
-    std::vector<std::string> getProcessedClassification(){
-        std::vector<std::string> res;
-        int k = 1;
-        for(distanceAndData temp : this->processedData){
-            for(std::string classification : *temp.getData().getVectorClassification())
-            if(k <= this->k) {
-                k+=1;
-                res.push_back(classification);
-            }
-            else{
-                break;
-            }
-        }
-        return res;
-    }
-
+    std::vector<std::string> getProcessedClassification();
 
 public:
     /**
