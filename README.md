@@ -24,7 +24,7 @@ In order for these opertions to be well defined the following conditions must be
 2. Vectors musn't be empty.
 3. The input must be consisted of real numbers only.
 
-Our program will try to match the input vector with as much vector from our data that match the above conditions. If not all the conditions are met, including bad program arguments (more on that later), the program will exit gracefully.
+Our program will try to match the input vector with as much vectors from our data that match the above conditions. If not all the conditions are met, including bad program arguments (more on that later), the program will exit gracefully.
 
 ### Some technical details
 
