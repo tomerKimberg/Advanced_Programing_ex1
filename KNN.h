@@ -19,7 +19,7 @@ private:
     /**
      * inner class used to store a distance and the associated data with it
      */
-    class distanceAndData{
+    class DistanceAndData{
     private:
         double distance;
         /**
@@ -82,7 +82,7 @@ private:
          * @param vectorDouble the vector<double> that the distance was calculated to
          * @param classification it's classification
          */
-        distanceAndData(double d,  std::vector<double>* vectorDouble,
+        DistanceAndData(double d,  std::vector<double>* vectorDouble,
                         std::vector<std::string>* classification){
             this->distance = d;
             this->data = neighbor(vectorDouble,classification);
@@ -101,7 +101,7 @@ private:
         neighbor getData(){
             return this->data;
         }
-        bool operator< (const distanceAndData& data1) const {
+        bool operator< (const DistanceAndData& data1) const {
             return this->getDistance() < data1.getDistance();
         }
 
@@ -111,7 +111,7 @@ private:
     };
 
     //vector of distance and data object that stores a computed distance and a dataVector associated with it
-    std::vector<distanceAndData> processedData;
+    std::vector<DistanceAndData> processedData;
     //store all vectors and classifications for vectors that don't match the given vectors dimension
     std::vector<std::pair<std::vector<double>, std::vector<std::string>>> mismatches;
 

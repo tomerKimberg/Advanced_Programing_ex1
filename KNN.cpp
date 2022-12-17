@@ -37,7 +37,7 @@ bool KNN::run(std::vector<double> v1){
 std::vector<std::vector<double>> KNN::getProcessedVectorData(){
 	std::vector<std::vector<double>> res;
 	int k = 1;
-	for(distanceAndData temp : this->processedData){
+	for(DistanceAndData temp : this->processedData){
 		if(k <= this->k) {
 			k += 1;
 			res.push_back(*temp.getData().getVectorDouble());
@@ -51,7 +51,7 @@ std::vector<std::vector<double>> KNN::getProcessedVectorData(){
 std::vector<std::string> KNN::getProcessedClassification(){
 	std::vector<std::string> res;
 	int k = 1;
-	for(distanceAndData temp : this->processedData){
+	for(DistanceAndData temp : this->processedData){
 		for(std::string classification : *temp.getData().getVectorClassification())
 		if(k <= this->k) {
 			k+=1;
@@ -98,7 +98,7 @@ void KNN::setNeighbors(std::map<std::vector<double>, std::vector<std::string>> n
 }
 void KNN::updateProcessedData(double distance, std::vector<double> *vectorDouble,
                               std::vector<std::string> *classification) {
-    this->processedData.emplace_back(distanceAndData(distance, vectorDouble, classification));
+    this->processedData.emplace_back(DistanceAndData(distance, vectorDouble, classification));
 
 }
 
