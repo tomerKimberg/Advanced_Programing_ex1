@@ -13,7 +13,7 @@ int SocketExtractor::getFileDescriptor(){
     return this->fileDescriptor;
 }
 DataExtractor* SocketExtractor::copy(){
-
+    return new SocketExtractor(this->fileDescriptor);
 }
 bool SocketExtractor::hasNext(){
     int bytesLeft = 0;
