@@ -9,7 +9,7 @@ private:
     bool failed;
 public:
     SocketExtractor(int fileDescriptor);
-    int getFileDescriptor;
+    int getFileDescriptor();
     DataExtractor* copy() override;
     bool hasNext() override;
     std::string getData() override;
