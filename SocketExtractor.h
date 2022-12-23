@@ -8,7 +8,7 @@ private:
     int socket;
     bool failed;
 public:
-    SocketExtractor(int clientSocket);
+    SocketExtractor(int socket);
     int getFileDescriptor;
     bool hasNext();
     std::string getData();
