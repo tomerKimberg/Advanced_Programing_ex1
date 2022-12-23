@@ -5,10 +5,10 @@
 
 class SocketExtractor : public DataExtractor{
 private:
-    int socket;
+    int fileDescriptor;
     bool failed;
 public:
-    SocketExtractor(int socket);
+    SocketExtractor(int fileDescriptor);
     int getFileDescriptor;
     DataExtractor* copy() override;
     bool hasNext() override;
