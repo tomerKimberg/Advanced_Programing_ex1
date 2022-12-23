@@ -3,6 +3,16 @@
 
 #define SOCKET_EXTRACTOR_DEBUG 0
 
+SocketExtractor::SocketExtractor(int fileDescriptor){
+    this->fileDescriptor = fileDescriptor;
+    this->failed = false;
+}
+int SocketExtractor::getFileDescriptor(){
+    return this->fileDescriptor;
+}
+DataExtractor* SocketExtractor::copy(){
+
+}
 bool SocketExtractor::hasNext(){
     int bytesLeft = 0;
     ioctl(this->fileDescriptor, FIONREAD, &bytesLeft);
