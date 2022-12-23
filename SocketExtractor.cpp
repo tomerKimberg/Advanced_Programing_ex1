@@ -21,3 +21,7 @@ bool SocketExtractor::hasNext(){
     }
     return bytesLeft > 0;
 }
+bool SocketExtractor::fail(){
+    return this->failed;
+}
+
