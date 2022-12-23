@@ -10,6 +10,7 @@ private:
 public:
     SocketExtractor(int socket);
     int getFileDescriptor;
+    DataExtractor* copy();
     bool hasNext();
     std::string getData();
     bool fail();
