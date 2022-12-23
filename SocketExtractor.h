@@ -10,10 +10,10 @@ private:
 public:
     SocketExtractor(int socket);
     int getFileDescriptor;
-    DataExtractor* copy();
-    bool hasNext();
-    std::string getData();
-    bool fail();
+    DataExtractor* copy() override;
+    bool hasNext() override;
+    std::string getData() override;
+    bool fail() override;
 
 
 };
