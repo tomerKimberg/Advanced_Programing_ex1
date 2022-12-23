@@ -9,6 +9,7 @@ private:
     bool failed;
 public:
     SocketExtractor(int socket);
+    ~SocketExtractor();
     int getFileDescriptor;
     DataExtractor* copy();
     bool hasNext();
