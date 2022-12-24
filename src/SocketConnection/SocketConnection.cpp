@@ -52,7 +52,8 @@ std::pair<int, sockaddr_in> SocketConnection::accept() {
 }
 
 int SocketConnection::connect(){
-    if( ::connect(this->sock, (struct sockaddr *) &this->sin, sizeof(this->sin)) < 0){
+    int connection = ::connect(this->sock, (struct sockaddr *) &this->sin, sizeof(this->sin));
+    if(  connection < 0){
         perror("error connecting to socket");
     }
 }
