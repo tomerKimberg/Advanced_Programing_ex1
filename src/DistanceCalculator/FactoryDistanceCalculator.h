@@ -18,7 +18,7 @@ class FactoryDistanceCalculator {
 private:
     //think about attribues needed for the FactoryDistanceCalculator
 public:
-    // pointer to distanceCalculator
+    // pointer to DistanceCalculator
     DistanceCalculator* createDistanceCalculator(std::string metric);
 
 };

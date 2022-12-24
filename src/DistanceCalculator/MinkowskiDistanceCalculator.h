@@ -8,7 +8,7 @@
 
 #define DEFAULT_MINKOWSKI_POWER 2
 /**
- * a distanceCalculator object using the Minkowski metric
+ * a DistanceCalculator object using the Minkowski metric
  */
 class MinkowskiDistanceCalculator: public DistanceCalculator {
 private:

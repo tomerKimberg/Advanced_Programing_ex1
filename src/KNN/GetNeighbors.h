@@ -4,7 +4,7 @@
 
 #ifndef TARGIL1_GETNEIGHBORS_H
 #define TARGIL1_GETNEIGHBORS_H
-#include "headerDataExtractors.h"
+#include "../Extractors/headerDataExtractors.h"
 #include <map>
 #include <vector>
 

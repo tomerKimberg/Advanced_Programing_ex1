@@ -4,11 +4,11 @@
 
 #ifndef TARGIL1_KNN_H
 #define TARGIL1_KNN_H
-#include "headerDistanceCalculators.h"
+#include "../DistanceCalculator/headerDistanceCalculators.h"
 #include <map>
 #include <set>
 #include <algorithm>
-#include "FactoryDistanceCalculator.h"
+#include "../DistanceCalculator/FactoryDistanceCalculator.h"
 class KNN {
 private:
     int k;
