@@ -12,7 +12,7 @@
 int main(){
     SocketConnection client(12345);
     bool connection = false;
-    if(client.connect() > 0){
+    if(client.connect() == 0){
         connection = true;
     }
 
@@ -21,6 +21,9 @@ int main(){
         std::cin >> userInput;
         if(client.send(userInput)){
             std::cout <<"message was sent" <<std::endl;
+            if(userInput == "-1"){
+                connection = false;
+            }
         }
         else{
             connection = false;
