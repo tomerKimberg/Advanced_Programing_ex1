@@ -56,6 +56,7 @@ int SocketConnection::connect(){
     if(  connection < 0){
         perror("error connecting to socket");
     }
+    return connection;
 }
 
 std::string SocketConnection::receive() {
