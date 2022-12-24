@@ -11,6 +11,21 @@
 
 int main(){
     SocketConnection client(12345);
+    bool connection = false;
+    if(client.connect() > 0){
+        connection = true;
+    }
 
+    while(connection){
+        std::string userInput;
+        std::cin >> userInput;
+        if(client.send(userInput)){
+            std::cout <<"message was sent" <<std::endl;
+        }
+        else{
+            connection = false;
+        }
+
+    }
     client.close();
 }

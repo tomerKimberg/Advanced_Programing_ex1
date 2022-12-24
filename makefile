@@ -12,12 +12,23 @@ all:
 	$(MAKE) -C src/KNN
 	$(MAKE) -C src/SocketConnection
 	$(MAKE) -C src/ValidationFuncs
-
-	$(CC) -c $(CFLAGS) main.cpp
-	mv	main.o obj
-	$(MAKE) -C obj
+	$(MAKE) -C src/Server
+	$(MAKE) -C obj server
+	rm -f ./obj/server.o
+	$(MAKE) -C src/Client
+	$(MAKE) -C obj client
+	rm -f ./obj/client.o
 
 server:
+	$(MAKE) -C src/Extractors
+	$(MAKE) -C src/DistanceCalculator
+	$(MAKE) -C src/KNN
+	$(MAKE) -C src/SocketConnection
+	$(MAKE) -C src/ValidationFuncs
+	$(MAKE) -C src/Server
+	$(MAKE) -C obj
+
+client:
 	$(MAKE) -C src/Extractors
 	$(MAKE) -C src/DistanceCalculator
 	$(MAKE) -C src/KNN
@@ -29,7 +40,7 @@ server:
 
 
 clean:
-	rm a.out
+	rm *.out
 	cd obj
 	rm *.o
 	cd ../
