@@ -11,24 +11,26 @@
 int main(){
     SocketConnection server(12345);
     server.bind();
-    SocketConnection* connection;
     bool firstConnection = false;
-    while(!firstConnection) {
-        if(server.listen() == 0) {
-            connection = new SocketConnection(server.accept());
-            if(connection->getSock() > 0){
-                firstConnection = true;
+
+    if(server.listen() == 0) {
+        SocketConnection connection(server.accept());
+        if (connection.getSock() > 0) {
+            firstConnection = true;
+        }
+
+
+        while (firstConnection) {
+            std::string message = connection.receive();
+            std::cout << message << std::endl;
+            if (message == "-1") {
+                firstConnection = false;
+                connection.close();
             }
         }
     }
-    while(firstConnection) {
-        std::string message = connection->receive();
-        std::cout << message << std::endl;
-        if(message == "-1"){
-            firstConnection = false;
-            connection->close();
-            delete(connection);
-        }
+    else{
+        std::cout << "problem listening" << std::endl;
     }
     server.close();
 }
