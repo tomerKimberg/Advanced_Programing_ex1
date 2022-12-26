@@ -2,8 +2,8 @@
 // Created by tomer on 25/12/2022.
 //
 
-#ifndef TARGIL1_CLIENT_USER_INPUT_H
-#define TARGIL1_CLIENT_USER_INPUT_H
+#ifndef TARGIL1_USER_INPUT_H
+#define TARGIL1_USER_INPUT_H
 
 #include <vector>
 #include <string>
@@ -37,4 +37,4 @@ bool checkMetric(std::string metric);
  * @return bool
  */
 bool checkKNeighbors(std::string KNeighbors);
-#endif //TARGIL1_CLIENT_USER_INPUT_H
+#endif //TARGIL1_USER_INPUT_H
