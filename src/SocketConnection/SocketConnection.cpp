@@ -1,7 +1,7 @@
 #include <cstring>
 #include <csignal>
 #include "SocketConnection.h"
-
+#define DEBUG_SEND 1
 SocketConnection::SocketConnection(const int portNum, unsigned long ip, int domain, int type){
     this->sock = socket(domain, type, 0);
     if(this->sock < 0 ){
@@ -52,9 +52,11 @@ std::pair<int, sockaddr_in> SocketConnection::accept() {
 }
 
 int SocketConnection::connect(){
-    if( ::connect(this->sock, (struct sockaddr *) &this->sin, sizeof(this->sin)) < 0){
+    int connection = ::connect(this->sock, (struct sockaddr *) &this->sin, sizeof(this->sin));
+    if(  connection < 0){
         perror("error connecting to socket");
     }
+    return connection;
 }
 
 std::string SocketConnection::receive() {
@@ -70,6 +72,9 @@ int SocketConnection::send(const std::string& message) {
     int send_bytes =  ::send(this->sock, data_addr, size+1, 0);
     if(send_bytes < 0){
         perror("error sending message");
+    }
+    if(DEBUG_SEND == 1 && send_bytes >= 0){
+        std::cout << data_addr << std::endl;
     }
     return send_bytes;
 }

@@ -1,3 +1,4 @@
+#include <sstream>
 #include "../distanceCalculator/vector_functions.h"
 #include "../validationFuncs/vector_validation.h"
 #include "../distanceCalculator/distance_algorithms.h"
