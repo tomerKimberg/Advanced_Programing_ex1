@@ -2,6 +2,7 @@
 .vscode/*
 *.exe
 *.out
+*.o
 CMakeLists
 datasets/
 makefile-alternative
