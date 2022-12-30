@@ -7,6 +7,7 @@ CFLAGS = -std=c++11
 # ****************************************************
 # Targets needed to bring the executable up to date
 all:
+	mkdir -p ./obj
 	$(MAKE) -C src/Extractors
 	$(MAKE) -C src/DistanceCalculator
 	$(MAKE) -C src/KNN
