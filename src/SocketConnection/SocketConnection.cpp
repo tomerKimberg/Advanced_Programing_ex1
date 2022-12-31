@@ -28,17 +28,20 @@ SocketConnection::SocketConnection(std::pair<int, sockaddr_in> sockEssential) {
 }
 
 int SocketConnection::bind() {
-    if(::bind(this->sock,(struct sockaddr *) &this->sin, sizeof (this->sin))<0){
+    int bind = ::bind(this->sock,(struct sockaddr *) &this->sin, sizeof (this->sin));
+    if(bind < 0){
         perror("error binding socket");
     }
+    return bind;
 }
 
 int SocketConnection::listen() {
-    int error = ::listen(this->sock, NUM_CONNECTIONS);
+    int listen = ::listen(this->sock, NUM_CONNECTIONS);
 
-    if(error < 0) {
+    if(listen < 0) {
         perror("error listening to a socket");
     }
+    return listen;
 }
 
 std::pair<int, sockaddr_in> SocketConnection::accept() {
