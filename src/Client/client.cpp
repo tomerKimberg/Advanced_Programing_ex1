@@ -8,57 +8,45 @@
 #include "../Extractors/DataExtractor.h"
 #include "..//Extractors/FileExtractor.h"
 #include "..//SocketConnection/SocketConnection.h"
-#define NUMBER_OF_VECTORS 1
-
-/**
- * create a new vector, if input is invalid set valid_input to false
- * @param std::string line
- * @param bool& valid_input
- * @return std::vector<double>, creates a new vector from the string
- */
-std::vector<double> vectorFromString(std::string line, bool& valid_input)
-{
-    std::stringstream stringstream;
-    stringstream.str(line);
-    std::string number;
-    std::vector<double> inputVector;
-    while(stringstream >> number && valid_input)
-    {
-        if (checkRealNumber(number)){
-            inputVector.push_back(std::stod(number));
-        }
-        else{
-            valid_input = false;
-        }
-    }
-    return inputVector;
-}
+#include "../ValidationFuncs/user_input.h"
 
 
+void run(SocketConnection client);
 
 int main(){
     SocketConnection client(12345);
+    run(client);
+}
+
+void run(SocketConnection client) {
     bool connection = false;
     if(client.connect() == 0){
         connection = true;
     }
 
     while(connection){
-        //get a vector from the user
-        std::string line = "";
-        bool valid_input = true;
-        std::getline(std::cin, line);
-        //check validation of input
-        if(client.send(line)){
-            std::cout << "message was sent" << std::endl;
-            if(line == "-1"){
+        std::string userInput;
+        getline(std::cin, userInput);
+        if(validUserInput(splitUserInput(userInput)) || userInput == "-1") {
+            if (client.send(userInput)) {
+                //successfully sent close signal to server
+                if(userInput == "-1"){
+                    break;
+
+                }
+                //add code to receive and print result from server
+                std::cout << "message was sent" << std::endl;
+            }
+                //there was an error sending to the server, probably connection lost
+            else {
                 connection = false;
             }
         }
         else{
-            connection = false;
+            std::cout << "input invalid" << std::endl;
         }
 
     }
     client.close();
+
 }
