@@ -13,11 +13,9 @@ all:
 	$(MAKE) -C src/SocketConnection
 	$(MAKE) -C src/ValidationFuncs
 	$(MAKE) -C src/Server
-	$(MAKE) -C obj server
-	rm -f ./obj/server.o
 	$(MAKE) -C src/Client
+	$(MAKE) -C obj server
 	$(MAKE) -C obj client
-	rm -f ./obj/client.o
 
 server:
 	$(MAKE) -C src/Extractors
@@ -26,7 +24,7 @@ server:
 	$(MAKE) -C src/SocketConnection
 	$(MAKE) -C src/ValidationFuncs
 	$(MAKE) -C src/Server
-	$(MAKE) -C obj
+	$(MAKE) -C obj server
 
 client:
 	$(MAKE) -C src/Extractors
@@ -34,13 +32,12 @@ client:
 	$(MAKE) -C src/KNN
 	$(MAKE) -C src/SocketConnection
 	$(MAKE) -C src/ValidationFuncs
-	$(MAKE) -C src/Server
-	$(MAKE) -C obj
+	$(MAKE) -C src/Client
+	$(MAKE) -C obj client
 
 
 
 clean:
-	rm *.out
-	cd obj
-	rm *.o
-	cd ../
+	$(MAKE) -C obj clean
+	rm server.out
+	rm client.out
