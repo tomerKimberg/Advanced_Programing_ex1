@@ -11,11 +11,13 @@ all:
 	mv *.out ../
 
 server:
-	$(CC) $(CFLAGS) *.o -o server.out
+	$(CC) $(CFLAGS) *.o obj_server/*.o -o server.out
 	mv server.out ../
 
 client:
-	$(CC) $(CFLAGS) *.o -o client.out
+	$(CC) $(CFLAGS) *.o obj_client/*.o -o client.out
 	mv client.out ../
 clean:
 	rm *.o
+	rm obj_client/*.o
+	rm obj_server/*.o
