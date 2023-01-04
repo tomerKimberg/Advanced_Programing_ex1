@@ -15,7 +15,7 @@ bool isIP(std::string ip){
         return false; // inet_pton returns 0 on unsuccessful conversion
     }
     if(validIp == -1){
-        std::cout << BAD_AF_PARAMETER << std::endl;
+        std::cout << BAD_AF_PARAMETER << std::endl; // keep printing because this is something that should never happen
         return false;
     }
     return true;
