@@ -37,24 +37,26 @@ int main(int argc, char** argv){
     bool firstConnection = false;
 
     if(server.listen() == 0) {
-        SocketConnection connection(server.accept());
-        if (connection.getSock() > 0) {
-            firstConnection = true;
-        }
-
-
-        while (firstConnection) {
-            std::string message = connection.receive();
-            std::cout << message << std::endl;
-            if (message == "-1") {
-                firstConnection = false;
-                connection.close();
+        while(true){
+            SocketConnection connection(server.accept());
+            if (connection.getSock() > 0) {
+                firstConnection = true;
+            }
+            while (firstConnection) {
+                std::string message = connection.receive();
+                std::cout << message << std::endl;
+                //message is empty only if socket was closed
+                if (message.empty()) {
+                    firstConnection = false;
+                    connection.close();
+                }
             }
         }
     }
     else{
         std::cout << "problem listening" << std::endl;
     }
+        
     server.close();
     return 0;
 }
