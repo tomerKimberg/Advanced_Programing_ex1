@@ -8,7 +8,7 @@
 
 bool isIP(std::string ip){
     //buffer for destination of inet_pton
-    unsigned char buf[sizeof(struct sockaddr)];
+    unsigned char buf[INET_ADDRSTRLEN];
     int validIp = inet_pton(AF_INET, ip.c_str(), buf);
     if(validIp == 0){
         return false; // inet_pton returns 0 on unsuccessful conversion
