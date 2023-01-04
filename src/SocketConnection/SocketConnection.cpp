@@ -1,7 +1,7 @@
 #include <cstring>
 #include <csignal>
 #include "SocketConnection.h"
-#define DEBUG_SEND 1
+#define DEBUG_SEND 0
 SocketConnection::SocketConnection(const int portNum, unsigned long ip, int domain, int type){
     this->sock = socket(domain, type, 0);
     if(this->sock < 0 ){
