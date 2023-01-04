@@ -1,4 +1,6 @@
+#include <sstream>
 #include "../DistanceCalculator/vector_functions.h"
+#include "../ValidationFuncs/user_input.h"
 #include "../ValidationFuncs/vector_validation.h"
 #include "../ValidationFuncs/arguments_validation.h"
 #include "../DistanceCalculator/distance_algorithms.h"
@@ -12,6 +14,9 @@
 #define SERVER_NUMBER_OF_ARGUMENTS 3
 #define SERVER_ARGS_VARIABLE_PORT 2
 #define SERVER_ARGS_VARIABLE_PATH 1
+#define SERVER_MESSAGE_INDEX_VECTOR 0
+#define SERVER_MESSAGE_INDEX_METRIC 1
+#define SERVER_MESSAGE_INDEX_K 2
 #define BIND_ERROR_MESSAGE "error binding given port, exiting."
 
 
@@ -21,6 +26,21 @@
  * @return bool - wether the arguments are valid or not
 */
 bool validArgs(int argc, char** argv);
+/**
+ * function runs the server, handles connection changes and recieving and sending data
+ * @param SocketConnection - the connetion to the server
+ * @param std::map<std::vector<double>, std::vector<std::string>> - the neighbors object
+ * @return none 
+*/
+void runServer(SocketConnection server, std::map<std::vector<double>, std::vector<std::string>> neighbors);
+/**
+ * create a new vector, if input is invalid set valid_input to false
+ * @param std::string line
+ * @param bool& valid_input
+ * @return std::vector<double>, creates a new vector from the string
+ */
+std::vector<double> vectorFromString(std::string line, bool& valid_input);
+
 
 int main(int argc, char** argv){
     //check program arguments
@@ -34,29 +54,18 @@ int main(int argc, char** argv){
         std::cout << BIND_ERROR_MESSAGE << std::endl;
         return 1;
     }
-    bool firstConnection = false;
-
     if(server.listen() == 0) {
-        while(true){
-            SocketConnection connection(server.accept());
-            if (connection.getSock() > 0) {
-                firstConnection = true;
-            }
-            while (firstConnection) {
-                std::string message = connection.receive();
-                std::cout << message << std::endl;
-                //message is empty only if socket was closed
-                if (message.empty()) {
-                    firstConnection = false;
-                    connection.close();
-                }
-            }
-        }
+        //create an DataExtractor pointer using FileExtractor
+        FileExtractor fileExtractor(argv[SERVER_ARGS_VARIABLE_PATH]);
+        DataExtractor* extractor = &fileExtractor;
+        //create neighbors from the data of our file
+        GetNeighbors get(extractor);       
+        std::map<std::vector<double>, std::vector<std::string>> neighbors = get.getNeighborsInMap();
+        runServer(server, neighbors);
     }
     else{
         std::cout << "problem listening" << std::endl;
-    }
-        
+    }        
     server.close();
     return 0;
 }
@@ -71,4 +80,59 @@ bool validArgs(int argc, char** argv){
         return false;
     }
     return true;
+}
+std::vector<double> vectorFromString(std::string line, bool& valid_input)
+{
+    std::stringstream stringstream;
+    stringstream.str(line);
+    std::string number;
+    std::vector<double> inputVector;
+    while(stringstream >> number && valid_input)
+    {
+        if (checkRealNumber(number)){
+            inputVector.push_back(std::stod(number));
+        }
+        else{
+            valid_input = false;
+        }
+    }
+    return inputVector;   
+}
+
+void runServer(SocketConnection server, std::map<std::vector<double>, std::vector<std::string>> neighbors){
+    bool acceptedConnection = false;
+    while(true){
+        SocketConnection connection(server.accept());
+        if (connection.getSock() > 0) {
+            acceptedConnection = true;
+        }
+        while (acceptedConnection) {
+            std::string message = connection.receive();
+            std::string response = "";
+            std::cout << message << std::endl;
+            //message is empty only if socket was closed
+            if (message.empty()){
+                acceptedConnection = false;
+                connection.close();
+                break;
+            }
+            std::vector<std::string> splittedMessage = splitUserInput(message);
+            if(!validUserInput(splittedMessage)){
+                response = INVALID_INPUT_ERROR_MESSAGE;
+            }else{
+                bool validVector = true;
+                std::vector<double> inputVector = vectorFromString(splittedMessage[SERVER_MESSAGE_INDEX_VECTOR], validVector);
+                if(!validVector){
+                    acceptedConnection = false;
+                    connection.close();
+                    break;
+                }
+                int neighborsNum = std::stoi(splittedMessage[SERVER_MESSAGE_INDEX_K]);
+                //create a KNN object, and get the classification of the input vector
+                KNN knn(neighbors, splittedMessage[SERVER_MESSAGE_INDEX_METRIC], neighborsNum);
+                response = knn.getClassification(inputVector);
+            }
+            std::cout << response << std::endl;
+        }
+    }
 }
