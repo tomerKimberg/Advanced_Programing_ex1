@@ -29,6 +29,18 @@ void testisIP(){
     result = isIP(test1);
     std::cout << "result for test1, " << test1<< " is: " << result << std::endl;
     std::string test2 = "abc";
+    result = isIP(test2);
+    std::cout << "result for test2, " << test2 << " is: " << result << std::endl;
+    std::string test3 = "127.0.0.1";
+    result = isIP(test3);
+    std::cout << "result for test3, " << test3 << " is: " << result << std::endl;
+    std::string test4 = "1.1.1.1";
+    result = isIP(test4);
+    std::cout << "result for test4, " << test4 << " is: " << result << std::endl;
+    std::string test5 = "255.255.255.255";
+    result = isIP(test5);
+    std::cout << "result for test5, " << test5 << " is: " << result << std::endl;
+    std::cout <<"***finish tests*****" << std::endl;
     result = isIP("abc");
     std::cout << "result for test2, " << test2 << " is: " << result << std::endl;
     std::string test3 = "127.0.0.1";
