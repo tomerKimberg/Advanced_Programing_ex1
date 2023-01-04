@@ -31,6 +31,7 @@ int main(int argc, char** argv){
     }
     SocketConnection client(12345);
     run(client);
+    return 0;
 }
 
 void run(SocketConnection client) {

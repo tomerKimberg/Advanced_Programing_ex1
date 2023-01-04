@@ -52,6 +52,7 @@ int main(int argc, char** argv){
         std::cout << "problem listening" << std::endl;
     }
     server.close();
+    return 0;
 }
 
 bool validArgs(int argc, char** argv){
