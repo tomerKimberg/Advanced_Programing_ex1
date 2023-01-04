@@ -109,7 +109,6 @@ void runServer(SocketConnection server, std::map<std::vector<double>, std::vecto
         while (acceptedConnection) {
             std::string message = connection.receive();
             std::string response = "";
-            std::cout << message << std::endl;
             //message is empty only if socket was closed
             if (message.empty()){
                 acceptedConnection = false;
@@ -123,8 +122,8 @@ void runServer(SocketConnection server, std::map<std::vector<double>, std::vecto
                 bool validVector = true;
                 std::vector<double> inputVector = vectorFromString(splittedMessage[SERVER_MESSAGE_INDEX_VECTOR], validVector);
                 if(!validVector){
+                    response = INVALID_INPUT_ERROR_MESSAGE;
                     acceptedConnection = false;
-                    connection.close();
                     break;
                 }
                 int neighborsNum = std::stoi(splittedMessage[SERVER_MESSAGE_INDEX_K]);
@@ -132,7 +131,7 @@ void runServer(SocketConnection server, std::map<std::vector<double>, std::vecto
                 KNN knn(neighbors, splittedMessage[SERVER_MESSAGE_INDEX_METRIC], neighborsNum);
                 response = knn.getClassification(inputVector);
             }
-            std::cout << response << std::endl;
+            connection.send(response);
         }
     }
 }
