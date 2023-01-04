@@ -25,16 +25,15 @@ bool isPort(std::string portStr){
     try{
         port = std::stoi(portStr);
     }catch(...){
-        std::cout << BAD_PORT_MESSAGE << std:: endl;
+        //conversion to number failed
         return false;
     }   
+    //number after conversion is out of range
     if(port <= 0 || port > MAX_PORT_VALUE){        
-        std::cout << BAD_PORT_MESSAGE << std:: endl;
         return false;
     }
     //handle combined input of numbers and string because on input like 64$6, stoi will return 64
     if(port < pow(10, portStr.length() - 1)){
-        std::cout << BAD_PORT_MESSAGE << std:: endl;
         return false;
     }
     return true;
