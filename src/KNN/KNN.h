@@ -9,9 +9,11 @@
 #include <set>
 #include <algorithm>
 #include "../DistanceCalculator/FactoryDistanceCalculator.h"
+#include "../ValidationFuncs/user_input.h"
 class KNN {
 private:
     int k;
+    int vectorsWithSameLength;
     std::string metric;
     DistanceCalculator* distanceCalculatorMetric;
     std::map<std::vector<double>, std::vector<std::string>> neighbors;
@@ -173,6 +175,11 @@ public:
      * @return int k
      */
     int getK();
+    /**
+     * return the count of used vectors in KNN
+     * @return int vectors with same length
+     */
+    int getVectorsWithSameLength();
     std::map<std::vector<double>, std::vector<std::string>> getNeighbors();
     /**
      * get the vectors that there dimension doesn't match input vector dimension

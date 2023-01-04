@@ -10,11 +10,13 @@ bool KNN::run(std::vector<double> v1){
 		return false;
 	}
 	this->processedData.clear();
+	this->vectorsWithSameLength = 0;
 	//iterate over all neighbors in the map
 	for(std::map<std::vector<double>, std::vector<std::string>>::iterator iter = this->neighbors.begin();
 		iter != this->neighbors.end(); ++iter)
+	//check distance if vectors have the same dimensions
 	if(v1.size() == iter->first.size()) {
-		//check distance if vectors have the same dimensions
+		this->vectorsWithSameLength++;
 		std::vector<double> v2 = iter->first;
 		//compute distance from v1 for every v2
 		double distance = this->distanceCalculatorMetric->calculateDistance(v1, v2);
@@ -67,6 +69,7 @@ std::vector<std::string> KNN::getProcessedClassification(){
 //constructor and destructor
 KNN::KNN(std::map<std::vector<double>, std::vector<std::string>> neighbors,
          std::string metric, int k) {
+	this-> vectorsWithSameLength = 0;
     this->neighbors = neighbors;
     this->distanceCalculatorMetric = this->FDC.createDistanceCalculator(metric);
     if(k >= 0) {
@@ -106,6 +109,9 @@ void KNN::updateProcessedData(double distance, std::vector<double> *vectorDouble
 int KNN::getK() {
     return this->k;
 }
+int KNN::getVectorsWithSameLength(){
+	return this->vectorsWithSameLength;
+}
 std::map<std::vector<double>, std::vector<std::string>> KNN::getNeighbors() {
     return this->neighbors;
 }
@@ -126,8 +132,11 @@ std::string KNN::getClassification(std::vector<double> v1) {
     }
     std::vector<std::string> KNearestClassifications = this->getProcessedClassification();
     if(KNearestClassifications.empty()){
-        return "no classification found,\nnon of the neighbors vectors dimensions match given input vector";
-    };
+        return INVALID_INPUT_ERROR_MESSAGE;
+    }
+	if(this->k > this->vectorsWithSameLength){
+		return "k too big";
+	}
     std::map<std::string, int> classifications;
         for (std::string classification: KNearestClassifications) {
             std::map<std::string, int>::iterator it = classifications.find(classification);
