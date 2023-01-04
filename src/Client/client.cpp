@@ -49,13 +49,12 @@ void run(SocketConnection client) {
     while(connection){
         std::string userInput;
         getline(std::cin, userInput);
-        if(validUserInput(splitUserInput(userInput)) || userInput == "-1") {
+        //if input is -1, close client
+        if(userInput == "-1"){
+            break;
+        }
+        if(validUserInput(splitUserInput(userInput))) {
             if (client.send(userInput)) {
-                //successfully sent close signal to server
-                if(userInput == "-1"){
-                    break;
-
-                }
                 //add code to receive and print result from server
                 std::cout << "message was sent" << std::endl;
             }
@@ -70,7 +69,6 @@ void run(SocketConnection client) {
 
     }
     client.close();
-
 }
 bool validArgs(int argc, char** argv){
     if(CLIENT_NUMBER_OF_ARGUMENTS != argc){
