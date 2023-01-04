@@ -1,4 +1,5 @@
 #include <sstream>
+#include <arpa/inet.h>
 #include "../DistanceCalculator/vector_functions.h"
 #include "../ValidationFuncs/vector_validation.h"
 #include "../ValidationFuncs/arguments_validation.h"
@@ -29,7 +30,12 @@ int main(int argc, char** argv){
         std::cout << ARGS_BAD_MESSAGE << std::endl;
         return 1;
     }
-    SocketConnection client(12345);
+
+    int port = std::stoi(argv[CLIENT_ARGS_VARIABLE_PORT]);
+    struct sockaddr_in sa;
+    unsigned long int ip = 0;
+    inet_pton(AF_INET, argv[CLIENT_ARGS_VARIABLE_IP], &ip);
+    SocketConnection client(port, ip);
     run(client);
     return 0;
 }
