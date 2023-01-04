@@ -4,7 +4,6 @@
 #include <cmath>
 
 #define MAX_PORT_VALUE 65535
-#define BAD_PORT_MESSAGE "bad port parameter, needs to be a positive integer between 1 and 65535"
 #define BAD_AF_PARAMETER "bad address for af parameter in inet_pton"
 
 bool isIP(std::string ip){
