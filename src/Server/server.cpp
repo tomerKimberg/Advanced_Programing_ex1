@@ -12,6 +12,7 @@
 #define SERVER_NUMBER_OF_ARGUMENTS 3
 #define SERVER_ARGS_VARIABLE_PORT 2
 #define SERVER_ARGS_VARIABLE_PATH 1
+#define BIND_ERROR_MESSAGE "error binding given port, exiting."
 
 
 /**
@@ -29,7 +30,10 @@ int main(int argc, char** argv){
     }
     int port = std::stoi(argv[SERVER_ARGS_VARIABLE_PORT]);
     SocketConnection server(port);
-    server.bind();
+    if(server.bind() < 0){
+        std::cout << BIND_ERROR_MESSAGE << std::endl;
+        return 1;
+    }
     bool firstConnection = false;
 
     if(server.listen() == 0) {
