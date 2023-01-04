@@ -135,7 +135,7 @@ std::string KNN::getClassification(std::vector<double> v1) {
         return INVALID_INPUT_ERROR_MESSAGE;
     }
 	if(this->k > this->vectorsWithSameLength){
-		return "k too big";
+		return INVALID_INPUT_ERROR_MESSAGE;
 	}
     std::map<std::string, int> classifications;
         for (std::string classification: KNearestClassifications) {
