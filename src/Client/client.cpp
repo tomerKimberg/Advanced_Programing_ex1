@@ -1,6 +1,7 @@
 #include <sstream>
 #include "../DistanceCalculator/vector_functions.h"
 #include "../ValidationFuncs/vector_validation.h"
+#include "../ValidationFuncs/arguments_validation.h"
 #include "../DistanceCalculator/distance_algorithms.h"
 #include "..//DistanceCalculator/headerDistanceCalculators.h"
 #include "..//KNN/KNN.h"
