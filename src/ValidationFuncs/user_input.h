@@ -7,6 +7,8 @@
 
 #include <vector>
 #include <string>
+
+#define INVALID_INPUT_ERROR_MESSAGE "invalid input"
 /**
  * split user input to 3 strings- vector, metric and k-neighbors
  * @param line user input

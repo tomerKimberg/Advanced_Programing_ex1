@@ -64,7 +64,7 @@ void run(SocketConnection client) {
             }
         }
         else{
-            std::cout << "input invalid" << std::endl;
+            std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;
         }
 
     }
