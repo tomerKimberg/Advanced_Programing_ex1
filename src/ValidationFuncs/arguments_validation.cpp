@@ -28,7 +28,6 @@ bool isPort(std::string portStr){
         std::cout << BAD_PORT_MESSAGE << std:: endl;
         return false;
     }   
-    std::cout << "port: "<< port << std::endl; 
     if(port <= 0 || port > MAX_PORT_VALUE){        
         std::cout << BAD_PORT_MESSAGE << std:: endl;
         return false;
