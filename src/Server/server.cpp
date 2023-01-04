@@ -9,8 +9,26 @@
 #include "..//Extractors/FileExtractor.h"
 #include "..//SocketConnection/SocketConnection.h"
 
-int main(){
-    SocketConnection server(12345);
+#define SERVER_NUMBER_OF_ARGUMENTS 3
+#define SERVER_ARGS_VARIABLE_PORT 2
+#define SERVER_ARGS_VARIABLE_PATH 1
+
+
+/**
+ * @param int argc, amount of the program arguments
+ * @param char** argv - the arguments values
+ * @return bool - wether the arguments are valid or not
+*/
+bool validArgs(int argc, char** argv);
+
+int main(int argc, char** argv){
+    //check program arguments
+    if(!validArgs(argc, argv)){
+        std::cout << ARGS_BAD_MESSAGE << std::endl;
+        return 1;
+    }
+    int port = std::stoi(argv[SERVER_ARGS_VARIABLE_PORT]);
+    SocketConnection server(port);
     server.bind();
     bool firstConnection = false;
 
@@ -34,4 +52,16 @@ int main(){
         std::cout << "problem listening" << std::endl;
     }
     server.close();
+}
+
+bool validArgs(int argc, char** argv){
+    if(SERVER_NUMBER_OF_ARGUMENTS != argc){
+        std::cout << BAD_ARGUMENTS_NUMBER << std:: endl;
+        return false;
+    }
+    if(!isPort(argv[SERVER_ARGS_VARIABLE_PORT])){
+        std::cout << BAD_ARGUMENT_PORT_MESSAGE << std:: endl;
+        return false;
+    }
+    return true;
 }

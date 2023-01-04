@@ -1,5 +1,9 @@
 #ifndef TARGIL1_ARGUMENTS_VALIDATION_H
 #define TARGIL1_ARGUMENTS_VALIDATION_H
+#define BAD_ARGUMENTS_NUMBER "Wrong amount of arguments were passed to the program, exiting."
+#define BAD_ARGUMENT_PORT_MESSAGE "Bad port given to the program, exiting."
+#define BAD_ARGUMENT_IP_MESSAGE "Bad ip given to the program, exiting."
+#define ARGS_BAD_MESSAGE "Bad arguments, exiting."
 #include <string>
 /**
  * This function tries to convert the given string to ipv4 address and returns a boolean value according to the result
