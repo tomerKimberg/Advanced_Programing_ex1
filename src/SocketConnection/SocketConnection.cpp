@@ -82,8 +82,8 @@ int SocketConnection::send(const std::string& message) {
     return send_bytes;
 }
 
-int SocketConnection::close() {
-    return ::close(this->sock);
+int SocketConnection::closeSocket() {
+    return close(this->sock);
 }
 
 bool SocketConnection::receiveNotFail(){

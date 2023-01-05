@@ -68,7 +68,7 @@ void run(SocketConnection client) {
         }
 
     }
-    client.close();
+    client.closeSocket();
 }
 bool validArgs(int argc, char** argv){
     if(CLIENT_NUMBER_OF_ARGUMENTS != argc){
