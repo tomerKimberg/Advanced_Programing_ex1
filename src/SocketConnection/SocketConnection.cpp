@@ -1,5 +1,6 @@
 #include <cstring>
 #include <csignal>
+#include <unistd.h>
 #include "SocketConnection.h"
 #define DEBUG_SEND 0
 SocketConnection::SocketConnection(const int portNum, unsigned long ip, int domain, int type){
