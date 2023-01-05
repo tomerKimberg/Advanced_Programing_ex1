@@ -1,7 +1,7 @@
 
 # **Program description**
 
-This program classifies a given vector using the KNN algorithm, a databe from a CSV file and a distance metric.
+In this repository we create a client and a server which communicate between them to get classifications of vectors. We start a server with a path to source file, that will use the server in the KNN process. we start a client, and the client sends to the server a vector to classify, distance calculation metric and the number of neighbors to use in the knn. The server responds to the client with the right classification or an invalid input message, if the vector doesn't fit the server's vecotrs from the source file, or the K is bigger than the amount of records in the source file.
 
 ### What is KNN?
 KNN is an artificail intelligence algorithm used to classify a given vector.
@@ -37,18 +37,32 @@ This project includes a makefile, to compile the project, run it with the make c
 ```
 make
 ```
-After compilation, a new file called knn will apear, this is the execution file for our program.
-To run the program, we need 3 program arguments:
-1. k - a positive integer to indicate how many neighbors will we consider when determining the classification
-2. path - a full or relative path to a csv source file, for the knn model to have data
-3. metric - one of the following five distance metrics
+After compilation, two new files will be created, server.out and client.out.
+To run the server, we need 2 program argument:
+1. path - a full or relative path to a csv source file, for the knn model to have data
+2. port - the port that the server will bind to
+execution example:
+```
+./server.out datasets/iris/iris_classified.csv 12345
+```
+To run the client, we need 2 program argument:
+1. ip - the ip of the computer that the server uses
+2. port - the port of our server
+execution example:
+```
+./client.out 127.0.0.1 12345
+```
+when the client is active, to send a request to the server, use the following fomat: VECTOR METRIC K, when:
+1. VECTOR - is the vector we want to classify
+2. METRIC - is one of the following five distance metrics
 	- AUC - for Auclidean distance
 	- MAN - for Manhattan distance
 	- CHB - for Chebyshev distance
 	- CAN - for Canberra distance
 	- MIN - for Monkowski distance (with a constant of 2)
-
-execution example:
+3. K - a positive integer to indicate how many neighbors will we consider when determining the classification
+for example:
 ```
-./knn 6 datasets/iris/iris_classified.csv AUC
+1.1 2.2 3.3 4.4 AUC 5
 ```
+to close the connection from the client, type "-1", and the client will close.
