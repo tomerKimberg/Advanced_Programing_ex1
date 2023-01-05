@@ -3,6 +3,7 @@
 #define BAD_ARGUMENTS_NUMBER "Wrong amount of arguments were passed to the program, exiting."
 #define BAD_ARGUMENT_PORT_MESSAGE "Bad port given to the program, exiting."
 #define BAD_ARGUMENT_IP_MESSAGE "Bad ip given to the program, exiting."
+#define BAD_ARGUMENT_PATH_MESSAGE "Bad path given to the program, exiting."
 #define ARGS_BAD_MESSAGE "Bad arguments, exiting."
 #include <string>
 /**
@@ -17,4 +18,10 @@ bool isIP(std::string ip);
  * @return bool
 */
 bool isPort(std::string port);
+/**
+ * This function tries to open the given string as a file and returns a boolean value according to the result
+ * @param std::string port the port we want to convert
+ * @return bool
+*/
+bool isPath(std::string path);
 #endif //TARGIL1_ARGUMENTS_VALIDATION_H

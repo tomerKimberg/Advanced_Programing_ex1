@@ -79,6 +79,10 @@ bool validArgs(int argc, char** argv){
         std::cout << BAD_ARGUMENT_PORT_MESSAGE << std:: endl;
         return false;
     }
+    if(!isPath(argv[SERVER_ARGS_VARIABLE_PATH])){
+        std::cout << BAD_ARGUMENT_PATH_MESSAGE << std:: endl;
+        return false;
+    }
     return true;
 }
 std::vector<double> vectorFromString(std::string line, bool& valid_input)
