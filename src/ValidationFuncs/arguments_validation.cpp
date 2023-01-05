@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <arpa/inet.h>
 #include <cmath>
 
@@ -35,6 +36,15 @@ bool isPort(std::string portStr){
     if(port < pow(10, portStr.length() - 1)){
         return false;
     }
+    return true;
+}
+bool isPath(std::string path){
+    std::ifstream fileStream;
+    fileStream.open(path);
+    if(fileStream.fail()){
+        return false;
+    }
+    fileStream.close();
     return true;
 }
 /**
