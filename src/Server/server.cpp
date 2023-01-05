@@ -66,7 +66,7 @@ int main(int argc, char** argv){
     else{
         std::cout << "problem listening" << std::endl;
     }        
-    server.close();
+    server.closeSocket();
     return 0;
 }
 
@@ -112,7 +112,7 @@ void runServer(SocketConnection server, std::map<std::vector<double>, std::vecto
             //message is empty only if socket was closed
             if (message.empty()){
                 acceptedConnection = false;
-                connection.close();
+                connection.closeSocket();
                 break;
             }
             std::vector<std::string> splittedMessage = splitUserInput(message);

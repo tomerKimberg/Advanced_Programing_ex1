@@ -59,7 +59,7 @@ public:
      * close connection and ussage of socket
      * @return int negative number- unsuccessful close
      */
-    int close();
+    int closeSocket();
 
     bool receiveNotFail();
 

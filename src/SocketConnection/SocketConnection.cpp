@@ -1,5 +1,6 @@
 #include <cstring>
 #include <csignal>
+#include <unistd.h>
 #include "SocketConnection.h"
 #define DEBUG_SEND 0
 SocketConnection::SocketConnection(const int portNum, unsigned long ip, int domain, int type){
@@ -82,8 +83,8 @@ int SocketConnection::send(const std::string& message) {
     return send_bytes;
 }
 
-int SocketConnection::close() {
-    return ::close(this->sock);
+int SocketConnection::closeSocket() {
+    return close(this->sock);
 }
 
 bool SocketConnection::receiveNotFail(){
