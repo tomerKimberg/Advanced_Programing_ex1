@@ -7,7 +7,9 @@
 
 
 class DefualtIO {
-
+public:
+    std::string read();
+    void write(std::string);
 };
 
 
