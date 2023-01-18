@@ -12,7 +12,7 @@ class Context {
 private:
   int* k;
   KNN* knn;
-  GetNeigbors* ng;
+  GetNeighbors* gn;
   std::string* metric;
   std::vector<int,std::string>* result;
 
