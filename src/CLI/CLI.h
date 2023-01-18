@@ -24,5 +24,6 @@ class CLI{
 	*/
 	void start();
 }
+;
 
 #endif //TARGIL1_CLI_H

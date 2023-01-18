@@ -6,7 +6,7 @@
 #include "../Extractors/SocketExtractor.h"
 #define NUM_CONNECTIONS 5
 
-//TODO derive from DefualtIO
+//TODO derive from DefaultIO
 class SocketConnection {
 private:
     sockaddr_in sin;
