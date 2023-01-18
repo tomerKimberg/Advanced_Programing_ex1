@@ -14,7 +14,7 @@ private:
     std::string description;
     Context context;
 public:
-    void execute();
+    virtual void execute() = 0;
 };
 
 
