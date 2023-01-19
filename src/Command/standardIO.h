@@ -2,20 +2,20 @@
 // Created by tomer on 19/01/2023.
 //
 
-#ifndef TARGIL1_STANDARTIO_H
-#define TARGIL1_STANDARTIO_H
+#ifndef TARGIL1_STANDARDIO_H
+#define TARGIL1_STANDARDIO_H
 
 
 #include "DefaultIO.h"
 
-class StandartIO : public DefaultIO{
+class StandardIO : public DefaultIO{
 public:
     std::string read() override;
 
     void write(std::string string) override;
 
-    StandartIO();
+    StandardIO();
 };
 
 
-#endif //TARGIL1_STANDARTIO_H
+#endif //TARGIL1_STANDARDIO_H
