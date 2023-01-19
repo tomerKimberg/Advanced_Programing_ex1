@@ -9,13 +9,16 @@ Command1::Command1(std::string description, DefaultIO* io,
                    Context context) : Command(description, io, context) {
 }
 void Command1::execute() {
-    this->io.write(UPLOAD_TRAIN_CSV);
-    std::string valid  = this->io.read();
+    this->io->write(UPLOAD_TRAIN_CSV);
+    std::string valid  = this->io->read();
     if(valid == "invalid Path"){
 
     }
     else{
-        this->context.setGn(this->io.);
+
+        //TODO create stringExtractor
+        //this->context.setGn();
+
     }
 
 }
