@@ -15,7 +15,7 @@ void Command1::execute() {
 
     }
     else{
-
+        this->context.setGn(this->io.);
     }
 
 }
