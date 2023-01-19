@@ -50,6 +50,10 @@ public:
 
     void updateToClassify(std::vector<double> v);
 
+    void initializeGetNeighbors();
+
+    void initializeKNN();
+
 
 
 
