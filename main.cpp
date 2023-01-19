@@ -4,6 +4,8 @@
 #include <regex>
 #include <cmath>
 #include "src/Extractors/StringExtractor.h"
+#include "src/Command/Command1.h"
+#include "src/Command/standardIO.h"
 
 
 #define NUMBER_OF_VECTORS 1
@@ -22,11 +24,18 @@ input: vector<double>
 output: none
 this function prints the vector with spaces between the values
 */
+#include "src/ValidationFuncs/arguments_validation.h"
 
 
 int main(int argc, char** argv)
 {
-
+    Context context;
+    StandardIO standardIo;
+    FileExtractor fileExtractor("datasets/wine/wine_Classified");
+    isPath("datasets/beans/beans_Classified");
+    std::string data = fileExtractor.getData();
+    Command1 c("test",&standardIo, &context);
+    c.execute();
 
 
 

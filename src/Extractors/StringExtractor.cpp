@@ -21,7 +21,7 @@ StringExtractor::~StringExtractor() {
 }
 
 DataExtractor *StringExtractor::copy() {
-    return nullptr;
+    return new StringExtractor(this->data);
 }
 
 std::string StringExtractor::getData() {
