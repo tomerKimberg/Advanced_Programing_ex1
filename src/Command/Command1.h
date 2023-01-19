@@ -7,7 +7,7 @@
 #include "Command.h"
 
 class Command1: public Command{
-    Command1(std::string description, DefaultIO io, Context context);
+    Command1(std::string description, DefaultIO* io, Context context);
 
     void execute();
 };

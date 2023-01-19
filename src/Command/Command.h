@@ -10,12 +10,12 @@
 
 class Command {
 protected:
-    DefaultIO io;
+    DefaultIO* io;
     std::string description;
     Context context;
 
 public:
-    Command(std::string description, DefaultIO io, Context context);
+    Command(std::string description, DefaultIO* io, Context context);
     virtual void execute() = 0;
 };
 
