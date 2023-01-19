@@ -108,3 +108,16 @@ void Context::updateToClassify(std::vector<double> v){
     this->toClassify->push_back(v);
 }
 
+void Context::initializeGetNeighbors() {
+    if(this->gn){
+        delete this->gn;
+        this->gn = nullptr;
+    }
+}
+void Context::initializeKNN() {
+    if(this->knn){
+        delete this->knn;
+        this->knn = nullptr;
+    }
+}
+

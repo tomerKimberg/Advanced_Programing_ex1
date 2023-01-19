@@ -26,10 +26,7 @@ this function prints the vector with spaces between the values
 
 int main(int argc, char** argv)
 {
-    StringExtractor stringExtractor("1,de/r3,2,f/r");
-    while (stringExtractor.hasNext()){
-        stringExtractor.getData();
-    }
+
 
 
 
