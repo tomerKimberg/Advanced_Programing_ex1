@@ -10,6 +10,7 @@ Context::Context(){
     //this->metric = "AUC";
     this->metric = "AUC";
     this->gn = nullptr;
+    this->toClassify = nullptr;
     this->knn = nullptr;
     this->result = nullptr;
 }
@@ -17,6 +18,9 @@ Context::~Context() {
     delete this->k;
     delete this->gn;
     delete this->knn;
+    delete this->result;
+    delete this->toClassify;
+
 
 
 }
@@ -33,11 +37,15 @@ GetNeighbors *Context::getGn() const {
     return gn;
 }
 
+std::vector<std::vector<double>> *Context::getToClassify() const {
+    return toClassify;
+}
+
 const std::string &Context::getMetric() const {
     return metric;
 }
 
-std::vector<int, std::string> *Context::getResult() const {
+std::vector<std::pair<long, std::string>> *Context::getResult() const {
     return result;
 }
 
@@ -60,15 +68,43 @@ void Context::setGn(DataExtractor& extractor) {
         delete this->gn;
         this->gn = new GetNeighbors(&extractor);
     }
+
     else{
         this->gn = new GetNeighbors(&extractor);
     }
 }
 
+void Context::setToClassify(std::vector<std::vector<double>> *toClassify) {
+    this->toClassify = toClassify;
+}
+
 void Context::setMetric(const std::string &metric) {
     Context::metric = metric;
 }
-
-void Context::setResult(std::vector<int, std::string> *result) {
-    Context::result = result;
+void Context::initializeResult() {
+    if(this->result){
+        this->result->clear();
+    }
+    else{
+        this->result = new std::vector<std::pair<long, std::string>>;
+    }
 }
+
+void Context::updateResult(int k ,const std::string& classification) {
+    this->result->push_back(std::make_pair(k,classification));
+}
+
+void Context::initializeToClassify(){
+    if(this->toClassify){
+        toClassify->clear();
+    }
+    else{
+
+        this->toClassify = new std::vector<std::vector<double>>;
+    }
+}
+
+void Context::updateToClassify(std::vector<double> v){
+    this->toClassify->push_back(v);
+}
+
