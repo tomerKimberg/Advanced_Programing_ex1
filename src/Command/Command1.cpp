@@ -11,6 +11,7 @@ Command1::Command1(std::string description, DefaultIO* io,
                    Context* context) : Command(description, io, context) {
 }
 void Command1::execute() {
+    //TODO save all parameters to restore if upload wasn't complete
     //initialize all parameters.
     this->context->initializeKNN();
     this->context->initializeGetNeighbors();
