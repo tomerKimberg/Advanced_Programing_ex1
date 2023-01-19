@@ -31,11 +31,15 @@ int main(int argc, char** argv)
 {
     Context context;
     StandardIO standardIo;
-    FileExtractor fileExtractor("datasets/wine/wine_Classified");
-    isPath("datasets/beans/beans_Classified");
-    std::string data = fileExtractor.getData();
+    FileExtractor fileExtractor("../datasets/wine/wine_Classified.csv");
+
+    std::string data;
+    while (fileExtractor.hasNext()){
+        data += fileExtractor.getData();
+    }
     Command1 c("test",&standardIo, &context);
     c.execute();
+
 
 
 

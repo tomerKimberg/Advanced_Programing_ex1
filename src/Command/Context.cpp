@@ -75,6 +75,9 @@ void Context::setGn(DataExtractor& extractor) {
 }
 
 void Context::setToClassify(std::vector<std::vector<double>> *toClassify) {
+    if(this->toClassify){
+        delete this->toClassify;
+    }
     this->toClassify = toClassify;
 }
 

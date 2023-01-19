@@ -10,6 +10,7 @@ StandardIO::StandardIO() {}
 std::string StandardIO::read() {
     std::string temp;
     std::cin >> temp;
+
     return temp;
 }
 

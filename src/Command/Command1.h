@@ -13,11 +13,11 @@
 class Command1: public Command{
 
 private:
-    std::vector<std::vector<double>>* getToClassify(std::string data) {
+    void getToClassify(std::string data, std::vector<std::vector<double>>* toClassify) {
         StringExtractor stringExtractor(data);
-        std::vector<std::vector<double>>* toClassify = new std::vector<std::vector<double>>;
         while(stringExtractor.hasNext()){
             std::string  temp = stringExtractor.getData();
+            std::replace(temp.begin(),temp.end(), ',', ' ');
             if(checkVector(temp)){
                 std::stringstream stringstream;
                 stringstream.str(temp);
@@ -39,25 +39,39 @@ private:
             }
 
         }
-        return toClassify;
 
     }
     bool upload(std::string message){
         this->io->write(message);
-        std::string data  = this->io->read();
+        std::string data;
+
+
         if(data == "invalid Path"){
             return false;
         }
+
         else if( message == UPLOAD_TRAIN_CSV){
+            FileExtractor fileExtractor("../datasets/wine/wine_Classified.csv");
+            while (fileExtractor.hasNext()){
+                data += fileExtractor.getData();
+            }
+            //data += "\r";
             StringExtractor stringExtractor(data);
+
             this->context->setGn(stringExtractor);
+            //std::map<std::vector<double>, std::vector<std::string>> t = this->context->getGn()->getNeighborsInMap();
             return true;
 
         }
         else{
+            FileExtractor fileExtractor("../datasets/wine/wine_Unclassified.csv");
+            while (fileExtractor.hasNext()){
+                data += fileExtractor.getData();
+            }
+            //data +="\r";
+            this->context->initializeToClassify();
+            getToClassify(data, this->context->getToClassify());
 
-
-            this->context->setToClassify(this->getToClassify(data));
             return true;
 
         }
