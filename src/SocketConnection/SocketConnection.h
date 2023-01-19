@@ -4,10 +4,11 @@
 #include <netinet/in.h>
 #include <string>
 #include "../Extractors/SocketExtractor.h"
+#include "../Command/DefaultIO.h"
 #define NUM_CONNECTIONS 5
 
 //TODO derive from DefaultIO
-class SocketConnection {
+class SocketConnection :public DefaultIO{
 private:
     sockaddr_in sin;
     int sock;
@@ -66,6 +67,9 @@ public:
     bool receiveNotFail();
 
     int getSock();
+
+    std::string read();
+    void write(std::string message);
 
 
 };

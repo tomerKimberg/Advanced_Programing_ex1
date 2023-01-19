@@ -95,3 +95,12 @@ int SocketConnection::getSock() {
     return this->sock;
 }
 
+std::string SocketConnection::read(){
+    return this->receive();
+}
+void SocketConnection::write(std::string message) {
+    this->send(message);
+}
+
+
+
