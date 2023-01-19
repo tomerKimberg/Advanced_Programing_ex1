@@ -71,7 +71,6 @@ public:
     std::string read();
     void write(std::string message);
 
-
 };
 
 
