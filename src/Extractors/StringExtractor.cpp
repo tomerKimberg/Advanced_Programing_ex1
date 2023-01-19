@@ -7,8 +7,12 @@
 StringExtractor::StringExtractor(std::string data) {
     this->data = data;
     this->size = data.size();
+    std::string last = this->data.substr(this->size-1);
+    if(last != "\r"){
+        this->data += "\r";
+    }
     this->index0 = 0;
-    if(this->data.find_first_of("/r") != std::string::npos){
+    if(this->index0 < this->size || this->size == 0){
         this->next = true;
     }
     else{
@@ -21,16 +25,18 @@ StringExtractor::~StringExtractor() {
 }
 
 DataExtractor *StringExtractor::copy() {
-    return nullptr;
+    return new StringExtractor(this->data);
 }
 
 std::string StringExtractor::getData() {
-    size_t indexTemp = this->data.find_first_of("/r");
+    size_t indexTemp = this->data.find_first_of("\r");
     std::string temp = this->data.substr(0, indexTemp);
-    this->data.erase(0,indexTemp+2);
+    this->index0 += (indexTemp + 2);
+    this->data.erase(0,indexTemp+1);
     return temp;
 
 }
+
 
 
 bool StringExtractor::fail() {
@@ -38,7 +44,7 @@ bool StringExtractor::fail() {
 }
 
 bool StringExtractor::hasNext(){
-    if(this->data.find_first_of("/r") != std::string::npos){
+    if(this->data.find_first_of("\r") != std::string::npos){
         this->next = true;
     }
     else{
