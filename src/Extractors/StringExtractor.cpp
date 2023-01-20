@@ -47,7 +47,12 @@ bool StringExtractor::hasNext(){
     else{
         this->next = false;
         //restore stream using backup;
+        //this->data.str(this->backup);
         this->data.str(this->backup);
+        this->data.clear();
+
+
+
     }
     return this->fail();
 
