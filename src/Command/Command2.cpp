@@ -26,13 +26,19 @@ void Command2::execute() {
     ss >> metricTemp;
 
     int len = kString.size();
+    if(len == 0){
+        return;
+    }
     for(int i = 0 ; i < len; i++){
         if(!std::isdigit(kString[i])) {
             this->io->write("invalid value for K\n");
             valid = false;
         }
     }
-    kTemp  = stoi(kString);
+    if(valid){
+        kTemp  = stoi(kString);
+    }
+
 
     if(!checkMetric(metricTemp)){
         this->io->write("invalid value for metric\n");
@@ -43,7 +49,7 @@ void Command2::execute() {
         this->context->setMetric(metricTemp);
         this->kBackup = kTemp;
         this->metricBackUp = metricTemp;
-        this->io->write("valid");
+
 
     }
 }
