@@ -14,7 +14,7 @@ class Command1: public Command{
 
 private:
     void getToClassify(std::string data, std::vector<std::vector<double>>* toClassify) {
-        StringExtractor stringExtractor(data);
+        StringExtractor stringExtractor(data,'\r');
         while(stringExtractor.hasNext()){
             std::string  temp = stringExtractor.getData();
             std::replace(temp.begin(),temp.end(), ',', ' ');
@@ -55,11 +55,11 @@ private:
             while (fileExtractor.hasNext()){
                 data += fileExtractor.getData();
             }
-            //data += "\r";
-            StringExtractor stringExtractor(data);
+            //backup += "\r";
+            StringExtractor stringExtractor(data,'\r');
 
             this->context->setGn(stringExtractor);
-            //std::map<std::vector<double>, std::vector<std::string>> t = this->context->getGn()->getNeighborsInMap();
+            std::map<std::vector<double>, std::vector<std::string>> t = this->context->getGn()->getNeighborsInMap();
             return true;
 
         }
@@ -68,7 +68,7 @@ private:
             while (fileExtractor.hasNext()){
                 data += fileExtractor.getData();
             }
-            //data +="\r";
+            //backup +="\r";
             this->context->initializeToClassify();
             getToClassify(data, this->context->getToClassify());
 

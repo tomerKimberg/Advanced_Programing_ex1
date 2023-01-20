@@ -19,7 +19,7 @@ private:
     std::map<std::vector<double>, std::vector<std::string>> neighbors;
     FactoryDistanceCalculator FDC;
     /**
-     * inner class used to store a distance and the associated data with it
+     * inner class used to store a distance and the associated backup with it
      */
     class DistanceAndData{
     private:
@@ -112,7 +112,7 @@ private:
 
     };
 
-    //vector of distance and data object that stores a computed distance and a dataVector associated with it
+    //vector of distance and backup object that stores a computed distance and a dataVector associated with it
     std::vector<DistanceAndData> processedData;
     //store all vectors and classifications for vectors that don't match the given vectors dimension
     std::vector<std::pair<std::vector<double>, std::vector<std::string>>> mismatches;
@@ -127,7 +127,7 @@ private:
     void updateProcessedData(double distance, std::vector<double>* vectorDouble,
                              std::vector<std::string>* classification);
     /**
-     * for all the data inside the neighbors map, calculate distance and update the processedData accordingly
+     * for all the backup inside the neighbors map, calculate distance and update the processedData accordingly
      * @param v1 the vector to get its k-nearest neighbors
      * @return wether run was succesful or not
      */
