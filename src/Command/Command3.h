@@ -16,6 +16,7 @@ private:
     }
     bool runKnn(){
         int num = 1;
+        this->context->initializeResult();
         for(std::vector<double> temp : *this->context->getToClassify()){
           if(this->classify(num,temp)) {
               num += 1;
