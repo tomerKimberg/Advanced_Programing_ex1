@@ -33,6 +33,7 @@ void Command2::execute() {
         if(!std::isdigit(kString[i])) {
             this->io->write("invalid value for K\n");
             valid = false;
+            break;
         }
     }
     if(valid){
@@ -47,6 +48,10 @@ void Command2::execute() {
     if(valid){
         this->context->setK(kTemp);
         this->context->setMetric(metricTemp);
+        //the new parameters are different from the current ones
+        if(this->kBackup != kTemp || this->metricBackUp != metricTemp){
+            this->context->initializeResult();
+        }
         this->kBackup = kTemp;
         this->metricBackUp = metricTemp;
 
