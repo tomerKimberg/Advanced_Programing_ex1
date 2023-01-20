@@ -15,7 +15,7 @@ private:
   GetNeighbors* gn;
   std::string metric;
   std::vector<std::vector<double>>* toClassify;
-  std::vector<std::pair<long, std::string>>* result;
+  std::vector<std::pair<int, std::string>>* result;
 public:
     Context();
     ~Context();
@@ -30,7 +30,7 @@ public:
 
     const std::string &getMetric() const;
 
-    std::vector<std::pair<long, std::string>> *getResult() const;
+    std::vector<std::pair<int, std::string>> *getResult() const;
 
     void setK(int k);
 

@@ -45,7 +45,7 @@ const std::string &Context::getMetric() const {
     return metric;
 }
 
-std::vector<std::pair<long, std::string>> *Context::getResult() const {
+std::vector<std::pair<int, std::string>> *Context::getResult() const {
     return result;
 }
 
@@ -89,7 +89,7 @@ void Context::initializeResult() {
         this->result->clear();
     }
     else{
-        this->result = new std::vector<std::pair<long, std::string>>;
+        this->result = new std::vector<std::pair<int, std::string>>;
     }
 }
 
