@@ -48,14 +48,15 @@ private:
         std::string data = this->io->read();
 
 
-        if(data == "invalid Path"){
+        if(data == "invalid path"){
             return false;
         }
 
         else if(message == UPLOAD_TRAIN_CSV){
             if(DEBUG) {
+
+                FileExtractor fileExtractor(data);
                 data = "";
-                FileExtractor fileExtractor("../datasets/wine/wine_Classified.csv");
                 while (fileExtractor.hasNext()) {
                     data += fileExtractor.getData();
                 }
@@ -69,8 +70,9 @@ private:
         }
         else{
             if(DEBUG) {
+
+                FileExtractor fileExtractor(data);
                 data = "";
-                FileExtractor fileExtractor("../datasets/wine/wine_Unclassified.csv");
                 while (fileExtractor.hasNext()) {
                     data += fileExtractor.getData();
                 }
