@@ -4,15 +4,13 @@
 
 #include "StringExtractor.h"
 
-StringExtractor::StringExtractor(std::string data) {
-    this->data = data;
+StringExtractor::StringExtractor(std::string data, char delim) {
+    this->backup = data;
     this->size = data.size();
-    std::string last = this->data.substr(this->size-1);
-    if(last != "\r"){
-        this->data += "\r";
-    }
+    this->data.str(data);
+    this->delim = delim;
     this->index0 = 0;
-    if(this->index0 < this->size || this->size == 0){
+    if(!this->data.eof()){
         this->next = true;
     }
     else{
@@ -25,14 +23,13 @@ StringExtractor::~StringExtractor() {
 }
 
 DataExtractor *StringExtractor::copy() {
-    return new StringExtractor(this->data);
+    return new StringExtractor(this->backup, this->delim);
 }
 
 std::string StringExtractor::getData() {
-    size_t indexTemp = this->data.find_first_of("\r");
-    std::string temp = this->data.substr(0, indexTemp);
-    this->index0 += (indexTemp + 2);
-    this->data.erase(0,indexTemp+1);
+
+    std::string temp;
+    std::getline(this->data,temp, this->delim);
     return temp;
 
 }
@@ -44,11 +41,13 @@ bool StringExtractor::fail() {
 }
 
 bool StringExtractor::hasNext(){
-    if(this->data.find_first_of("\r") != std::string::npos){
+    if(!this->data.eof()){
         this->next = true;
     }
     else{
         this->next = false;
+        //restore stream using backup;
+        this->data.str(this->backup);
     }
     return this->fail();
 

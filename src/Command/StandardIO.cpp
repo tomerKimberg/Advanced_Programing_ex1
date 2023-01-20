@@ -1,18 +1,17 @@
 //
 // Created by tomer on 19/01/2023.
 //
-#include <stdio.h>
-#include <c++/11/iostream>
+
+#include <sstream>
+#include <iostream>
 #include "standardIO.h"
 
 StandardIO::StandardIO() {}
 
 std::string StandardIO::read() {
-    char* temp;
-    std::cin.getline(temp,std::string::npos);
-    std::string result = temp;
-
-    return result;
+    std::string temp;
+    std::getline(std::cin, temp, '\n');
+    return temp;
 }
 
 void StandardIO::write(std::string string) {
