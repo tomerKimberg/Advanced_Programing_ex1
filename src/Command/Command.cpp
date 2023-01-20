@@ -9,3 +9,6 @@ Command::Command(std::string description, DefaultIO* io, Context* context){
     this->io = io;
     this->context = context;
 }
+std::string Command::getDescription(){
+    return this->description;
+}

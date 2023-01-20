@@ -16,6 +16,7 @@ protected:
 
 public:
     Command(std::string description, DefaultIO* io, Context* context);
+    std::string getDescription();
     virtual void execute() = 0;
 };
 
