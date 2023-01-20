@@ -9,6 +9,7 @@
 #include "../ValidationFuncs/user_input.h"
 #define UPLOAD_TRAIN_CSV  "Please upload your local train CSV file.\n"
 #define UPLOAD_TEST_CSV  "Please upload your local test CSV file.\n"
+#define DEBUG true
 
 class Command1: public Command{
 
@@ -43,39 +44,45 @@ private:
     }
     bool upload(std::string message){
         this->io->write(message);
-        std::string data;
+        //get data from io
+        std::string data = this->io->read();
 
 
         if(data == "invalid Path"){
             return false;
         }
 
-        else if( message == UPLOAD_TRAIN_CSV){
-            FileExtractor fileExtractor("../datasets/wine/wine_Classified.csv");
-            while (fileExtractor.hasNext()){
-                data += fileExtractor.getData();
+        else if(message == UPLOAD_TRAIN_CSV){
+            if(DEBUG) {
+                data = "";
+                FileExtractor fileExtractor("../datasets/wine/wine_Classified.csv");
+                while (fileExtractor.hasNext()) {
+                    data += fileExtractor.getData();
+                }
             }
-            //backup += "\r";
+            //initialize stringExtractor to read until \r char
             StringExtractor stringExtractor(data,'\r');
-
             this->context->setGn(stringExtractor);
-            std::map<std::vector<double>, std::vector<std::string>> t = this->context->getGn()->getNeighborsInMap();
+            //std::map<std::vector<double>, std::vector<std::string>> t = this->context->getGn()->getNeighborsInMap();
             return true;
 
         }
         else{
-            FileExtractor fileExtractor("../datasets/wine/wine_Unclassified.csv");
-            while (fileExtractor.hasNext()){
-                data += fileExtractor.getData();
+            if(DEBUG) {
+                data = "";
+                FileExtractor fileExtractor("../datasets/wine/wine_Unclassified.csv");
+                while (fileExtractor.hasNext()) {
+                    data += fileExtractor.getData();
+                }
             }
-            //backup +="\r";
+
             this->context->initializeToClassify();
             getToClassify(data, this->context->getToClassify());
 
             return true;
 
         }
-        }
+    }
 
 public:
 
