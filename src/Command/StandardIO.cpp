@@ -18,3 +18,7 @@ void StandardIO::write(std::string string) {
     std::cout << string;
 
 }
+
+int StandardIO::closeIO(){
+    return 1;
+}

@@ -10,11 +10,14 @@
 
 class StandardIO : public DefaultIO{
 public:
+    StandardIO();
+
     std::string read() override;
 
     void write(std::string string) override;
 
-    StandardIO();
+    int closeIO();
+
 };
 
 

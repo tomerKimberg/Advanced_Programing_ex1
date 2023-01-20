@@ -102,5 +102,9 @@ void SocketConnection::write(std::string message) {
     this->send(message);
 }
 
+int SocketConnection::closeIO(){
+    return this->closeSocket();
+}
+
 
 
