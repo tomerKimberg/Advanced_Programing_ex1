@@ -26,22 +26,16 @@ this function prints the vector with spaces between the values
 */
 #include "src/ValidationFuncs/arguments_validation.h"
 #include "src/Command/Command2.h"
+#include "src/Command/Command3.h"
+#include "src/Command/Command4.h"
+#include "src/CLI/CLI.h"
 
 
 int main(int argc, char** argv)
 {
-    Context context;
     StandardIO standardIo;
-    FileExtractor fileExtractor("../datasets/wine/wine_Classified.csv");
-
-    std::string data;
-    while (fileExtractor.hasNext()){
-        data += fileExtractor.getData();
-    }
-    Command1 c("test",&standardIo, &context);
-    c.execute();
-    Command2 c2("test2", &standardIo, &context);
-    c2.execute();
+    CLI cli((DefaultIO*) &standardIo);
+    cli.start();
 
 
 
