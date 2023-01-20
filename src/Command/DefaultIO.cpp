@@ -3,11 +3,5 @@
 //
 
 #include "DefaultIO.h"
-DefaultIO::DefaultIO() {
-    this->extractor = nullptr;
-}
 
-DataExtractor* DefaultIO::getDataExtractor() {
-    return this->extractor;
-}
 

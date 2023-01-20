@@ -25,6 +25,7 @@ output: none
 this function prints the vector with spaces between the values
 */
 #include "src/ValidationFuncs/arguments_validation.h"
+#include "src/Command/Command2.h"
 
 
 int main(int argc, char** argv)
@@ -39,7 +40,8 @@ int main(int argc, char** argv)
     }
     Command1 c("test",&standardIo, &context);
     c.execute();
-
+    Command2 c2("test2", &standardIo, &context);
+    c2.execute();
 
 
 
