@@ -21,8 +21,10 @@ private:
         return false;
     }
     bool checkResult(){
-        if(!this->context->getResult()->empty()){
-            return true;
+        if(this->context->getResult()) {
+            if (!this->context->getResult()->empty()) {
+                return true;
+            }
         }
         return false;
     }
