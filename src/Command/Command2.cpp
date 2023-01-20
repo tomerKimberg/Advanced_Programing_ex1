@@ -17,10 +17,6 @@ void Command2::execute() {
     this->io->write(message);
     //expect to get number and metric
     std::stringstream ss(this->io->read());
-    //for debug
-    if(DEBUG) {
-        ss.str("10 MAN");
-    }
     bool valid  = true;
 
     int kTemp;
