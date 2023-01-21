@@ -9,7 +9,7 @@
 #include "../ValidationFuncs/user_input.h"
 #define UPLOAD_TRAIN_CSV  "Please upload your local train CSV file.\n"
 #define UPLOAD_TEST_CSV  "Please upload your local test CSV file.\n"
-#define COMMAND1_DEBUG true
+#define COMMAND1_DEBUG false
 
 class Command1: public Command{
 
