@@ -4,7 +4,6 @@
 
 #include <sstream>
 #include "Command2.h"
-#define DEBUG true
 #include "../ValidationFuncs/vector_validation.h"
 Command2::Command2(std::string description, DefaultIO *io, Context *context) : Command(description, io, context) {
     this->kBackup = *(this->context->getK());
