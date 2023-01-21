@@ -22,6 +22,11 @@
  * @return bool - wether the arguments are valid or not
 */
 bool validArgs(int argc, char** argv);
+/**
+ * @param SocketConnection - the connection that the menu will come from
+ *   recieves data using SocketConnection and prints it on std::cout
+*/
+void printMenu(SocketConnection client);
 void run(SocketConnection client);
 
 int main(int argc, char** argv){
@@ -47,8 +52,7 @@ void run(SocketConnection client) {
     }
 
     while(connection){
-        std::string userInput;
-        getline(std::cin, userInput);
+        printMenu(client);
         //if input is -1, close client
         if(userInput == "-1"){
             break;
@@ -84,4 +88,7 @@ bool validArgs(int argc, char** argv){
         return false;
     }
     return true;
+}
+void printMenu(SocketConnection client){
+    std::cout << client.receive() << std::endl;
 }
