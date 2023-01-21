@@ -27,6 +27,11 @@ bool validArgs(int argc, char** argv);
  *   recieves data using SocketConnection and prints it on std::cout
 */
 void printMenu(SocketConnection client);
+/**
+ * @param SocketConnection - the connection that the input will be sent through
+ * reads input from std::cin ands sends it through the socket
+ */
+void sendInputToServer(SocketConnection client);
 void run(SocketConnection client);
 
 int main(int argc, char** argv){
@@ -53,24 +58,7 @@ void run(SocketConnection client) {
 
     while(connection){
         printMenu(client);
-        //if input is -1, close client
-        if(userInput == "-1"){
-            break;
-        }
-        if(validUserInput(splitUserInput(userInput))) {
-            if(client.send(userInput)) {
-                std::string response = client.receive();
-                std::cout << response << std::endl;
-            }
-                //there was an error sending to the server, probably connection lost
-            else {
-                connection = false;
-            }
-        }
-        else{
-            std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;
-        }
-
+        sendInputToServer(client);
     }
     client.closeSocket();
 }
@@ -91,4 +79,9 @@ bool validArgs(int argc, char** argv){
 }
 void printMenu(SocketConnection client){
     std::cout << client.receive() << std::endl;
+}
+void sendInputToServer(SocketConnection client){
+    std::string userInput;        
+    getline(std::cin, userInput);
+    client.send(userInput);
 }
