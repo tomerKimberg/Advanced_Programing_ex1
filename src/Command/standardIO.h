@@ -7,7 +7,9 @@
 
 
 #include "DefaultIO.h"
-
+/**
+ * standard io for debug use
+ */
 class StandardIO : public DefaultIO{
 public:
     StandardIO();

@@ -12,6 +12,9 @@ class CLI{
 	std::vector<Command*> commands;
 	Context context;
     std::string menu;
+    /**
+     * create the menu
+     */
     void createMenu(){
         this->menu += "Welcome to the KNN Classifier Server. Please choose an option:\n";
         for(Command* c : this->commands){
@@ -19,6 +22,11 @@ class CLI{
         }
         this->menu += "8. exit\n";
     }
+    /**
+     * check if instruction given in valid
+     * @param instruction string
+     * @return true or false
+     */
     bool validateInstuction(std::string instruction){
         if(std::isdigit(instruction[0]) && instruction.size() == 1){
             int temp = std::stoi(instruction);
@@ -29,6 +37,11 @@ class CLI{
         return false;
 
     }
+    /**
+     * execute the command by the given instruction
+     * @param commandNum int
+     * @return true if the instruction was not to close communication
+     */
     bool goToCommand(int commandNum){
         if(commandNum == 8){
             return false;
@@ -52,7 +65,9 @@ class CLI{
 	*	output: none
 	*/
      ~CLI();
-
+    /**
+     * run the CLI
+     */
     void start();
 }
 ;

@@ -14,12 +14,20 @@ public:
     void execute() override;
 
 private:
+    /**
+     * check requirement to run knn algorithm
+     * @return bool
+     */
     bool checkRequirement(){
         if(this->context->getGn()){
             return true;
         }
         return false;
     }
+    /**
+     * check if results already exists
+     * @return
+     */
     bool checkResult(){
         if(this->context->getResult()) {
             if (!this->context->getResult()->empty()) {
@@ -28,6 +36,10 @@ private:
         }
         return false;
     }
+    /**
+     * create string of result to send
+     * @return std::string
+     */
     std::string sendResults(){
         std::string result;
         for(std::pair<int,std::string> temp : *this->context->getResult()){
