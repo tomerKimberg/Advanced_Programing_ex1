@@ -9,7 +9,7 @@
 #include "../ValidationFuncs/user_input.h"
 #define UPLOAD_TRAIN_CSV  "Please upload your local train CSV file.\n"
 #define UPLOAD_TEST_CSV  "Please upload your local test CSV file.\n"
-#define DEBUG true
+#define COMMAND1_DEBUG true
 
 class Command1: public Command{
 
@@ -64,7 +64,7 @@ private:
 
         else if(message == UPLOAD_TRAIN_CSV){
             //only for debug!!!
-            if(DEBUG) {
+            if(COMMAND1_DEBUG) {
 
                 FileExtractor fileExtractor(data);
                 data = "";
@@ -81,7 +81,7 @@ private:
         }
         else{
             //only for debug!!!
-            if(DEBUG) {
+            if(COMMAND1_DEBUG) {
 
                 FileExtractor fileExtractor(data);
                 data = "";
