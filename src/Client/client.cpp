@@ -26,13 +26,13 @@ bool validArgs(int argc, char** argv);
  * @param SocketConnection - the connection that the menu will come from
  *   recieves data using SocketConnection and prints it on std::cout
 */
-void printMenu(SocketConnection client);
+void printMenu(SocketConnection server);
 /**
  * @param SocketConnection - the connection that the input will be sent through
  * reads input from std::cin ands sends it through the socket
  */
-void sendInputToServer(SocketConnection client);
-void run(SocketConnection client);
+void sendInputToServer(SocketConnection server);
+void run(SocketConnection server);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -45,22 +45,22 @@ int main(int argc, char** argv){
     struct sockaddr_in sa;
     unsigned long int ip = 0;
     inet_pton(AF_INET, argv[CLIENT_ARGS_VARIABLE_IP], &ip);
-    SocketConnection client(port, ip);
-    run(client);
+    SocketConnection server(port, ip);
+    run(server);
     return 0;
 }
 
-void run(SocketConnection client) {
+void run(SocketConnection server) {
     bool connection = false;
-    if(client.connect() == 0){
+    if(server.connect() == 0){
         connection = true;
     }
 
     while(connection){
-        printMenu(client);
-        sendInputToServer(client);
+        printMenu(server);
+        sendInputToServer(server);
     }
-    client.closeSocket();
+    server.closeSocket();
 }
 bool validArgs(int argc, char** argv){
     if(CLIENT_NUMBER_OF_ARGUMENTS != argc){
@@ -77,11 +77,11 @@ bool validArgs(int argc, char** argv){
     }
     return true;
 }
-void printMenu(SocketConnection client){
-    std::cout << client.receive() << std::endl;
+void printMenu(SocketConnection server){
+    std::cout << server.receive() << std::endl;
 }
-void sendInputToServer(SocketConnection client){
+void sendInputToServer(SocketConnection server){
     std::string userInput;        
     getline(std::cin, userInput);
-    client.send(userInput);
+    server.send(userInput);
 }
