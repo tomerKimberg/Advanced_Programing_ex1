@@ -24,11 +24,11 @@ In order for these opertions to be well defined the following conditions must be
 2. Vectors musn't be empty.
 3. The input must be consisted of real numbers only.
 
-Our program will try to match the input vector with as much vectors from our backup that match the above conditions. If not all the conditions are met, including bad program arguments (more on that later), the program will exit gracefully.
+Our program will try to match the input vector with as much vectors from our data that match the above conditions. If not all the conditions are met, including bad program arguments (more on that later), the program will exit gracefully.
 
 ### Some technical details
 
-Our project uses an object oriented approch, all the distance functions are inheriting from the abstract class, `Distance function`. to create the database for the KNN, we used a class called `GetNeighbors`, that returns a map of vectors, for the KNN to use. we iterate on the file using a `FileExtractor` class that inherits from the `DataExtractor` class and in the future we will add a `SocketExtractor` class that will also be a `DataExtractor`, so the `GetNeighbors` object won't care about the source of our backup.
+Our project uses an object oriented approch, all the distance functions are inheriting from the abstract class, `Distance function`. to create the database for the KNN, we used a class called `GetNeighbors`, that returns a map of vectors, for the KNN to use. we iterate on the file using a `FileExtractor` class that inherits from the `DataExtractor` class and in the future we will add a `SocketExtractor` class that will also be a `DataExtractor`, so the `GetNeighbors` object won't care about the source of our data.
 Finally, the `KNN` object will apply the KNN algorithm on our vector, and return it's classification.
 
 # **Compilation and running instructions**
@@ -39,7 +39,7 @@ make
 ```
 After compilation, two new files will be created, server.out and client.out.
 To run the server, we need 2 program argument:
-1. path - a full or relative path to a csv source file, for the knn model to have backup
+1. path - a full or relative path to a csv source file, for the knn model to have data
 2. port - the port that the server will bind to
 execution example:
 ```
