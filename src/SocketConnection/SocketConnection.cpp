@@ -63,7 +63,7 @@ int SocketConnection::connect(){
     return connection;
 }
 
-std::string SocketConnection::receive() {
+std::string SocketConnection::read() {
     return this->socketExtractor.getData();
 }
 
@@ -93,10 +93,6 @@ bool SocketConnection::receiveNotFail(){
 
 int SocketConnection::getSock() {
     return this->sock;
-}
-
-std::string SocketConnection::read(){
-    return this->receive();
 }
 void SocketConnection::write(std::string message) {
     this->send(message);

@@ -51,7 +51,7 @@ public:
      * get incoming message from connected socket
      * @return string of the message
      */
-    std::string receive();
+    std::string read();
     /**
      * send message to connected socket
      * @param message sting of the meddage to send
@@ -68,7 +68,6 @@ public:
 
     int getSock();
 
-    std::string read();
     void write(std::string message);
     int closeIO();
 
