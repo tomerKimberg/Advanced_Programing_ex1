@@ -40,7 +40,7 @@ void Command1::execute() {
 
 }
 //private functions
-void Command1::getToClassify(std::string data, std::vector<std::vector<double>>* toClassify) {
+void Command1::saveDataToClassify(std::string data, std::vector<std::vector<double>>* toClassify) {
     StringExtractor stringExtractor(data,'\r');
     while(stringExtractor.hasNext()){
         std::string  temp = stringExtractor.getData();
@@ -105,7 +105,7 @@ bool Command1::upload(std::string message){
         }
 
         this->context->initializeToClassify();
-        getToClassify(data, this->context->getToClassify());
+        saveDataToClassify(data, this->context->getToClassify());
 
         return true;
 

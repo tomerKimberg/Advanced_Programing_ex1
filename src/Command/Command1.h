@@ -19,7 +19,7 @@ private:
      * @param data std::string. data sent to server
      * @param toClassify vector<vector<double>>, save data to this
      */
-    void getToClassify(std::string data, std::vector<std::vector<double>>* toClassify);    /**
+    void saveDataToClassify(std::string data, std::vector<std::vector<double>>* toClassify);    /**
      * upload csv file to the server
      * @param message std::string, the data sent to server
      * @return true- success uploading, else the path was invalid, false
