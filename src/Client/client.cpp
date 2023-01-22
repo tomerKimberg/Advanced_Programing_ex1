@@ -78,7 +78,7 @@ bool validArgs(int argc, char** argv){
     return true;
 }
 void printMenu(SocketConnection server){
-    std::cout << server.receive() << std::endl;
+    std::cout << server.read() << std::endl;
 }
 void sendInputToServer(SocketConnection server){
     std::string userInput;        
