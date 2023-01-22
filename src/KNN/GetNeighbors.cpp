@@ -11,6 +11,7 @@ GetNeighbors::GetNeighbors(DataExtractor *de){
     this->dataExtractor = nullptr;
     this->setDataExtractor(de);
 }
+
 void GetNeighbors::setDataExtractor(DataExtractor *de) {
     //keep in case we will change implementation-
     //using this method, the pointer is dependent on the life scope of &de.
@@ -80,5 +81,9 @@ std::map<std::vector<double>, std::vector<std::string>> GetNeighbors::getNeighbo
         
     }
     return neighbors;
+}
+
+DataExtractor *GetNeighbors::getDataExtractor() const {
+    return dataExtractor;
 }
 

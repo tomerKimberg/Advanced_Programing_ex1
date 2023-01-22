@@ -9,8 +9,20 @@
 
 class DefaultIO {
 public:
-    std::string read();
-    void write(std::string);
+    /**
+     * read from source using io
+     * @return std::string
+     */
+    virtual std::string read() = 0;
+    /**
+     * write to source using io
+     */
+    virtual void write(std::string) = 0;
+    /** ### might want to remove
+     * close an IO, return a close code
+     * @return int
+     */
+    virtual int closeIO() = 0;
 };
 
 
