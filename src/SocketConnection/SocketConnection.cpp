@@ -95,6 +95,7 @@ int SocketConnection::getSock() {
     return this->sock;
 }
 void SocketConnection::write(std::string message) {
+    //kept write function becuase send function returns value but write needs to be void
     this->send(message);
 }
 
