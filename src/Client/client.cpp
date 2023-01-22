@@ -7,6 +7,7 @@
 #include "..//DistanceCalculator/headerDistanceCalculators.h"
 #include "..//KNN/KNN.h"
 #include "..//KNN/GetNeighbors.h"
+#include "../CommunicationProtocol.h"
 #include "../Extractors/DataExtractor.h"
 #include "..//Extractors/FileExtractor.h"
 #include "..//SocketConnection/SocketConnection.h"
@@ -15,6 +16,13 @@
 #define CLIENT_NUMBER_OF_ARGUMENTS 3
 #define CLIENT_ARGS_VARIABLE_PORT 2
 #define CLIENT_ARGS_VARIABLE_IP 1
+//menu options
+#define CLIENT_EXIT_MENU_OPTION 8
+#define UPLOAD_FILES_OPTION 1
+#define CHANGE_K_METRIC_OPTION 2
+#define CLASSIFY_OPTION 3
+#define RECEIVE_RESULTS_OPTION 4
+#define RECEIVE_RESULTS_TO_FILE_OPTION 5
 
 /**
  * @param int argc, amount of the program arguments
@@ -32,6 +40,11 @@ void printMenu(SocketConnection server);
  * reads input from std::cin ands sends it through the socket
  */
 void sendInputToServer(SocketConnection server);
+/**
+ * @param int the option to be executed from the menu
+ * executes the relevant menu function - only executes if menuOption is corresponding to a valid *defined* menu option
+*/
+void executeMenuOption(int menuOption);
 void run(SocketConnection server);
 
 int main(int argc, char** argv){
@@ -59,6 +72,21 @@ void run(SocketConnection server) {
     while(connection){
         printMenu(server);
         sendInputToServer(server);
+        std::string response = server.read();
+        if(INVALID_MESSAGE_MENU_OPTION == response){
+            continue;
+        }
+        int menuOption = 0;
+        try{
+            menuOption = std::stoi(response);
+        }catch(...){
+            std::cout << ERROR_MESSAGE_SERVER_UNEXPECTED_RESPONSE;
+            continue;
+        }
+        if(CLIENT_EXIT_MENU_OPTION == menuOption){
+            break;
+        }
+        executeMenuOption(menuOption);
     }
     server.closeSocket();
 }
@@ -78,10 +106,31 @@ bool validArgs(int argc, char** argv){
     return true;
 }
 void printMenu(SocketConnection server){
-    std::cout << server.read() << std::endl;
+    std::cout << "in print menu" << std::endl;
+    std::string menu = server.read();
+    std::cout << menu << std::endl;
 }
 void sendInputToServer(SocketConnection server){
     std::string userInput;        
     getline(std::cin, userInput);
     server.send(userInput);
+}
+void executeMenuOption(int menuOption){   
+    switch(menuOption){
+        case UPLOAD_FILES_OPTION:
+            std::cout << "option 1" << std::endl;
+            break;
+        case CHANGE_K_METRIC_OPTION:
+            std::cout << "option 2" << std::endl;
+            break;
+        case CLASSIFY_OPTION:
+            std::cout << "option 3" << std::endl;
+            break;
+        case RECEIVE_RESULTS_OPTION:
+            std::cout << "option 4" << std::endl;
+            break;
+        case RECEIVE_RESULTS_TO_FILE_OPTION:
+            std::cout << "option 5" << std::endl;
+            break;
+    }
 }

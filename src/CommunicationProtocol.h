@@ -7,5 +7,7 @@
 #define INVALID_MESSAGE_MENU_OPTION "invalid menu option, please try again.\n"
 #define ERROR_MESSAGE_REQUIRED_CLASSIFICATION "please classify the data\n"
 #define ERROR_MESSAGE_REQUIRED_DATA "please upload data\n"
+//communication errors
+#define ERROR_MESSAGE_SERVER_UNEXPECTED_RESPONSE "the server sent an unexpected result, please try again.\n"
 
 #endif
