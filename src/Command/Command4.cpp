@@ -21,5 +21,29 @@ void Command4::execute() {
         this->io->write("please upload data\n");
         return;
     }
-
+}
+//private functions
+bool Command4::checkRequirement(){
+    if(this->context->getGn()){
+        return true;
+    }
+    return false;
+}
+bool Command4::checkResult(){
+    if(this->context->getResult()) {
+        if (!this->context->getResult()->empty()) {
+            return true;
+        }
+    }
+    return false;
+}
+std::string Command4::sendResults(){
+    std::string result;
+    for(std::pair<int,std::string> temp : *this->context->getResult()){
+        result += std::to_string(temp.first);
+        result += '\t';
+        result += temp.second;
+        result += '\n';
+    }
+    return result;
 }

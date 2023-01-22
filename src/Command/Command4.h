@@ -18,39 +18,17 @@ private:
      * check requirement to run knn algorithm
      * @return bool
      */
-    bool checkRequirement(){
-        if(this->context->getGn()){
-            return true;
-        }
-        return false;
-    }
+    bool checkRequirement();
     /**
      * check if results already exists
      * @return
      */
-    bool checkResult(){
-        if(this->context->getResult()) {
-            if (!this->context->getResult()->empty()) {
-                return true;
-            }
-        }
-        return false;
-    }
+    bool checkResult();
     /**
      * create string of result to send
      * @return std::string
      */
-    std::string sendResults(){
-        std::string result;
-        for(std::pair<int,std::string> temp : *this->context->getResult()){
-            result += std::to_string(temp.first);
-            result += '\t';
-            result += temp.second;
-            result += '\n';
-        }
-        return result;
-    }
-};
-
+    std::string sendResults();
+}; 
 
 #endif //TARGIL1_COMMAND4_H
