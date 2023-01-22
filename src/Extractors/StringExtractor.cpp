@@ -33,11 +33,8 @@ std::string StringExtractor::getData() {
     return temp;
 
 }
-
-
-
 bool StringExtractor::fail() {
-    return this->next;
+    return this->data.fail();
 }
 
 bool StringExtractor::hasNext(){
@@ -50,11 +47,8 @@ bool StringExtractor::hasNext(){
         //this->data.str(this->backup);
         this->data.str(this->backup);
         this->data.clear();
-
-
-
     }
-    return this->fail();
+    return this->next;
 
 
 }
