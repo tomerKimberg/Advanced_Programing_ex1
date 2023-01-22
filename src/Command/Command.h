@@ -9,11 +9,21 @@
 #include "Context.h"
 
 class Command {
-private:
-    DefaultIO io;
+protected:
+    DefaultIO* io;
     std::string description;
-    Context context;
+    Context* context;
+
 public:
+    Command(std::string description, DefaultIO* io, Context* context);
+    /**
+     * get the description of the command
+     * @return std::string
+     */
+    std::string getDescription();
+    /**
+     * execute a command
+     */
     virtual void execute() = 0;
 };
 

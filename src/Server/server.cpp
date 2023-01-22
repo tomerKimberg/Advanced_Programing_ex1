@@ -111,7 +111,7 @@ void runServer(SocketConnection server, std::map<std::vector<double>, std::vecto
             acceptedConnection = true;
         }
         while (acceptedConnection) {
-            std::string message = connection.receive();
+            std::string message = connection.read();
             std::string response = "";
             //message is empty only if socket was closed
             if (message.empty()){

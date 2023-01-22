@@ -12,6 +12,8 @@ all:
 	$(MAKE) -C src/KNN
 	$(MAKE) -C src/SocketConnection
 	$(MAKE) -C src/ValidationFuncs
+	$(MAKE) -C src/Command
+	$(MAKE) -C src/CLI
 	$(MAKE) -C src/Server
 	$(MAKE) -C src/Client
 	$(MAKE) -C obj server

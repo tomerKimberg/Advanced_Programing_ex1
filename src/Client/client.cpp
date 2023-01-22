@@ -55,7 +55,7 @@ void run(SocketConnection client) {
         }
         if(validUserInput(splitUserInput(userInput))) {
             if(client.send(userInput)) {
-                std::string response = client.receive();
+                std::string response = client.read();
                 std::cout << response << std::endl;
             }
                 //there was an error sending to the server, probably connection lost
