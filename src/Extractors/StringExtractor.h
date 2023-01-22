@@ -28,7 +28,7 @@ public:
 
     bool fail() override;
 
-    bool hasNext();
+    bool hasNext() override;
 };
 
 
