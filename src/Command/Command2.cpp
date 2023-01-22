@@ -4,6 +4,7 @@
 
 #include <sstream>
 #include "Command2.h"
+#include "../CommunicationProtocol.h"
 #include "../ValidationFuncs/vector_validation.h"
 Command2::Command2(std::string description, DefaultIO *io, Context *context) : Command(description, io, context) {
     this->kBackup = *(this->context->getK());
@@ -30,7 +31,7 @@ void Command2::execute() {
     }
     for(int i = 0 ; i < len; i++){
         if(!std::isdigit(kString[i])) {
-            this->io->write("invalid value for K\n");
+            this->io->write(INVALID_MESSAGE_VALUE_K);
             valid = false;
             break;
         }
@@ -41,7 +42,7 @@ void Command2::execute() {
 
 
     if(!checkMetric(metricTemp)){
-        this->io->write("invalid value for metric\n");
+        this->io->write(INVALID_MESSAGE_VALUE_METRIC);
         valid = false;
     }
     if(valid){
@@ -53,7 +54,5 @@ void Command2::execute() {
         }
         this->kBackup = kTemp;
         this->metricBackUp = metricTemp;
-
-
     }
 }

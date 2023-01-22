@@ -3,6 +3,7 @@
 //
 
 #include "Command1.h"
+#include "../CommunicationProtocol.h"
 #include "../Extractors/StringExtractor.h"
 #define UPLOAD_TRAIN_CSV  "Please upload your local train CSV file.\n"
 #define UPLOAD_TEST_CSV  "Please upload your local test CSV file.\n"
@@ -71,7 +72,7 @@ bool Command1::upload(std::string message){
     std::string data = this->io->read();
 
     //if the client got a wrong path, the client will send an invalid path message to the server
-    if(data == "invalid path"){
+    if(data == INVALID_MESSAGE_PATH){
         return false;
     }
 

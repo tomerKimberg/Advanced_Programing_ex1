@@ -3,6 +3,7 @@
 //
 
 #include "Command4.h"
+#include "../CommunicationProtocol.h"
 
 Command4::Command4(const std::string &description, DefaultIO *io, Context *context) : Command(description, io,
                                                                                               context) {}
@@ -13,12 +14,12 @@ void Command4::execute() {
             this->io->write(this->sendResults());
         }
         else{
-            this->io->write("please classify the data\n");
+            this->io->write(ERROR_MESSAGE_REQUIRED_CLASSIFICATION);
             return;
         }
     }
     else{
-        this->io->write("please upload data\n");
+        this->io->write(ERROR_MESSAGE_REQUIRED_DATA);
         return;
     }
 }
