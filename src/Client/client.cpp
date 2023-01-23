@@ -119,7 +119,7 @@ bool validArgs(int argc, char** argv){
 }
 void printMenu(SocketConnection server){
     std::string menu = server.read();
-    std::cout << menu << std::endl;
+    std::cout << menu;
 }
 void sendInputToServer(SocketConnection server){
     std::string userInput;        
@@ -150,7 +150,7 @@ void uploadFiles(SocketConnection server){
     const int FILES_TO_UPLOAD = 2;
     //read first message from server
     std::string message = server.read();
-    std::cout << message << std::endl;
+    std::cout << message;
     for(int i = 0; i < FILES_TO_UPLOAD; i++){        
         std::string path = ""; 
         getline(std::cin, path);
@@ -173,7 +173,7 @@ void uploadFiles(SocketConnection server){
         }
         server.send(data);
         message = server.read();
-        std::cout << message << std::endl;
+        std::cout << message;
     }
     //read recieved upload message
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
