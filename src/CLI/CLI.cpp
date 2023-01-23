@@ -30,6 +30,7 @@ void CLI::start() {
         this->defaultIo->write(this->menu);
         std::string instruction = this->defaultIo->read();
         if (this->validateInstuction(instruction)) {
+            this->defaultIo->write(instruction);
             run = this->goToCommand(std::stoi(instruction));
         }else {
             this->defaultIo->write(INVALID_MESSAGE_MENU_OPTION);
