@@ -38,15 +38,24 @@ void CLI::start() {
         if(CLI_DEBUG){
             std::cout << "After recieve, instruction is:" << instruction << std::endl;
         }
-        if (this->validateInstuction(instruction)) {
-            this->defaultIo->write(instruction);
-            run = this->goToCommand(std::stoi(instruction));
-        }else {
-            this->defaultIo->write(INVALID_MESSAGE_MENU_OPTION);
+        bool validInstruction = true;
+        if (!this->validateInstuction(instruction)) {
+            validInstruction = false;
             if(CLI_DEBUG){
-                std::cout << "sent to client INVALID_MESSAGE_MENU" << std::endl;
+                std::cout << "instruction not valid" << std::endl;
             }
         }
+        if(validInstruction){
+            this->defaultIo->write(instruction);
+        }else{
+            this->defaultIo->write(INVALID_MESSAGE_MENU_OPTION);
+            }
+        //read ok message from client
+        this->defaultIo->read();
+        if(validInstruction){
+            run = this->goToCommand(std::stoi(instruction));
+        }
+        
     }
     this->defaultIo->closeIO();
 }

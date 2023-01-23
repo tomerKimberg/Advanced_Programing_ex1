@@ -25,6 +25,8 @@
 #define RECEIVE_RESULTS_TO_FILE_OPTION 5
 //client only messages
 #define INVALID_INPUT_ERROR_MESSAGE "invalid input"
+//debug
+#define CLIENT_DEBUG 0
 
 /**
  * @param int argc, amount of the program arguments
@@ -83,6 +85,7 @@ void run(SocketConnection server) {
         sendInputToServer(server);
         std::string response = server.read();
         if(INVALID_MESSAGE_MENU_OPTION == response){
+            server.send(COMMUNICATION_MESSAGE_RECEIVED); 
             continue;
         }
         int menuOption = 0;
@@ -123,7 +126,8 @@ void sendInputToServer(SocketConnection server){
     getline(std::cin, userInput);
     server.send(userInput);
 }
-void executeMenuOption(int menuOption, SocketConnection server){   
+void executeMenuOption(int menuOption, SocketConnection server){  
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
     switch(menuOption){
         case UPLOAD_FILES_OPTION:
             uploadFiles(server);
@@ -144,14 +148,17 @@ void executeMenuOption(int menuOption, SocketConnection server){
 }
 void uploadFiles(SocketConnection server){
     const int FILES_TO_UPLOAD = 2;
-    for(int i = 0; i < FILES_TO_UPLOAD; i++){
-        std::string message = server.read();
-        std::cout << message << std::endl;
+    //read first message from server
+    std::string message = server.read();
+    std::cout << message << std::endl;
+    for(int i = 0; i < FILES_TO_UPLOAD; i++){        
         std::string path = ""; 
         getline(std::cin, path);
         if(!isPath(path)){
             server.send(INVALID_MESSAGE_PATH);
-            std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;
+            if(CLIENT_DEBUG){
+                std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;
+            }            
             return;
         }
         FileExtractor fileExtractor(path);
@@ -159,6 +166,14 @@ void uploadFiles(SocketConnection server){
         while (fileExtractor.hasNext()) {
             data += fileExtractor.getData();
         }
+        if(CLIENT_DEBUG){
+            std::cout << "file to send to server:" << std::endl;
+            std::cout << data << std::endl;
+        }
         server.send(data);
+        message = server.read();
+        std::cout << message << std::endl;
     }
+    //read recieved upload message
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
 }

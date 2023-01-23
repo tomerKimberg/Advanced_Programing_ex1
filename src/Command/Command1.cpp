@@ -23,21 +23,18 @@ void Command1::execute() {
             this->context->initializeResult();
             this->context->initializeKNN();
             this->io->write("upload complete\n");
+            //read to accept message received
+            this->io->read();
         }
         //path was not valid, restore gn;
         else{
             this->io->write("invalid\n");
             this->context->setGn(*backUp);
-
         }
     }
     if(backUp){
         delete backUp;
     }
-
-
-
-
 }
 //private functions
 void Command1::saveDataToClassify(std::string data, std::vector<std::vector<double>>* toClassify) {
@@ -70,44 +67,25 @@ bool Command1::upload(std::string message){
     this->io->write(message);
     //get data from io
     std::string data = this->io->read();
+    if(COMMAND1_DEBUG){
+        std::cout << "file received:" << std::endl;
+        std::cout << data << std::endl;
+    }    
 
     //if the client got a wrong path, the client will send an invalid path message to the server
     if(data == INVALID_MESSAGE_PATH){
         return false;
     }
-
     else if(message == UPLOAD_TRAIN_CSV){
-        //only for debug!!!
-        if(COMMAND1_DEBUG) {
-
-            FileExtractor fileExtractor(data);
-            data = "";
-            while (fileExtractor.hasNext()) {
-                data += fileExtractor.getData();
-            }
-        }
         //initialize stringExtractor to read until \r char
         StringExtractor stringExtractor(data,'\r');
         this->context->setGn(stringExtractor);
-
         return true;
 
     }
     else{
-        //only for debug!!!
-        if(COMMAND1_DEBUG) {
-
-            FileExtractor fileExtractor(data);
-            data = "";
-            while (fileExtractor.hasNext()) {
-                data += fileExtractor.getData();
-            }
-        }
-
         this->context->initializeToClassify();
         saveDataToClassify(data, this->context->getToClassify());
-
         return true;
-
     }
 }

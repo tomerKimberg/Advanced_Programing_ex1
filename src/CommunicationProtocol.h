@@ -9,5 +9,6 @@
 #define ERROR_MESSAGE_REQUIRED_DATA "please upload data\n"
 //communication errors
 #define ERROR_MESSAGE_SERVER_UNEXPECTED_RESPONSE "the server sent an unexpected result, please try again.\n"
-
+//communication  message
+#define COMMUNICATION_MESSAGE_RECEIVED "recieved\n"
 #endif
