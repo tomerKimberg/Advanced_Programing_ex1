@@ -8,6 +8,9 @@
 #include "../Command/Command2.h"
 #include "../Command/Command4.h"
 
+//debug
+#define CLI_DEBUG 0
+
 CLI::CLI(DefaultIO* io) {
     this->defaultIo = io;
     this->commands.push_back(new Command1("1. upload an unclassified csv data file\n", io ,&this->context ));
@@ -28,12 +31,21 @@ void CLI::start() {
     bool run = true;
     while(run) {
         this->defaultIo->write(this->menu);
+        if(CLI_DEBUG){
+            std::cout << "CLI sent menu, reading instruction" << std::endl;
+        }
         std::string instruction = this->defaultIo->read();
+        if(CLI_DEBUG){
+            std::cout << "After recieve, instruction is:" << instruction << std::endl;
+        }
         if (this->validateInstuction(instruction)) {
             this->defaultIo->write(instruction);
             run = this->goToCommand(std::stoi(instruction));
         }else {
             this->defaultIo->write(INVALID_MESSAGE_MENU_OPTION);
+            if(CLI_DEBUG){
+                std::cout << "sent to client INVALID_MESSAGE_MENU" << std::endl;
+            }
         }
     }
     this->defaultIo->closeIO();
