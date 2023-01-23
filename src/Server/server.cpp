@@ -5,15 +5,15 @@
 #include "../ValidationFuncs/arguments_validation.h"
 #include "../DistanceCalculator/distance_algorithms.h"
 #include "..//DistanceCalculator/headerDistanceCalculators.h"
+#include "../CLI/CLI.h"
 #include "..//KNN/KNN.h"
 #include "..//KNN/GetNeighbors.h"
 #include "../Extractors/DataExtractor.h"
 #include "..//Extractors/FileExtractor.h"
 #include "..//SocketConnection/SocketConnection.h"
 
-#define SERVER_NUMBER_OF_ARGUMENTS 3
-#define SERVER_ARGS_VARIABLE_PORT 2
-#define SERVER_ARGS_VARIABLE_PATH 1
+#define SERVER_NUMBER_OF_ARGUMENTS 2
+#define SERVER_ARGS_VARIABLE_PORT 1
 #define SERVER_MESSAGE_INDEX_VECTOR 0
 #define SERVER_MESSAGE_INDEX_METRIC 1
 #define SERVER_MESSAGE_INDEX_K 2
@@ -33,6 +33,12 @@ bool validArgs(int argc, char** argv);
  * @return none 
 */
 void runServer(SocketConnection server, std::map<std::vector<double>, std::vector<std::string>> neighbors);
+/**
+ * gets a connection to client and uses 
+ * @param SocketConnection - the accepted connection to a client
+ * @return none
+*/
+void runServerThread(SocketConnection connection);
 /**
  * create a new vector, if input is invalid set valid_input to false
  * @param std::string line
@@ -54,18 +60,15 @@ int main(int argc, char** argv){
         std::cout << BIND_ERROR_MESSAGE << std::endl;
         return 1;
     }
-    if(server.listen() == 0) {
-        //create an DataExtractor pointer using FileExtractor
-        FileExtractor fileExtractor(argv[SERVER_ARGS_VARIABLE_PATH]);
-        DataExtractor* extractor = &fileExtractor;
-        //create neighbors from the data of our file
-        GetNeighbors get(extractor);       
-        std::map<std::vector<double>, std::vector<std::string>> neighbors = get.getNeighborsInMap();
-        runServer(server, neighbors);
-    }
-    else{
+    if(0 != server.listen()) {
         std::cout << "problem listening" << std::endl;
-    }        
+        return 1;
+    }
+    while(true){
+       SocketConnection connection(server.accept());
+       runServerThread(connection); 
+    }
+    //run program   
     server.closeSocket();
     return 0;
 }
@@ -77,10 +80,6 @@ bool validArgs(int argc, char** argv){
     }
     if(!isPort(argv[SERVER_ARGS_VARIABLE_PORT])){
         std::cout << BAD_ARGUMENT_PORT_MESSAGE << std:: endl;
-        return false;
-    }
-    if(!isPath(argv[SERVER_ARGS_VARIABLE_PATH])){
-        std::cout << BAD_ARGUMENT_PATH_MESSAGE << std:: endl;
         return false;
     }
     return true;
@@ -101,6 +100,10 @@ std::vector<double> vectorFromString(std::string line, bool& valid_input)
         }
     }
     return inputVector;   
+}
+void runServerThread(SocketConnection connection){
+    CLI cli((DefaultIO*) &connection);
+    cli.start();
 }
 
 void runServer(SocketConnection server, std::map<std::vector<double>, std::vector<std::string>> neighbors){
