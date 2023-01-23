@@ -77,8 +77,8 @@ bool Command1::upload(std::string message){
         return false;
     }
     else if(message == UPLOAD_TRAIN_CSV){
-        //initialize stringExtractor to read until \r char
-        StringExtractor stringExtractor(data,'\r');
+        //initialize stringExtractor to read until \n char
+        StringExtractor stringExtractor(data,DELIMETER_CHAR);
         this->context->setGn(stringExtractor);
         return true;
 

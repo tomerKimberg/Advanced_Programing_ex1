@@ -49,7 +49,7 @@ void CLI::start() {
             this->defaultIo->write(instruction);
         }else{
             this->defaultIo->write(INVALID_MESSAGE_MENU_OPTION);
-            }
+        }
         //read ok message from client
         this->defaultIo->read();
         if(validInstruction){

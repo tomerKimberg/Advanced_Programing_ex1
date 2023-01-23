@@ -165,6 +165,7 @@ void uploadFiles(SocketConnection server){
         std::string data = "";
         while (fileExtractor.hasNext()) {
             data += fileExtractor.getData();
+            data += DELIMETER_CHAR;//and \n for StringExtractor
         }
         if(CLIENT_DEBUG){
             std::cout << "file to send to server:" << std::endl;
