@@ -5,6 +5,7 @@
 #include "../ValidationFuncs/arguments_validation.h"
 #include "../DistanceCalculator/distance_algorithms.h"
 #include "..//DistanceCalculator/headerDistanceCalculators.h"
+#include "../CLI/CLI.h"
 #include "..//KNN/KNN.h"
 #include "..//KNN/GetNeighbors.h"
 #include "../Extractors/DataExtractor.h"
@@ -33,6 +34,12 @@ bool validArgs(int argc, char** argv);
 */
 void runServer(SocketConnection server, std::map<std::vector<double>, std::vector<std::string>> neighbors);
 /**
+ * gets a connection to client and uses 
+ * @param SocketConnection - the accepted connection to a client
+ * @return none
+*/
+void runServerThread(SocketConnection connection);
+/**
  * create a new vector, if input is invalid set valid_input to false
  * @param std::string line
  * @param bool& valid_input
@@ -56,6 +63,10 @@ int main(int argc, char** argv){
     if(0 != server.listen()) {
         std::cout << "problem listening" << std::endl;
         return 1;
+    }
+    while(true){
+       SocketConnection connection(server.accept());
+       runServerThread(connection); 
     }
     //run program   
     server.closeSocket();
@@ -89,6 +100,10 @@ std::vector<double> vectorFromString(std::string line, bool& valid_input)
         }
     }
     return inputVector;   
+}
+void runServerThread(SocketConnection connection){
+    CLI cli((DefaultIO*) &connection);
+    cli.start();
 }
 
 void runServer(SocketConnection server, std::map<std::vector<double>, std::vector<std::string>> neighbors){
