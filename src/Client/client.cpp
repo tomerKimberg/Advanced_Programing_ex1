@@ -106,7 +106,6 @@ bool validArgs(int argc, char** argv){
     return true;
 }
 void printMenu(SocketConnection server){
-    std::cout << "in print menu" << std::endl;
     std::string menu = server.read();
     std::cout << menu << std::endl;
 }
