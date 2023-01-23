@@ -2,6 +2,7 @@
 // Created by tomer on 20/01/2023.
 //
 #include "CLI.h"
+#include "../CommunicationProtocol.h"
 #include "../Command/Command1.h"
 #include "../Command/Command3.h"
 #include "../Command/Command2.h"
@@ -31,7 +32,7 @@ void CLI::start() {
         if (this->validateInstuction(instruction)) {
             run = this->goToCommand(std::stoi(instruction));
         }else {
-            this->defaultIo->write("invalid option, try again\n");
+            this->defaultIo->write(INVALID_MESSAGE_MENU_OPTION);
         }
     }
     this->defaultIo->closeIO();

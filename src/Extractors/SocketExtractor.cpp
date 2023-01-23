@@ -24,9 +24,15 @@ bool SocketExtractor::hasNext(){
     return bytesLeft > 0;
 }
 std::string SocketExtractor::getData(){
+    if(SOCKET_EXTRACTOR_DEBUG){
+        std::cout << "In getData function" << std::endl;
+    }
     char buffer[RECIEVE_SIZE] = {};
     std::string data = "";
     do{
+        if(SOCKET_EXTRACTOR_DEBUG){
+            std::cout << "before recv call " + data << std::endl;
+        }
         int read_bytes = recv(this->fileDescriptor, buffer, RECIEVE_SIZE, 0);
         if(read_bytes <= 0){
             if(SOCKET_EXTRACTOR_DEBUG){
@@ -41,8 +47,13 @@ std::string SocketExtractor::getData(){
         }
         this->failed = false;
         data += buffer;
+        if(SOCKET_EXTRACTOR_DEBUG){
+            std::cout << "data currently is: " + data << std::endl;
+        }
     }while(this->hasNext());
-
+    if(SOCKET_EXTRACTOR_DEBUG){
+        std::cout << "after loop, data returned is: " + data << std::endl;
+    }
     return data;
 }
 bool SocketExtractor::fail(){

@@ -7,6 +7,7 @@
 #include "..//DistanceCalculator/headerDistanceCalculators.h"
 #include "..//KNN/KNN.h"
 #include "..//KNN/GetNeighbors.h"
+#include "../CommunicationProtocol.h"
 #include "../Extractors/DataExtractor.h"
 #include "..//Extractors/FileExtractor.h"
 #include "..//SocketConnection/SocketConnection.h"
@@ -15,6 +16,13 @@
 #define CLIENT_NUMBER_OF_ARGUMENTS 3
 #define CLIENT_ARGS_VARIABLE_PORT 2
 #define CLIENT_ARGS_VARIABLE_IP 1
+//menu options
+#define CLIENT_EXIT_MENU_OPTION 8
+#define UPLOAD_FILES_OPTION 1
+#define CHANGE_K_METRIC_OPTION 2
+#define CLASSIFY_OPTION 3
+#define RECEIVE_RESULTS_OPTION 4
+#define RECEIVE_RESULTS_TO_FILE_OPTION 5
 
 /**
  * @param int argc, amount of the program arguments
@@ -22,7 +30,22 @@
  * @return bool - wether the arguments are valid or not
 */
 bool validArgs(int argc, char** argv);
-void run(SocketConnection client);
+/**
+ * @param SocketConnection - the connection that the menu will come from
+ *   recieves data using SocketConnection and prints it on std::cout
+*/
+void printMenu(SocketConnection server);
+/**
+ * @param SocketConnection - the connection that the input will be sent through
+ * reads input from std::cin ands sends it through the socket
+ */
+void sendInputToServer(SocketConnection server);
+/**
+ * @param int the option to be executed from the menu
+ * executes the relevant menu function - only executes if menuOption is corresponding to a valid *defined* menu option
+*/
+void executeMenuOption(int menuOption);
+void run(SocketConnection server);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -35,40 +58,37 @@ int main(int argc, char** argv){
     struct sockaddr_in sa;
     unsigned long int ip = 0;
     inet_pton(AF_INET, argv[CLIENT_ARGS_VARIABLE_IP], &ip);
-    SocketConnection client(port, ip);
-    run(client);
+    SocketConnection server(port, ip);
+    run(server);
     return 0;
 }
 
-void run(SocketConnection client) {
+void run(SocketConnection server) {
     bool connection = false;
-    if(client.connect() == 0){
+    if(server.connect() == 0){
         connection = true;
     }
 
     while(connection){
-        std::string userInput;
-        getline(std::cin, userInput);
-        //if input is -1, close client
-        if(userInput == "-1"){
+        printMenu(server);
+        sendInputToServer(server);
+        std::string response = server.read();
+        if(INVALID_MESSAGE_MENU_OPTION == response){
+            continue;
+        }
+        int menuOption = 0;
+        try{
+            menuOption = std::stoi(response);
+        }catch(...){
+            std::cout << ERROR_MESSAGE_SERVER_UNEXPECTED_RESPONSE;
+            continue;
+        }
+        if(CLIENT_EXIT_MENU_OPTION == menuOption){
             break;
         }
-        if(validUserInput(splitUserInput(userInput))) {
-            if(client.send(userInput)) {
-                std::string response = client.read();
-                std::cout << response << std::endl;
-            }
-                //there was an error sending to the server, probably connection lost
-            else {
-                connection = false;
-            }
-        }
-        else{
-            std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;
-        }
-
+        executeMenuOption(menuOption);
     }
-    client.closeSocket();
+    server.closeSocket();
 }
 bool validArgs(int argc, char** argv){
     if(CLIENT_NUMBER_OF_ARGUMENTS != argc){
@@ -84,4 +104,32 @@ bool validArgs(int argc, char** argv){
         return false;
     }
     return true;
+}
+void printMenu(SocketConnection server){
+    std::string menu = server.read();
+    std::cout << menu << std::endl;
+}
+void sendInputToServer(SocketConnection server){
+    std::string userInput;        
+    getline(std::cin, userInput);
+    server.send(userInput);
+}
+void executeMenuOption(int menuOption){   
+    switch(menuOption){
+        case UPLOAD_FILES_OPTION:
+            std::cout << "option 1" << std::endl;
+            break;
+        case CHANGE_K_METRIC_OPTION:
+            std::cout << "option 2" << std::endl;
+            break;
+        case CLASSIFY_OPTION:
+            std::cout << "option 3" << std::endl;
+            break;
+        case RECEIVE_RESULTS_OPTION:
+            std::cout << "option 4" << std::endl;
+            break;
+        case RECEIVE_RESULTS_TO_FILE_OPTION:
+            std::cout << "option 5" << std::endl;
+            break;
+    }
 }
