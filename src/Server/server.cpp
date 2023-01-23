@@ -11,9 +11,8 @@
 #include "..//Extractors/FileExtractor.h"
 #include "..//SocketConnection/SocketConnection.h"
 
-#define SERVER_NUMBER_OF_ARGUMENTS 3
-#define SERVER_ARGS_VARIABLE_PORT 2
-#define SERVER_ARGS_VARIABLE_PATH 1
+#define SERVER_NUMBER_OF_ARGUMENTS 2
+#define SERVER_ARGS_VARIABLE_PORT 1
 #define SERVER_MESSAGE_INDEX_VECTOR 0
 #define SERVER_MESSAGE_INDEX_METRIC 1
 #define SERVER_MESSAGE_INDEX_K 2
@@ -54,18 +53,11 @@ int main(int argc, char** argv){
         std::cout << BIND_ERROR_MESSAGE << std::endl;
         return 1;
     }
-    if(server.listen() == 0) {
-        //create an DataExtractor pointer using FileExtractor
-        FileExtractor fileExtractor(argv[SERVER_ARGS_VARIABLE_PATH]);
-        DataExtractor* extractor = &fileExtractor;
-        //create neighbors from the data of our file
-        GetNeighbors get(extractor);       
-        std::map<std::vector<double>, std::vector<std::string>> neighbors = get.getNeighborsInMap();
-        runServer(server, neighbors);
-    }
-    else{
+    if(0 != server.listen()) {
         std::cout << "problem listening" << std::endl;
-    }        
+        return 1;
+    }
+    //run program   
     server.closeSocket();
     return 0;
 }
@@ -77,10 +69,6 @@ bool validArgs(int argc, char** argv){
     }
     if(!isPort(argv[SERVER_ARGS_VARIABLE_PORT])){
         std::cout << BAD_ARGUMENT_PORT_MESSAGE << std:: endl;
-        return false;
-    }
-    if(!isPath(argv[SERVER_ARGS_VARIABLE_PATH])){
-        std::cout << BAD_ARGUMENT_PATH_MESSAGE << std:: endl;
         return false;
     }
     return true;
