@@ -1,4 +1,8 @@
 #include "Command5.h"
+
+#define MINIMAL_PORT_NUMBER 1025
+#define MAXIMAL_PORT_NUMBER 65536
+#define SUBSTRACTION_MODIFIER 1
 //debug
 #define DEBUG_COMMAND_5 0
 
@@ -22,6 +26,20 @@ void Command5::execute(){
         //we can just return because next message will be the menu from the server
         return;
     }
+    bool portValid = false;
+    int portNum = -1;
+    SocketConnection resultsConnection(portNum);
+    srand(time(NULL));
+    do{
+        portNum = rand() % (MAXIMAL_PORT_NUMBER - MINIMAL_PORT_NUMBER + SUBSTRACTION_MODIFIER) + MINIMAL_PORT_NUMBER;
+
+        SocketConnection newConnection(portNum);
+        if(newConnection.bind() >= 0 && 0 == newConnection.listen()){
+            portValid = true;
+            resultsConnection = newConnection;
+        }
+    }while(!portValid);
+    this->io->write(std::to_string(portNum));
     //read received message from server
     this->io->read();
 }

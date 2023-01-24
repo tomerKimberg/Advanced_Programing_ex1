@@ -224,6 +224,7 @@ void saveResultsToFile(SocketConnection server){
     std::string path = "";
     getline(std::cin, path);
     std::ofstream fileStream;
+    fileStream.clear();
     try{
         fileStream.open(path);
     }catch(...){
@@ -234,6 +235,15 @@ void saveResultsToFile(SocketConnection server){
         handleBadPathForResults(server);
         return;
     }
+    server.send(COMMUNICATION_MESSAGE_RECEIVED);
+    std::string port = server.read();
+    if(CLIENT_DEBUG){
+        std::cout << port << std::endl;
+    }
+    unsigned long int ip = server.getIP();
+    SocketConnection receiveResult(std::stoi(port), ip);
+    fileStream.close();// close file before going to a new thread
+    server.send(COMMUNICATION_MESSAGE_RECEIVED);
 }
 void handleBadPathForResults(SocketConnection server){
     server.send(INVALID_MESSAGE_PATH);
