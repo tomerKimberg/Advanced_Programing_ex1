@@ -41,7 +41,7 @@ void Command3::execute() {
 }
 //private functions
 bool Command3::checkRequirement(){
-    if(this->context->getGn()){
+    if(this->context->getGn() && !this->context->getToClassify()->empty()){
         return true;
     }
     return false;
