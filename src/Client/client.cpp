@@ -1,4 +1,6 @@
 #include <sstream>
+#include <iostream>
+#include <fstream>
 #include <arpa/inet.h>
 #include "../DistanceCalculator/vector_functions.h"
 #include "../ValidationFuncs/vector_validation.h"
@@ -70,6 +72,16 @@ void handleClassify(SocketConnection server);
  * read a response from server and send it to the stream
 */
 void writeServerResultsToStream(SocketConnection server, std::ostream& stream);
+/**
+ * @param SocketConnection the connection to the server
+ * take path as input, if valid and results are ready, will save the results to that path
+*/
+void saveResultsToFile(SocketConnection server);
+/**
+ * @param SocketConnection the connection to the server
+ * send error message via SocketConnection and std::cout
+*/
+void handleBadPathForResults(SocketConnection server);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -157,7 +169,7 @@ void executeMenuOption(int menuOption, SocketConnection server){
             std::cout << RESULT_STANDARD_OUTPUT_POSTFIX << std::endl;
             break;
         case RECEIVE_RESULTS_TO_FILE_OPTION:
-            std::cout << "option 5" << std::endl;
+            saveResultsToFile(server);
             break;
     }
 }
@@ -201,4 +213,24 @@ void handleClassify(SocketConnection server){
 }
 void writeServerResultsToStream(SocketConnection server, std::ostream& stream){
     stream << server.read();
+}
+void saveResultsToFile(SocketConnection server){
+    std::string path = "";
+    getline(std::cin, path);
+    std::ofstream fileStream;
+    std::string message = server.read();
+    try{
+        fileStream.open(path);
+    }catch(...){
+        handleBadPathForResults(server);
+        return;
+    }
+    if(fileStream.fail()){
+        handleBadPathForResults(server);
+        return;
+    }
+}
+void handleBadPathForResults(SocketConnection server){
+    server.send(INVALID_MESSAGE_PATH);
+    std::cout << INVALID_MESSAGE_PATH;
 }
