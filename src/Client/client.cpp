@@ -23,6 +23,10 @@
 #define CLASSIFY_OPTION 3
 #define RECEIVE_RESULTS_OPTION 4
 #define RECEIVE_RESULTS_TO_FILE_OPTION 5
+//client only messages
+#define INVALID_INPUT_ERROR_MESSAGE "invalid input"
+//debug
+#define CLIENT_DEBUG 0
 
 /**
  * @param int argc, amount of the program arguments
@@ -42,10 +46,17 @@ void printMenu(SocketConnection server);
 void sendInputToServer(SocketConnection server);
 /**
  * @param int the option to be executed from the menu
+ * @param SocketConnection the connection to the server
  * executes the relevant menu function - only executes if menuOption is corresponding to a valid *defined* menu option
 */
-void executeMenuOption(int menuOption);
+void executeMenuOption(int menuOption, SocketConnection server);
 void run(SocketConnection server);
+//menu options
+/**
+ * @param SocketConnection the connection to the server
+ * upload two files, train file and test file to the server via socket
+*/
+void uploadFiles(SocketConnection server);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -74,6 +85,7 @@ void run(SocketConnection server) {
         sendInputToServer(server);
         std::string response = server.read();
         if(INVALID_MESSAGE_MENU_OPTION == response){
+            server.send(COMMUNICATION_MESSAGE_RECEIVED); 
             continue;
         }
         int menuOption = 0;
@@ -86,7 +98,7 @@ void run(SocketConnection server) {
         if(CLIENT_EXIT_MENU_OPTION == menuOption){
             break;
         }
-        executeMenuOption(menuOption);
+        executeMenuOption(menuOption, server);
     }
     server.closeSocket();
 }
@@ -107,17 +119,18 @@ bool validArgs(int argc, char** argv){
 }
 void printMenu(SocketConnection server){
     std::string menu = server.read();
-    std::cout << menu << std::endl;
+    std::cout << menu;
 }
 void sendInputToServer(SocketConnection server){
     std::string userInput;        
     getline(std::cin, userInput);
     server.send(userInput);
 }
-void executeMenuOption(int menuOption){   
+void executeMenuOption(int menuOption, SocketConnection server){  
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
     switch(menuOption){
         case UPLOAD_FILES_OPTION:
-            std::cout << "option 1" << std::endl;
+            uploadFiles(server);
             break;
         case CHANGE_K_METRIC_OPTION:
             std::cout << "option 2" << std::endl;
@@ -132,4 +145,36 @@ void executeMenuOption(int menuOption){
             std::cout << "option 5" << std::endl;
             break;
     }
+}
+void uploadFiles(SocketConnection server){
+    const int FILES_TO_UPLOAD = 2;
+    //read first message from server
+    std::string message = server.read();
+    std::cout << message;
+    for(int i = 0; i < FILES_TO_UPLOAD; i++){        
+        std::string path = ""; 
+        getline(std::cin, path);
+        if(!isPath(path)){
+            server.send(INVALID_MESSAGE_PATH);
+            if(CLIENT_DEBUG){
+                std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;
+            }            
+            return;
+        }
+        FileExtractor fileExtractor(path);
+        std::string data = "";
+        while (fileExtractor.hasNext()) {
+            data += fileExtractor.getData();
+            data += DELIMETER_CHAR;//and \n for StringExtractor
+        }
+        if(CLIENT_DEBUG){
+            std::cout << "file to send to server:" << std::endl;
+            std::cout << data << std::endl;
+        }
+        server.send(data);
+        message = server.read();
+        std::cout << message;
+    }
+    //read recieved upload message
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
 }
