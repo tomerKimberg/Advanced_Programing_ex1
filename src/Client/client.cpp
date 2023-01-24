@@ -58,6 +58,12 @@ void run(SocketConnection server);
 */
 void uploadFiles(SocketConnection server);
 
+/**
+ * @param SocketConnection the connection to the server
+ * print the message that the server sends after classification and responds with received message
+*/
+void handleClassify(SocketConnection server);
+
 int main(int argc, char** argv){
     //check program arguments
     if(!validArgs(argc, argv)){
@@ -136,7 +142,7 @@ void executeMenuOption(int menuOption, SocketConnection server){
             std::cout << "option 2" << std::endl;
             break;
         case CLASSIFY_OPTION:
-            std::cout << "option 3" << std::endl;
+            handleClassify(server);
             break;
         case RECEIVE_RESULTS_OPTION:
             std::cout << "option 4" << std::endl;
@@ -176,5 +182,11 @@ void uploadFiles(SocketConnection server){
         std::cout << message;
     }
     //read recieved upload message
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+}
+void handleClassify(SocketConnection server){
+    //read first message from server
+    std::string message = server.read();
+    std::cout << message;
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
 }
