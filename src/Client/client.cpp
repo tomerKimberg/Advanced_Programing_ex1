@@ -25,6 +25,7 @@
 #define RECEIVE_RESULTS_TO_FILE_OPTION 5
 //client only messages
 #define INVALID_INPUT_ERROR_MESSAGE "invalid input"
+#define RESULT_STANDARD_OUTPUT_POSTFIX "Done."
 //debug
 #define CLIENT_DEBUG 0
 
@@ -153,6 +154,7 @@ void executeMenuOption(int menuOption, SocketConnection server){
         case RECEIVE_RESULTS_OPTION:
             writeServerResultsToStream(server, std::cout);
             server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+            std::cout << RESULT_STANDARD_OUTPUT_POSTFIX << std::endl;
             break;
         case RECEIVE_RESULTS_TO_FILE_OPTION:
             std::cout << "option 5" << std::endl;
