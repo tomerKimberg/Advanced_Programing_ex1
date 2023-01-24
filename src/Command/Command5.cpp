@@ -7,12 +7,12 @@ Command5::Command5(const std::string &description, DefaultIO *io, Context *conte
 void Command5::execute(){
     if(!this->checkRequirement()){
         this->io->write(ERROR_MESSAGE_REQUIRED_DATA);
-        //probably read is needed
+        this->io->read();
         return;
     }
     if(!this->checkResult()){
         this->io->write(ERROR_MESSAGE_REQUIRED_CLASSIFICATION);
-        //probably read is needed
+        this->io->read();
         return;
     }
     this->io->write(COMMUNICATION_MESSAGE_SERVER_READY_FOR_PATH);

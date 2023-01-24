@@ -215,10 +215,15 @@ void writeServerResultsToStream(SocketConnection server, std::ostream& stream){
     stream << server.read();
 }
 void saveResultsToFile(SocketConnection server){
+    std::string message = server.read();
+    if(COMMUNICATION_MESSAGE_SERVER_READY_FOR_PATH != message){
+        std::cout << message;
+        server.send(COMMUNICATION_MESSAGE_RECEIVED);
+        return;
+    }
     std::string path = "";
     getline(std::cin, path);
     std::ofstream fileStream;
-    std::string message = server.read();
     try{
         fileStream.open(path);
     }catch(...){
