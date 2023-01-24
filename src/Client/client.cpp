@@ -63,6 +63,12 @@ void uploadFiles(SocketConnection server);
  * print the message that the server sends after classification and responds with received message
 */
 void handleClassify(SocketConnection server);
+/**
+ * @param SocketConnection the connection to the server
+ * @param std::istream the stream that the response will be written to.
+ * read a response from server and send it to the stream
+*/
+void writeServerResultsToStream(SocketConnection server, std::ostream& stream);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -145,7 +151,8 @@ void executeMenuOption(int menuOption, SocketConnection server){
             handleClassify(server);
             break;
         case RECEIVE_RESULTS_OPTION:
-            std::cout << "option 4" << std::endl;
+            writeServerResultsToStream(server, std::cout);
+            server.send(COMMUNICATION_MESSAGE_RECEIVED); 
             break;
         case RECEIVE_RESULTS_TO_FILE_OPTION:
             std::cout << "option 5" << std::endl;
@@ -189,4 +196,7 @@ void handleClassify(SocketConnection server){
     std::string message = server.read();
     std::cout << message;
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+}
+void writeServerResultsToStream(SocketConnection server, std::ostream& stream){
+    stream << server.read();
 }
