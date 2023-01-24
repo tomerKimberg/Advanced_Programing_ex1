@@ -82,6 +82,12 @@ void saveResultsToFile(SocketConnection server);
  * send error message via SocketConnection and std::cout
 */
 void handleBadPathForResults(SocketConnection server);
+/**
+ * @param SocketConnection the connection we aregoing to receive from
+ * @param std::path the path to write to
+ * connect to the connection given, receive file data and save it to the file
+*/
+void receiveResultsAndSave(SocketConnection resultsConnection, std::string path);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -244,6 +250,17 @@ void saveResultsToFile(SocketConnection server){
     SocketConnection receiveResult(std::stoi(port), ip);
     fileStream.close();// close file before going to a new thread
     server.send(COMMUNICATION_MESSAGE_RECEIVED);
+    receiveResultsAndSave(receiveResult, path);
+}
+void receiveResultsAndSave(SocketConnection resultsConnection, std::string path){
+    std::ofstream fileStream;
+    fileStream.open(path);
+    resultsConnection.connect();
+    std::string results = resultsConnection.read();
+    fileStream << results;
+    resultsConnection.send(COMMUNICATION_MESSAGE_RECEIVED);
+    fileStream.close();
+    resultsConnection.closeSocket();
 }
 void handleBadPathForResults(SocketConnection server){
     server.send(INVALID_MESSAGE_PATH);

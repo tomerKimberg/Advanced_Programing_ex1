@@ -42,6 +42,7 @@ void Command5::execute(){
     this->io->write(std::to_string(portNum));
     //read received message from server
     this->io->read();
+    sendResultsToClient(resultsConnection);    
 }
 //private functions
 bool Command5::checkRequirement(){
@@ -68,3 +69,15 @@ std::string Command5::sendResults(){
     }
     return result;
 }                                                                                           
+void Command5::sendResultsToClient(SocketConnection resultsConnection){
+    SocketConnection connection(resultsConnection.accept());
+    std::string results = this->sendResults();
+    if(DEBUG_COMMAND_5){
+        std::cout << results << std::endl;
+    }
+    connection.send(results);
+    //read received message from server
+    connection.read();
+    connection.closeSocket();
+    resultsConnection.closeSocket();
+}
