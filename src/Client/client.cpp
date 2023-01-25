@@ -1,6 +1,8 @@
+#include <thread>
 #include <sstream>
 #include <iostream>
 #include <fstream>
+#include <pthread.h>
 #include <arpa/inet.h>
 #include "../DistanceCalculator/vector_functions.h"
 #include "../ValidationFuncs/vector_validation.h"
@@ -250,7 +252,8 @@ void saveResultsToFile(SocketConnection server){
     SocketConnection receiveResult(std::stoi(port), ip);
     fileStream.close();// close file before going to a new thread
     server.send(COMMUNICATION_MESSAGE_RECEIVED);
-    receiveResultsAndSave(receiveResult, path);
+    std::thread resultsThread(receiveResultsAndSave, receiveResult, path);
+    resultsThread.detach();
 }
 void receiveResultsAndSave(SocketConnection resultsConnection, std::string path){
     std::ofstream fileStream;

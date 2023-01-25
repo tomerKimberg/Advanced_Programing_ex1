@@ -1,3 +1,5 @@
+#include <thread>
+#include <unistd.h>
 #include "Command5.h"
 
 #define MINIMAL_PORT_NUMBER 1025
@@ -42,7 +44,8 @@ void Command5::execute(){
     this->io->write(std::to_string(portNum));
     //read received message from server
     this->io->read();
-    sendResultsToClient(resultsConnection);    
+    std::thread resultsRhread(&Command5::sendResultsToClient, this, resultsConnection); 
+    resultsRhread.detach();
 }
 //private functions
 bool Command5::checkRequirement(){
@@ -71,6 +74,7 @@ std::string Command5::sendResults(){
 }                                                                                           
 void Command5::sendResultsToClient(SocketConnection resultsConnection){
     SocketConnection connection(resultsConnection.accept());
+    sleep(20);
     std::string results = this->sendResults();
     if(DEBUG_COMMAND_5){
         std::cout << results << std::endl;
