@@ -58,6 +58,11 @@ void run(SocketConnection server);
  * upload two files, train file and test file to the server via socket
 */
 void uploadFiles(SocketConnection server);
+/**
+ * @param SocketConnection the connection to the server
+ * receive the current k and metric, and update them if necessary
+*/
+void updateKAndMetric(SocketConnection server);
 
 /**
  * @param SocketConnection the connection to the server
@@ -140,13 +145,14 @@ void sendInputToServer(SocketConnection server){
     server.send(userInput);
 }
 void executeMenuOption(int menuOption, SocketConnection server){  
+    //received menu
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
     switch(menuOption){
         case UPLOAD_FILES_OPTION:
             uploadFiles(server);
             break;
         case CHANGE_K_METRIC_OPTION:
-            std::cout << "option 2" << std::endl;
+            updateKAndMetric(server);
             break;
         case CLASSIFY_OPTION:
             handleClassify(server);
@@ -191,6 +197,21 @@ void uploadFiles(SocketConnection server){
         std::cout << message;
     }
     //read recieved upload message
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+}
+void updateKAndMetric(SocketConnection server){
+    //receive the current k and metric
+    std::string message = server.read();
+    std::cout << message;
+    std::string KAndMetric = K_METRIC_DONT_CHANGE; 
+    getline(std::cin, KAndMetric);
+    //send communication received to buffer between message and menu
+    server.send(KAndMetric);
+    message = server.read();
+    //if the message isn't an ok message, we need to print it
+    if(COMMUNICATION_MESSAGE_RECEIVED != message){
+        std::cout << message;
+    }
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
 }
 void handleClassify(SocketConnection server){
