@@ -1,4 +1,5 @@
 #include <sstream>
+#include <thread>
 #include "../DistanceCalculator/vector_functions.h"
 #include "../ValidationFuncs/user_input.h"
 #include "../ValidationFuncs/vector_validation.h"
@@ -66,7 +67,8 @@ int main(int argc, char** argv){
     }
     while(true){
        SocketConnection connection(server.accept());
-       runServerThread(connection); 
+       std::thread connectionThread(runServerThread, connection);
+       connectionThread.detach();
     }
     //run program   
     server.closeSocket();
