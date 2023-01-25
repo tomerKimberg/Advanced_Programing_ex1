@@ -4,7 +4,7 @@
 #include "SocketExtractor.h"
 
 #define RECIEVE_SIZE 1024
-#define SOCKET_EXTRACTOR_DEBUG 1
+#define SOCKET_EXTRACTOR_DEBUG 0
 
 SocketExtractor::SocketExtractor(int fileDescriptor){
     this->fileDescriptor = fileDescriptor;
