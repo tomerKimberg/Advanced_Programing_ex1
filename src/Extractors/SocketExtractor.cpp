@@ -53,7 +53,7 @@ std::string SocketExtractor::getData(){
             std::cout << "last char of buffer is: " + std::to_string(buffer[RECIEVE_SIZE - 1]) << std::endl;
             std::cout << "after recv call, data size is: " + std::to_string(data.size()) << std::endl;
         }
-    }while(this->hasNext() || buffer[RECIEVE_SIZE - 1] != 0);
+    }while(buffer[RECIEVE_SIZE - 1] != 0);
     if(SOCKET_EXTRACTOR_DEBUG){
         //std::cout << "after loop, data returned is: " + data << std::endl;
     }
