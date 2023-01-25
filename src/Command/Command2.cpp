@@ -23,7 +23,9 @@ void Command2::execute() {
     if(COMMAND_2_DEBUG){
         std::cout << "response from client is: " << response << std::endl;
     }
-    if(COMMUNICATION_MESSAGE_RECEIVED == response){
+    if(K_METRIC_DONT_CHANGE == response){
+        this->io->write(COMMUNICATION_MESSAGE_RECEIVED);
+        this->io->read();
         return;
     }
     std::stringstream ss(response);

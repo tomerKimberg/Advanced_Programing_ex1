@@ -191,10 +191,6 @@ void updateKAndMetric(SocketConnection server){
     std::string KAndMetric = K_METRIC_DONT_CHANGE; 
     getline(std::cin, KAndMetric);
     //send communication received to buffer between message and menu
-    if(K_METRIC_DONT_CHANGE == KAndMetric){
-        server.send(COMMUNICATION_MESSAGE_RECEIVED); 
-        return;
-    }
     server.send(KAndMetric);
     message = server.read();
     //if the message isn't an ok message, we need to print it
