@@ -74,7 +74,6 @@ std::string Command5::sendResults(){
 }                                                                                           
 void Command5::sendResultsToClient(SocketConnection resultsConnection){
     SocketConnection connection(resultsConnection.accept());
-    sleep(20);
     std::string results = this->sendResults();
     if(DEBUG_COMMAND_5){
         std::cout << results << std::endl;
