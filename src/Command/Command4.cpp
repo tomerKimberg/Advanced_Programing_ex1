@@ -22,6 +22,8 @@ void Command4::execute() {
         this->io->write(ERROR_MESSAGE_REQUIRED_DATA);
         return;
     }
+    //read received message from server
+    this->io->read();
 }
 //private functions
 bool Command4::checkRequirement(){

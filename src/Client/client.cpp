@@ -25,6 +25,7 @@
 #define RECEIVE_RESULTS_TO_FILE_OPTION 5
 //client only messages
 #define INVALID_INPUT_ERROR_MESSAGE "invalid input"
+#define RESULT_STANDARD_OUTPUT_POSTFIX "Done."
 //debug
 #define CLIENT_DEBUG 0
 
@@ -62,6 +63,18 @@ void uploadFiles(SocketConnection server);
  * receive the current k and metric, and update them if necessary
 */
 void updateKAndMetric(SocketConnection server);
+
+/**
+ * @param SocketConnection the connection to the server
+ * print the message that the server sends after classification and responds with received message
+*/
+void handleClassify(SocketConnection server);
+/**
+ * @param SocketConnection the connection to the server
+ * @param std::istream the stream that the response will be written to.
+ * read a response from server and send it to the stream
+*/
+void writeServerResultsToStream(SocketConnection server, std::ostream& stream);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -142,10 +155,12 @@ void executeMenuOption(int menuOption, SocketConnection server){
             updateKAndMetric(server);
             break;
         case CLASSIFY_OPTION:
-            std::cout << "option 3" << std::endl;
+            handleClassify(server);
             break;
         case RECEIVE_RESULTS_OPTION:
-            std::cout << "option 4" << std::endl;
+            writeServerResultsToStream(server, std::cout);
+            server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+            std::cout << RESULT_STANDARD_OUTPUT_POSTFIX << std::endl;
             break;
         case RECEIVE_RESULTS_TO_FILE_OPTION:
             std::cout << "option 5" << std::endl;
@@ -198,4 +213,13 @@ void updateKAndMetric(SocketConnection server){
         std::cout << message;
     }
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+}
+void handleClassify(SocketConnection server){
+    //read first message from server
+    std::string message = server.read();
+    std::cout << message;
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+}
+void writeServerResultsToStream(SocketConnection server, std::ostream& stream){
+    stream << server.read();
 }
