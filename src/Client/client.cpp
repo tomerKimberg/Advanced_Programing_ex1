@@ -177,9 +177,7 @@ void uploadFiles(SocketConnection server){
         getline(std::cin, path);
         if(!isPath(path)){
             server.send(INVALID_MESSAGE_PATH);
-            if(CLIENT_DEBUG){
-                std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;
-            }            
+            std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;          
             return;
         }
         FileExtractor fileExtractor(path);
