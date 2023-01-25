@@ -4,7 +4,7 @@
 #include "SocketExtractor.h"
 
 #define RECIEVE_SIZE 1024
-#define SOCKET_EXTRACTOR_DEBUG 0
+#define SOCKET_EXTRACTOR_DEBUG 1
 
 SocketExtractor::SocketExtractor(int fileDescriptor){
     this->fileDescriptor = fileDescriptor;
@@ -28,10 +28,10 @@ std::string SocketExtractor::getData(){
     if(SOCKET_EXTRACTOR_DEBUG){
         std::cout << "In getData function" << std::endl;
     }
-    char buffer[RECIEVE_SIZE] = {};
+    char buffer[RECIEVE_SIZE+1] = {};
     std::string data = "";
     do{
-        memset(buffer, 0 ,RECIEVE_SIZE);
+        memset(buffer, 0 ,RECIEVE_SIZE+1);
         if(SOCKET_EXTRACTOR_DEBUG){
             std::cout << "before recv call, data size is: " + std::to_string(data.size()) << std::endl;
         }
@@ -48,7 +48,8 @@ std::string SocketExtractor::getData(){
             return "";
         }
         this->failed = false;
-        data += buffer;
+	data.append(buffer);
+        //data += buffer;
         if(SOCKET_EXTRACTOR_DEBUG){
             std::cout << "last char of buffer is: " + std::to_string(buffer[RECIEVE_SIZE - 1]) << std::endl;
             std::cout << "after recv call, data size is: " + std::to_string(data.size()) << std::endl;
