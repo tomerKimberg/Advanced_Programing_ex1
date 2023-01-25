@@ -75,6 +75,12 @@ void handleClassify(SocketConnection server);
  * read a response from server and send it to the stream
 */
 void writeServerResultsToStream(SocketConnection server, std::ostream& stream);
+/**
+ * @param SocketConnection the connection that the results will come from
+ * recieve results from server, if there was an error print the error,
+ * if there wasn't any error print the results with "DOne." after
+*/
+void printResultsCout(SocketConnection server);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -158,9 +164,7 @@ void executeMenuOption(int menuOption, SocketConnection server){
             handleClassify(server);
             break;
         case RECEIVE_RESULTS_OPTION:
-            writeServerResultsToStream(server, std::cout);
-            server.send(COMMUNICATION_MESSAGE_RECEIVED); 
-            std::cout << RESULT_STANDARD_OUTPUT_POSTFIX << std::endl;
+            printResultsCout(server);
             break;
         case RECEIVE_RESULTS_TO_FILE_OPTION:
             std::cout << "option 5" << std::endl;
@@ -220,4 +224,13 @@ void handleClassify(SocketConnection server){
 }
 void writeServerResultsToStream(SocketConnection server, std::ostream& stream){
     stream << server.read();
+}
+void printResultsCout(SocketConnection server){
+    std::string results = server.read();
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+    std::cout << results;
+    if(ERROR_MESSAGE_REQUIRED_CLASSIFICATION != results
+    && ERROR_MESSAGE_REQUIRED_DATA != results){
+        std::cout << RESULT_STANDARD_OUTPUT_POSTFIX << std::endl;
+        }
 }
