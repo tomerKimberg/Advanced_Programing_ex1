@@ -15,14 +15,18 @@ void Command4::execute() {
         }
         else{
             this->io->write(ERROR_MESSAGE_REQUIRED_CLASSIFICATION);
+            //read received message from client
+            this->io->read();
             return;
         }
     }
     else{
         this->io->write(ERROR_MESSAGE_REQUIRED_DATA);
+        //read received message from client
+        this->io->read();
         return;
     }
-    //read received message from server
+    //read received message from client
     this->io->read();
 }
 //private functions

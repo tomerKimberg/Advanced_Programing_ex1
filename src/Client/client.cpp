@@ -62,6 +62,11 @@ void run(SocketConnection server);
  * upload two files, train file and test file to the server via socket
 */
 void uploadFiles(SocketConnection server);
+/**
+ * @param SocketConnection the connection to the server
+ * receive the current k and metric, and update them if necessary
+*/
+void updateKAndMetric(SocketConnection server);
 
 /**
  * @param SocketConnection the connection to the server
@@ -90,6 +95,12 @@ void handleBadPathForResults(SocketConnection server);
  * connect to the connection given, receive file data and save it to the file
 */
 void receiveResultsAndSave(SocketConnection resultsConnection, std::string path);
+/*
+ * @param SocketConnection the connection that the results will come from
+ * recieve results from server, if there was an error print the error,
+ * if there wasn't any error print the results with "DOne." after
+*/
+void printResultsCout(SocketConnection server);
 
 int main(int argc, char** argv){
     //check program arguments
@@ -160,21 +171,20 @@ void sendInputToServer(SocketConnection server){
     server.send(userInput);
 }
 void executeMenuOption(int menuOption, SocketConnection server){  
+    //received menu
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
     switch(menuOption){
         case UPLOAD_FILES_OPTION:
             uploadFiles(server);
             break;
         case CHANGE_K_METRIC_OPTION:
-            std::cout << "option 2" << std::endl;
+            updateKAndMetric(server);
             break;
         case CLASSIFY_OPTION:
             handleClassify(server);
             break;
         case RECEIVE_RESULTS_OPTION:
-            writeServerResultsToStream(server, std::cout);
-            server.send(COMMUNICATION_MESSAGE_RECEIVED); 
-            std::cout << RESULT_STANDARD_OUTPUT_POSTFIX << std::endl;
+            printResultsCout(server);
             break;
         case RECEIVE_RESULTS_TO_FILE_OPTION:
             saveResultsToFile(server);
@@ -191,9 +201,7 @@ void uploadFiles(SocketConnection server){
         getline(std::cin, path);
         if(!isPath(path)){
             server.send(INVALID_MESSAGE_PATH);
-            if(CLIENT_DEBUG){
-                std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;
-            }            
+            std::cout << INVALID_INPUT_ERROR_MESSAGE << std::endl;          
             return;
         }
         FileExtractor fileExtractor(path);
@@ -211,6 +219,21 @@ void uploadFiles(SocketConnection server){
         std::cout << message;
     }
     //read recieved upload message
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+}
+void updateKAndMetric(SocketConnection server){
+    //receive the current k and metric
+    std::string message = server.read();
+    std::cout << message;
+    std::string KAndMetric = K_METRIC_DONT_CHANGE; 
+    getline(std::cin, KAndMetric);
+    //send communication received to buffer between message and menu
+    server.send(KAndMetric);
+    message = server.read();
+    //if the message isn't an ok message, we need to print it
+    if(COMMUNICATION_MESSAGE_RECEIVED != message){
+        std::cout << message;
+    }
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
 }
 void handleClassify(SocketConnection server){
@@ -268,4 +291,13 @@ void receiveResultsAndSave(SocketConnection resultsConnection, std::string path)
 void handleBadPathForResults(SocketConnection server){
     server.send(INVALID_MESSAGE_PATH);
     std::cout << INVALID_MESSAGE_PATH;
+}
+void printResultsCout(SocketConnection server){
+    std::string results = server.read();
+    server.send(COMMUNICATION_MESSAGE_RECEIVED); 
+    std::cout << results;
+    if(ERROR_MESSAGE_REQUIRED_CLASSIFICATION != results
+    && ERROR_MESSAGE_REQUIRED_DATA != results){
+        std::cout << RESULT_STANDARD_OUTPUT_POSTFIX << std::endl;
+    }
 }

@@ -28,8 +28,9 @@ void Command1::execute() {
         }
         //path was not valid, restore gn;
         else{
-            this->io->write("invalid\n");
-            this->context->setGn(*backUp);
+            if(nullptr != backUp){
+                this->context->setGn(*backUp);
+            }            
         }
     }
     if(backUp){

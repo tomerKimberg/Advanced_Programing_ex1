@@ -14,5 +14,6 @@
 //communication  message
 #define COMMUNICATION_MESSAGE_RECEIVED "recieved\n"
 #define COMMUNICATION_MESSAGE_SERVER_READY_FOR_PATH "ready\n"
+#define K_METRIC_DONT_CHANGE ""
 #define DELIMETER_CHAR '\n'
 #endif

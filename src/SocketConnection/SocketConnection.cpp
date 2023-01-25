@@ -70,17 +70,22 @@ std::string SocketConnection::read() {
 int SocketConnection::send(const std::string& message) {
     //create an array of bytes from the message to send
     unsigned int size = message.length();
+    unsigned int charsRead = 0;
     char data_addr[size + 1];
     memset(data_addr, 0 ,size + 1);
     strcpy(data_addr, message.c_str());
-    int send_bytes =  ::send(this->sock, data_addr, size+1, 0);
-    if(send_bytes < 0){
-        perror("error sending message");
-    }
-    if(DEBUG_SEND == 1 && send_bytes >= 0){
-        std::cout << data_addr << std::endl;
-    }
-    return send_bytes;
+    do{
+        int send_bytes =  ::send(this->sock, data_addr + charsRead, size+1, 0);
+        charsRead += send_bytes;
+        if(send_bytes < 0){
+            perror("error sending message");
+        }
+        if(DEBUG_SEND == 1 && send_bytes >= 0){
+            std::cout << data_addr << std::endl;
+        }
+    }while(charsRead < size + 1);    
+
+    return charsRead;
 }
 
 int SocketConnection::closeSocket() {
