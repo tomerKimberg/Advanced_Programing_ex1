@@ -7,6 +7,7 @@
 #include "../Command/Command3.h"
 #include "../Command/Command2.h"
 #include "../Command/Command4.h"
+#include "../Command/Command5.h"
 
 //debug
 #define CLI_DEBUG 0
@@ -17,6 +18,7 @@ CLI::CLI(DefaultIO* io) {
     this->commands.push_back(new Command2("2. algorithm settings\n", io ,&this->context ));
     this->commands.push_back(new Command3("3. classify data\n", io ,&this->context ));
     this->commands.push_back(new Command4("4. display results\n", io ,&this->context ));
+    this->commands.push_back(new Command5("5. download results\n", io ,&this->context ));
     this->createMenu();
 
 

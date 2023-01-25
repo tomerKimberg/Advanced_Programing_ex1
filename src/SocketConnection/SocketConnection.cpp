@@ -99,6 +99,9 @@ bool SocketConnection::receiveNotFail(){
 int SocketConnection::getSock() {
     return this->sock;
 }
+unsigned long SocketConnection::getIP(){
+    return this->sin.sin_addr.s_addr;
+}
 void SocketConnection::write(std::string message) {
     //kept write function becuase send function returns value but write needs to be void
     this->send(message);

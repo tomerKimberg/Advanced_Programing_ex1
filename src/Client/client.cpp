@@ -1,4 +1,8 @@
+#include <thread>
 #include <sstream>
+#include <iostream>
+#include <fstream>
+#include <pthread.h>
 #include <arpa/inet.h>
 #include "../DistanceCalculator/vector_functions.h"
 #include "../ValidationFuncs/vector_validation.h"
@@ -76,6 +80,22 @@ void handleClassify(SocketConnection server);
 */
 void writeServerResultsToStream(SocketConnection server, std::ostream& stream);
 /**
+ * @param SocketConnection the connection to the server
+ * take path as input, if valid and results are ready, will save the results to that path
+*/
+void saveResultsToFile(SocketConnection server);
+/**
+ * @param SocketConnection the connection to the server
+ * send error message via SocketConnection and std::cout
+*/
+void handleBadPathForResults(SocketConnection server);
+/**
+ * @param SocketConnection the connection we aregoing to receive from
+ * @param std::path the path to write to
+ * connect to the connection given, receive file data and save it to the file
+*/
+void receiveResultsAndSave(SocketConnection resultsConnection, std::string path);
+/*
  * @param SocketConnection the connection that the results will come from
  * recieve results from server, if there was an error print the error,
  * if there wasn't any error print the results with "DOne." after
@@ -167,7 +187,7 @@ void executeMenuOption(int menuOption, SocketConnection server){
             printResultsCout(server);
             break;
         case RECEIVE_RESULTS_TO_FILE_OPTION:
-            std::cout << "option 5" << std::endl;
+            saveResultsToFile(server);
             break;
     }
 }
@@ -225,6 +245,53 @@ void handleClassify(SocketConnection server){
 void writeServerResultsToStream(SocketConnection server, std::ostream& stream){
     stream << server.read();
 }
+void saveResultsToFile(SocketConnection server){
+    std::string message = server.read();
+    if(COMMUNICATION_MESSAGE_SERVER_READY_FOR_PATH != message){
+        std::cout << message;
+        server.send(COMMUNICATION_MESSAGE_RECEIVED);
+        return;
+    }
+    std::string path = "";
+    getline(std::cin, path);
+    std::ofstream fileStream;
+    fileStream.clear();
+    try{
+        fileStream.open(path);
+    }catch(...){
+        handleBadPathForResults(server);
+        return;
+    }
+    if(fileStream.fail()){
+        handleBadPathForResults(server);
+        return;
+    }
+    server.send(COMMUNICATION_MESSAGE_RECEIVED);
+    std::string port = server.read();
+    if(CLIENT_DEBUG){
+        std::cout << port << std::endl;
+    }
+    unsigned long int ip = server.getIP();
+    SocketConnection receiveResult(std::stoi(port), ip);
+    fileStream.close();// close file before going to a new thread
+    server.send(COMMUNICATION_MESSAGE_RECEIVED);
+    std::thread resultsThread(receiveResultsAndSave, receiveResult, path);
+    resultsThread.detach();
+}
+void receiveResultsAndSave(SocketConnection resultsConnection, std::string path){
+    std::ofstream fileStream;
+    fileStream.open(path);
+    resultsConnection.connect();
+    std::string results = resultsConnection.read();
+    fileStream << results;
+    resultsConnection.send(COMMUNICATION_MESSAGE_RECEIVED);
+    fileStream.close();
+    resultsConnection.closeSocket();
+}
+void handleBadPathForResults(SocketConnection server){
+    server.send(INVALID_MESSAGE_PATH);
+    std::cout << INVALID_MESSAGE_PATH;
+}
 void printResultsCout(SocketConnection server){
     std::string results = server.read();
     server.send(COMMUNICATION_MESSAGE_RECEIVED); 
@@ -232,5 +299,5 @@ void printResultsCout(SocketConnection server){
     if(ERROR_MESSAGE_REQUIRED_CLASSIFICATION != results
     && ERROR_MESSAGE_REQUIRED_DATA != results){
         std::cout << RESULT_STANDARD_OUTPUT_POSTFIX << std::endl;
-        }
+    }
 }

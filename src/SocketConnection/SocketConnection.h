@@ -67,6 +67,10 @@ public:
     bool receiveNotFail();
 
     int getSock();
+    /**
+     * return the ip number in binary
+    */
+    unsigned long getIP();
 
     void write(std::string message);
     int closeIO();
